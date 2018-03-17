@@ -41,12 +41,4 @@ public class EvolvableString extends Evolvable<String> {
                 .append(m.substring(i + 1, m.length()))
                 .toString();
     }
-
-    public static void main(String[] args) {
-        String source = "!dlroW ,olleH";
-        String target = "Hello, World!";
-
-        EvolvableString se = new EvolvableString(source);
-        se.solve(target);
-    }
 }
