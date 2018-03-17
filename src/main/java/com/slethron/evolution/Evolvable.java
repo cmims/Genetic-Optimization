@@ -15,7 +15,8 @@ public abstract class Evolvable<T> {
         setSource(source);
     }
 
-    public void evolve(T target) throws IllegalArgumentException {
+    public void evolve(T target) {
+        verify(source, target);
         Double fitval = fitness(source, target);
 
         BigInteger i = BigInteger.ZERO;
@@ -53,6 +54,8 @@ public abstract class Evolvable<T> {
     public T getSource() {
         return source;
     }
+
+    abstract void verify(T source, T target) throws IllegalArgumentException;
 
     abstract Double fitness(T source, T target);
 

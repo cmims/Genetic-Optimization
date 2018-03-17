@@ -3,6 +3,11 @@ package com.slethron.evolution;
 import java.util.Random;
 
 public class EvolvableString extends Evolvable<String> {
+    private static final String LENGTH_N0T_EQUAL_ERR = "Source and target strings must have equal lengths";
+    private static final String LENGTH_OF_ZERO_ERR = "Source and target strings must have length > 0";
+    private static final String INVALID_CHAR_ERR = "Characters must be in UTF-16 range 32 <= x <= 126;";
+
+
     StringBuffer sb;
     Random random;
 
@@ -11,6 +16,8 @@ public class EvolvableString extends Evolvable<String> {
         sb = new StringBuffer();
         random = new Random();
     }
+
+
 
     @Override
     Double fitness(String source, String target) {
@@ -40,5 +47,25 @@ public class EvolvableString extends Evolvable<String> {
                 .append(Character.toChars(mutation))
                 .append(m.substring(i + 1, m.length()))
                 .toString();
+    }
+
+    @Override
+    void verify(String source, String target) throws IllegalArgumentException {
+        if (source.length() != target.length()) {
+            throw new IllegalArgumentException(LENGTH_N0T_EQUAL_ERR);
+        } else if (source.length() == 0 || target.length() == 0) {
+            throw new IllegalArgumentException(LENGTH_OF_ZERO_ERR);
+        } else {
+            for (char c : source.toCharArray()) {
+                if (c < 32 || c > 126) {
+                    throw new IllegalArgumentException(INVALID_CHAR_ERR);
+                }
+            }
+            for (char c : target.toCharArray()) {
+                if (c < 32 || c > 126) {
+                    throw new IllegalArgumentException(INVALID_CHAR_ERR);
+                }
+            }
+        }
     }
 }
