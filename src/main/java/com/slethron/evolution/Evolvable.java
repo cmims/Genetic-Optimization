@@ -18,7 +18,6 @@ public abstract class Evolvable<T> {
     public void evolve(T target) {
         verify(source, target);
         Double fitval = fitness(source, target);
-
         BigInteger i = BigInteger.ZERO;
         while (true) {
             i = i.add(BigInteger.ONE);
