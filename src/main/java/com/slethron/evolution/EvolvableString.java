@@ -7,7 +7,6 @@ public class EvolvableString extends Evolvable<String> {
     private static final String LENGTH_OF_ZERO_ERR = "Source and target strings must have length > 0";
     private static final String INVALID_CHAR_ERR = "Characters must be in UTF-16 range 32 <= x <= 126;";
 
-
     StringBuffer sb;
     Random random;
 
@@ -16,9 +15,7 @@ public class EvolvableString extends Evolvable<String> {
         sb = new StringBuffer();
         random = new Random();
     }
-
-
-
+    
     @Override
     Double fitness(String source, String target) {
         double fitval = 0;
