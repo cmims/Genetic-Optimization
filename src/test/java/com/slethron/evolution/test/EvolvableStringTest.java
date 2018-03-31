@@ -1,47 +1,24 @@
 package com.slethron.evolution.test;
 
 import com.slethron.evolution.EvolvableString;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EvolvableStringTest {
-    EvolvableString es;
-
-    String source = "!dlroW ,olleH";
-    String target = "Hello, World!";
-
-    String sourceInvalidChar = "!dlroW ,®lleH";
-    String targetInvalidChar = "Hello, World®";
-
-    String targetInvalidLength = "Hello, World! ";
-
-
-    @Before
-    public void before() {
+class EvolvableStringTest {
+    private EvolvableString es;
+    
+    @BeforeEach
+    void before() {
+        String source = "!dlroW ,olleH";
         es = new EvolvableString(source);
     }
 
     @Test
-    public void evolveEvolvesStringIntoTargetString() {
+    void evolveEvolvesStringIntoTargetString() {
+        String target = "Hello, World!";
         es.evolve(target);
         assertEquals(target, es.getSource());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void evolveThrowsIllegalArgumentExceptionWhenTargetLengthNotEqualsSourceLength() {
-        es.evolve(targetInvalidLength);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void evolveThrowsIllegalArgumentExceptionWhenTargetHasInvalidChar() {
-        es.evolve(targetInvalidChar);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void evolveThrowsIllegalArgumentExceptionWhenSourceHasInvalidChar() {
-        es.setSource(sourceInvalidChar);
-        es.evolve(target);
     }
 }
