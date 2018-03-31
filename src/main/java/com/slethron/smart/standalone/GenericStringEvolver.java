@@ -8,21 +8,21 @@ public class GenericStringEvolver {
     private static final String LENGTH_OF_ZERO_ERR = "Source and target strings must have length > 0";
     private static final String INVALID_CHAR_ERR = "Characters must be in UTF-16 range 32 <= x <= 126;";
     
-    private StringBuffer sb;
+    private StringBuilder sb;
     private Random random;
     
-    int last_i;
-    int last_op;
-    boolean accepted;
+    private int iLast;
+    private int opLast;
+    private boolean accepted;
     
-    String source;
+    private String source;
     
     public GenericStringEvolver(String source) {
-        sb = new StringBuffer();
+        sb = new StringBuilder();
         random = new Random();
     
-        last_i = 0;
-        last_op = 0;
+        iLast = 0;
+        opLast = 0;
         accepted = false;
         
         this.source = source;
@@ -32,7 +32,7 @@ public class GenericStringEvolver {
         verify(source, target);
         Double fitval = fitness(source, target);
         BigInteger i = BigInteger.ZERO;
-        while (true) {
+        while (fitval != 0) {
             i = i.add(BigInteger.ONE);
             String m = mutate(source);
             Double fitval_m = fitness(m, target);
@@ -54,10 +54,6 @@ public class GenericStringEvolver {
                     .append(m)
                     .append(accepted ? " : accepted" : " : rejected");
             System.out.println(sb.toString());
-            
-            if (fitval == 0) {
-                break;
-            }
         }
     }
     
@@ -83,16 +79,16 @@ public class GenericStringEvolver {
         int i;
         int op;
         if (accepted) {
-            i = last_i;
-            op = last_op;
+            i = iLast;
+            op = opLast;
             
             
         } else {
             i = random.nextInt(m.length());
             op = random.nextBoolean() ? 1 : -1;
             
-            last_i = i;
-            last_op = op;
+            iLast = i;
+            opLast = op;
         }
         
         int mutation = m.charAt(i) + op;
@@ -110,7 +106,7 @@ public class GenericStringEvolver {
                 .toString();
     }
     
-    private void verify(String source, String target) throws IllegalArgumentException {
+    private void verify(String source, String target) {
         if (source.length() != target.length()) {
             throw new IllegalArgumentException(LENGTH_N0T_EQUAL_ERR);
         } else if (source.length() == 0) {

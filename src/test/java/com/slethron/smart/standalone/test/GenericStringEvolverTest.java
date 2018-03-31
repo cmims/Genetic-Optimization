@@ -1,52 +1,63 @@
 package com.slethron.smart.standalone.test;
 
 import com.slethron.smart.standalone.GenericStringEvolver;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class GenericStringEvolverTest {
-    GenericStringEvolver se;
-    
-    String source = "!dlroW ,olleH";
-    String target = "Hello, World!";
-    
-    String sourceInvalidChar = "!dlroW ,®lleH";
-    String targetInvalidChar = "Hello, World®";
-    
-    String targetInvalidLength = "Hello, World! ";
-    
-    @BeforeEach
-    public void before() {
-        se = new GenericStringEvolver(source);
-    }
+class GenericStringEvolverTest {
+    private GenericStringEvolver se;
+    private String source = "!dlroW ,olleH";
+    private String target = "Hello, World!";
+    private String sourceInvalidChar = "!dlroW ,®lleH";
+    private String targetInvalidChar = "Hello, World®";
+    private String targetInvalidLength = "Hello, World! ";
     
     @Test
-    public void evolveEvolvesSourceStringIntoTargetString() {
+    void evolveEvolvesSourceStringIntoTargetString() {
+        se = new GenericStringEvolver(source);
         se.evolve(target);
         assertEquals(target, se.getSource());
     }
     
-//    @Test(expected = IllegalArgumentException.class)
-//    public void evolveThrowsIllegalArgumentExceptionWhenTargetLengthNotEqualsSourceLength() {
-//        se.evolve(targetInvalidLength);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void evolveThrowsIllegalArgumentExceptionWhenTargetHasInvalidChar() {
-//        se.evolve(targetInvalidChar);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void evolveThrowsIllegalArgumentExceptionWhenSourceHasInvalidChar() {
-//        se.setSource(sourceInvalidChar);
-//        se.evolve(target);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void evolveThrowsIllegalArgumentExceptionWhenTargetAndSourceHaveInvalidChar() {
-//        se.setSource(sourceInvalidChar);
-//        se.evolve(targetInvalidChar);
-//    }
+    @Test
+    void evolveThrowsIllegalArgumentExceptionWhenTargetLengthNotEqualsSourceLength() {
+        se = new GenericStringEvolver(source);
+        assertThrows(IllegalArgumentException.class,
+                () -> {
+                    se.evolve(targetInvalidLength);
+                }
+        );
+    }
+    
+    @Test
+    void evolveThrowsIllegalArgumentExceptionWhenTargetHasInvalidChar() {
+        se = new GenericStringEvolver(source);
+        assertThrows(IllegalArgumentException.class,
+                () -> {
+                    se.evolve(targetInvalidChar);
+                }
+        );
+    }
+    
+    @Test
+    void evolveThrowsIllegalArgumentExceptionWhenSourceHasInvalidChar() {
+        se = new GenericStringEvolver(sourceInvalidChar);
+        assertThrows(IllegalArgumentException.class,
+                () -> {
+                    se.evolve(target);
+                }
+        );
+    }
+    
+    @Test
+    void evolveThrowsIllegalArgumentExceptionWhenTargetAndSourceHaveInvalidChar() {
+        se = new GenericStringEvolver(sourceInvalidChar);
+        assertThrows(IllegalArgumentException.class,
+                () -> {
+                    se.evolve(targetInvalidChar);
+                }
+        );
+    }
 }
