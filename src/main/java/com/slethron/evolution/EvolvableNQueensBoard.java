@@ -35,9 +35,4 @@ public class EvolvableNQueensBoard extends Evolvable<NQueensBoard> {
         
         return board;
     }
-    
-    public static void main(String[] args) {
-        EvolvableNQueensBoard board = new EvolvableNQueensBoard(new NQueensBoard(4));
-        board.evolve(new NQueensBoard(0));
-    }
 }
