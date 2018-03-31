@@ -35,7 +35,7 @@ public class NQueensBoard {
         int order = 0;
         for (var i = 0; i < board.length; i++) {
             for (var j = 0; j < board.length; j++) {
-                if (j != i && board[j] != -1 || board[j] == board[i] || board[j] == Math.abs(j - i)) {
+                if (j != i && (board[j] != -1 || board[j] == board[i] || board[j] == Math.abs(j - i))) {
                     order++;
                 }
             }
@@ -47,9 +47,9 @@ public class NQueensBoard {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for (int c : board) {
-            sb.append(c);
-            if (c != board.length - 1) {
+        for (var i = 0; i < board.length; i++) {
+            sb.append(board[i]);
+            if (i != board.length - 1) {
                 sb.append(", ");
             }
         }
