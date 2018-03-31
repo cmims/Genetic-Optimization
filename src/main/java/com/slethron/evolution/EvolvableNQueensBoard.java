@@ -20,10 +20,9 @@ public class EvolvableNQueensBoard extends Evolvable<NQueensBoard> {
     
     @Override
     public NQueensBoard mutate(NQueensBoard source) {
-        var board = source;
-        var c = random.nextInt(board.getLength());
+        var c = random.nextInt(source.getLength());
         var flip = random.nextBoolean() ? 1 : -1;
-        var mutation = board.get(c) + flip;
+        var mutation = source.get(c) + flip;
         
         if (mutation > source.getLength() - 1) {
             mutation = 0;
@@ -31,8 +30,8 @@ public class EvolvableNQueensBoard extends Evolvable<NQueensBoard> {
             mutation = source.getLength() -1;
         }
         
-        board.set(c, mutation);
+        source.set(c, mutation);
         
-        return board;
+        return source;
     }
 }
