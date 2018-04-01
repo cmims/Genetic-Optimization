@@ -32,16 +32,24 @@ public class NQueensBoard {
     }
     
     public int orderConflict() {
-        int order = 0;
-        for (var i = 0; i < board.length; i++) {
-            for (var j = 0; j < board.length; j++) {
-                if (j != i && (board[j] != -1 || board[j] == board[i] || board[j] == Math.abs(j - i))) {
-                    order++;
+        int conflicts = 0;
+        for(var currentQueen = 0; currentQueen < board.length; currentQueen++) {
+            for (var nextQueen = currentQueen + 1; nextQueen < board.length; nextQueen++) {
+    
+                // Queen Same Row
+                if (board[currentQueen] == board[nextQueen]) {
+                    conflicts++;
+                }
+    
+                // Queen Diagonal
+                // Their Difference In Row Equals Their Difference In Column
+                // EX: Diagonal if two columns over and either two rows above or below
+                if (Math.abs(board[nextQueen] - board[currentQueen]) == Math.abs(nextQueen - currentQueen)) {
+                    conflicts++;
                 }
             }
-            
         }
-        return order;
+        return conflicts;
     }
     
     public String toString() {

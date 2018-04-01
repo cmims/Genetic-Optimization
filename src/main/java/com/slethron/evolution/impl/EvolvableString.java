@@ -1,10 +1,10 @@
-package com.slethron.evolution;
+package com.slethron.evolution.impl;
 
-import com.slethron.evolution.interfaces.Evolvable;
+import com.slethron.evolution.interfaces.TargetedEvolvable;
 
 import java.util.Random;
 
-public class EvolvableString extends Evolvable<String> {
+public class EvolvableString extends TargetedEvolvable<String> {
     private StringBuilder sb;
     private Random random;
 

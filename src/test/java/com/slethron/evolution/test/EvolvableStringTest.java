@@ -1,6 +1,6 @@
 package com.slethron.evolution.test;
 
-import com.slethron.evolution.EvolvableString;
+import com.slethron.evolution.impl.EvolvableString;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
