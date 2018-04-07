@@ -1,7 +1,7 @@
-package com.slethron.evolution.test;
+package com.slethron.evolution.individual.test;
 
-import com.slethron.evolution.impl.EvolvableNQueensBoard;
-import com.slethron.evolution.entities.NQueensBoard;
+import com.slethron.evolution.individual.EvolvableNQueensBoard;
+import com.slethron.evolution.type.NQueensBoard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,13 +10,13 @@ class EvolvableNQueensBoardTest {
     
     @BeforeEach
     void before() {
-        board = new EvolvableNQueensBoard(new NQueensBoard(14));
+        board = new EvolvableNQueensBoard(new NQueensBoard(6));
     }
     
     @Test
     void findSolution() {
         board.evolve();
-        
+
         System.out.println(board.getSource().toString());
     }
 }
