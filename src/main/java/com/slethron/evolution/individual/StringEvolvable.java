@@ -1,22 +1,28 @@
 package com.slethron.evolution.individual;
 
 import com.slethron.evolution.individual.interfaces.Evolvable;
+import com.slethron.evolution.util.RandomUtil;
 
 import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class StringEvolvable extends Evolvable<String> {
     private String target;
-    private final StringBuilder sb;
+    private final StringBuilder sb = new StringBuilder();
     
     public StringEvolvable(String target) {
-        this(generateRandomString(target.length()), target);
+        this(target, RandomUtil.generateRandomString(target.length()));
     }
-
-    private StringEvolvable(String source, String target) {
+    
+    public StringEvolvable(StringEvolvable stringEvolvable) {
+        this(stringEvolvable.target, stringEvolvable.source());
+    }
+    
+    public StringEvolvable(String target, String source) {
         super(source);
         this.target = target;
-        sb = new StringBuilder();
     }
     
     @Override
@@ -25,37 +31,27 @@ public class StringEvolvable extends Evolvable<String> {
         for (var i = 0; i < source().length(); i++) {
             fitVal += Math.abs(target.charAt(i) - source().charAt(i));
         }
-
+        
         return fitVal;
     }
-
+    
     @Override
     public String mutate() {
         var i = ThreadLocalRandom.current().nextInt(source().length());
         var flip = ThreadLocalRandom.current().nextBoolean() ? 1 : -1;
         var mutation = source().charAt(i) + flip;
-
+        
         if (mutation > 126) {
             mutation = 32;
-        } else if (mutation < 32){
+        } else if (mutation < 32) {
             mutation = 126;
         }
-
+        
         return sb.delete(0, sb.length())
                 .append(source(), 0, i)
                 .append((char) mutation)
                 .append(source(), i + 1, source().length())
                 .toString();
-    }
-    
-    private static String generateRandomString(int length) {
-        var sb = new StringBuilder();
-        for (var i = 0; i < length; i++) {
-            char c = (char) (ThreadLocalRandom.current().nextInt(126 - 32) + 32);
-            sb.append(c);
-        }
-        
-        return sb.toString();
     }
     
     public static class StringEvolvableComparator implements Comparator<StringEvolvable> {
