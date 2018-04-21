@@ -1,4 +1,4 @@
-package com.slethron.evolution.util;
+package com.slethron.util;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;

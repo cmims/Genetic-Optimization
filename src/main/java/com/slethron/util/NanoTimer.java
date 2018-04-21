@@ -1,4 +1,4 @@
-package com.slethron.evolution.util;
+package com.slethron.util;
 
 public class NanoTimer {
     private long pre;

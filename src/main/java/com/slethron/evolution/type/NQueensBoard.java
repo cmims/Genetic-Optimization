@@ -14,6 +14,10 @@ public class NQueensBoard {
         board = source.board.clone();
     }
     
+    public NQueensBoard(int[] board) {
+        this.board = board;
+    }
+    
     public int get(int column) {
         return board[column];
     }
@@ -38,9 +42,12 @@ public class NQueensBoard {
         int conflicts = 0;
         for (var currentQueen = 0; currentQueen < board.length; currentQueen++) {
             for (var nextQueen = currentQueen + 1; nextQueen < board.length; nextQueen++) {
+                // The queen is in the same row
                 if (board[currentQueen] == board[nextQueen]) {
                     conflicts++;
                 }
+                
+                // The quuen is in the diagonal
                 if (Math.abs(board[nextQueen] - board[currentQueen]) == Math.abs(nextQueen - currentQueen)) {
                     conflicts++;
                 }
@@ -77,15 +84,17 @@ public class NQueensBoard {
     
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        var sb = new StringBuilder();
         for (var i = 0; i < board.length; i++) {
-            sb.append(board[i]);
-            if (i != board.length - 1) {
-                sb.append(", ");
+            for (var j = 0; j < board.length; j++) {
+                if (j == board[i]) {
+                    sb.append("Q ");
+                } else {
+                    sb.append("* ");
+                }
             }
+            sb.append('\n');
         }
-        sb.append("]");
         
         return sb.toString();
     }

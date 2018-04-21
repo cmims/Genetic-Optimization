@@ -1,41 +1,33 @@
 package com.slethron.evolution.population.test;
 
 import com.slethron.evolution.individual.StringEvolvable;
-import com.slethron.evolution.population.NQueensPopulation;
+import com.slethron.evolution.individual.interfaces.Evolvable;
 import com.slethron.evolution.population.StringPopulation;
-import com.slethron.evolution.util.RandomUtil;
+import com.slethron.util.RandomUtil;
 import org.junit.jupiter.api.Test;
 
-class PopulationTest {
+import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class StringPopulationTest {
     
     @Test
-    void nQueensProblem_getSolutionFor8Queens() {
-        var population = new NQueensPopulation(10000, 8);
+    void evolveToHelloWorld() {
+        var population = new StringPopulation(1000, "Hello, World!");
         System.out.println(population.evolve().source());
     }
     
     @Test
-    void nQueensProblem_getSolutionFor12Queens() {
-        var population = new NQueensPopulation(10000, 12);
-        System.out.println(population.evolve().source());
-    }
+    void evolveToSomeLargeTargetString() {
+        String target = RandomUtil.generateRandomString(100);
+        System.out.println(target);
+        
+        var population = new StringPopulation(10000, target);
+        var result = population.evolve().source();
     
-    @Test
-    void nQueensProblem_getSolutionFor24Queens() {
-        var population = new NQueensPopulation(10000, 24);
-        System.out.println(population.evolve().source());
-    }
-    
-    @Test
-    void nQueensProblem_getSolutionFor48Queens() {
-        var population = new NQueensPopulation(10000, 48);
-        System.out.println(population.evolve().source());
-    }
-    
-    @Test
-    void stringMatchProblem_evolveToHelloWorld() {
-        var population = new StringPopulation(10000, "Hello, World!");
-        System.out.println(population.evolve());
+        System.out.println(result);
+        assertEquals(target, result);
     }
     
     @Test

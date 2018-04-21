@@ -6,28 +6,10 @@ import com.slethron.evolution.population.interfaces.Population;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-/*
-For sequential streams, the presence or absence of an encounter
-order does not affect performance, only determinism. If a stream
-is ordered, repeated execution of identical stream pipelines on an
-identical source will produce an identical result; if it is not
-ordered, repeated execution might produce different results.
-
-For parallel streams, relaxing the ordering constraint can sometimes
-enable more efficient execution.
-...
-
-In cases where the stream has an encounter order, but the user does
-not particularly care about that encounter order, explicitly de-ordering
-the stream with unordered() may improve parallel performance for some
-stateful or terminal operations.
-
-Although, the performance improvement may not be experienced unless
-the size of the string is
- */
 public class StringPopulation implements Population<StringEvolvable> {
     private StringEvolvable[] population;
     private String target;
@@ -78,12 +60,11 @@ public class StringPopulation implements Population<StringEvolvable> {
     
     @Override
     public StringEvolvable generateIndividualFromParents(StringEvolvable parentA, StringEvolvable parentB) {
-        var split = ThreadLocalRandom.current().nextInt(parentA.source().length());
+        var split = new AtomicInteger(ThreadLocalRandom.current().nextInt(parentA.source().length()));
         return new StringEvolvable(target,
                 IntStream.range(0, parentA.source().length())
                         .unordered().parallel()
-                        //TODO: Think this over
-                        .mapToObj(i -> i < split ? parentA.source().charAt(i) : parentB.source().charAt(i))
+                        .mapToObj(i -> i < split.get() ? parentA.source().charAt(i) : parentB.source().charAt(i))
                         .map(String::valueOf)
                         .collect(Collectors.joining()));
     }

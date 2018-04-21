@@ -4,8 +4,10 @@ import com.slethron.evolution.individual.NQueensEvolvable;
 import com.slethron.evolution.individual.interfaces.Evolvable;
 import com.slethron.evolution.population.interfaces.Population;
 import com.slethron.evolution.type.NQueensBoard;
+
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class NQueensPopulation implements Population<NQueensEvolvable> {
@@ -26,18 +28,19 @@ public class NQueensPopulation implements Population<NQueensEvolvable> {
                 }
                 
                 Evolvable m = e.next();
-                if (m.fitness() == 0
-                        && m instanceof NQueensEvolvable) {
+                if (m.fitness() == 0 && m instanceof NQueensEvolvable) {
                     return (NQueensEvolvable) m;
                 }
             }
+            
+            nextGeneration();
         }
     }
     
     @Override
     public void generateInitialPopulation(int populationSize) {
         population = IntStream.range(0, populationSize)
-                .parallel()
+                .unordered().parallel()
                 .mapToObj(i -> new NQueensEvolvable(new NQueensBoard(n).randomize()))
                 .toArray(NQueensEvolvable[]::new);
     }
@@ -47,22 +50,21 @@ public class NQueensPopulation implements Population<NQueensEvolvable> {
         Arrays.parallelSort(population, new NQueensEvolvable.NQueensEvolvableComparator());
         
         population = IntStream.range(0, population.length)
-                .parallel()
+                .unordered().parallel()
                 .mapToObj(i -> generateIndividualFromParents(
-                        population[ThreadLocalRandom.current().nextInt(population.length / 4)],
-                        population[ThreadLocalRandom.current().nextInt(population.length / 4)]))
+                        population[ThreadLocalRandom.current().nextInt(population.length / 5)],
+                        population[ThreadLocalRandom.current().nextInt(population.length / 5)]))
                 .toArray(NQueensEvolvable[]::new);
     }
     
     @Override
     public NQueensEvolvable generateIndividualFromParents(NQueensEvolvable parentA,
                                                           NQueensEvolvable parentB) {
-        var child = new NQueensBoard(parentA.source());
-        var split = ThreadLocalRandom.current().nextInt(parentA.source().length());
-        for (var i = split; i < parentB.source().length(); i++) {
-            child.set(i, parentB.source().get(i));
-        }
-        
-        return new NQueensEvolvable(child);
+        var split = new AtomicInteger(ThreadLocalRandom.current().nextInt(parentA.source().length()));
+        return new NQueensEvolvable(new NQueensBoard(
+                IntStream.range(0, parentA.source().length())
+                        .unordered().parallel()
+                        .map(i -> i < split.get() ? parentA.source().get(i) : parentB.source().get(i))
+                        .toArray()));
     }
 }

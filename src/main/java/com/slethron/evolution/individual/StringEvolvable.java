@@ -1,12 +1,10 @@
 package com.slethron.evolution.individual;
 
 import com.slethron.evolution.individual.interfaces.Evolvable;
-import com.slethron.evolution.util.RandomUtil;
+import com.slethron.util.RandomUtil;
 
 import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class StringEvolvable extends Evolvable<String> {
     private String target;
@@ -37,9 +35,10 @@ public class StringEvolvable extends Evolvable<String> {
     
     @Override
     public String mutate() {
-        var i = ThreadLocalRandom.current().nextInt(source().length());
-        var flip = ThreadLocalRandom.current().nextBoolean() ? 1 : -1;
-        var mutation = source().charAt(i) + flip;
+        var index = ThreadLocalRandom.current().nextInt(source().length());
+        var mutation = ThreadLocalRandom.current().nextInt(99) < 5 ?
+                ThreadLocalRandom.current().nextInt(126 - 32) + 32 :
+                source().charAt(index);
         
         if (mutation > 126) {
             mutation = 32;
@@ -48,16 +47,21 @@ public class StringEvolvable extends Evolvable<String> {
         }
         
         return sb.delete(0, sb.length())
-                .append(source(), 0, i)
-                .append((char) mutation)
-                .append(source(), i + 1, source().length())
+                .append(source(), 0, index)
+                .append(Character.toChars(mutation))
+                .append(source(), index + 1, source().length())
                 .toString();
+    }
+    
+    @Override
+    public String toString() {
+        return source().toString();
     }
     
     public static class StringEvolvableComparator implements Comparator<StringEvolvable> {
         @Override
         public int compare(StringEvolvable o1, StringEvolvable o2) {
-            return Double.compare(o2.fitness(), o1.fitness());
+            return Double.compare(o1.fitness(), o2.fitness());
         }
     }
 }
