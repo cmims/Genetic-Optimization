@@ -1,8 +1,8 @@
-package com.slethron.evolution.population;
+package com.slethron.evolution.population.impl;
 
-import com.slethron.evolution.individual.StringEvolvable;
-import com.slethron.evolution.individual.interfaces.Evolvable;
-import com.slethron.evolution.population.interfaces.Population;
+import com.slethron.evolution.individual.impl.StringEvolvable;
+import com.slethron.evolution.individual.Evolvable;
+import com.slethron.evolution.population.Population;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;

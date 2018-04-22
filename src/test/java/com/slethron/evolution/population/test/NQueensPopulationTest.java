@@ -1,6 +1,6 @@
 package com.slethron.evolution.population.test;
 
-import com.slethron.evolution.population.NQueensPopulation;
+import com.slethron.evolution.population.impl.NQueensPopulation;
 import com.slethron.util.NanoTimer;
 import org.junit.jupiter.api.Test;
 
@@ -33,15 +33,16 @@ class NQueensPopulationTest {
     
     @Test
     void getSolutionFor24Queens() {
+        var populationSize = 1000;
         var n = 24;
-        var population = new NQueensPopulation(1000, n);
+        var population = new NQueensPopulation(populationSize, n);
         
         NANO_TIMER.start();
         var result = population.evolve();
         NANO_TIMER.stop();
         
         System.out.println(result);
-        System.out.println("Solution for n = " + n + "found in " + NANO_TIMER.toString());
+        System.out.println("Solution for n = " + n + " with populationSize = " +  +"found in " + NANO_TIMER.toString());
     }
     
     @Test

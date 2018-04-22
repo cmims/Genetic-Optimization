@@ -1,12 +1,9 @@
 package com.slethron.evolution.population.test;
 
-import com.slethron.evolution.individual.StringEvolvable;
-import com.slethron.evolution.individual.interfaces.Evolvable;
-import com.slethron.evolution.population.StringPopulation;
+import com.slethron.evolution.individual.impl.StringEvolvable;
+import com.slethron.evolution.population.impl.StringPopulation;
 import com.slethron.util.RandomUtil;
 import org.junit.jupiter.api.Test;
-
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

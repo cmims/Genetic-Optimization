@@ -1,6 +1,6 @@
-package com.slethron.evolution.individual;
+package com.slethron.evolution.individual.impl;
 
-import com.slethron.evolution.individual.interfaces.Evolvable;
+import com.slethron.evolution.individual.Evolvable;
 import com.slethron.util.RandomUtil;
 
 import java.util.Comparator;

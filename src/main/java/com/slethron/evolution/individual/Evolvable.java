@@ -1,4 +1,4 @@
-package com.slethron.evolution.individual.interfaces;
+package com.slethron.evolution.individual;
 
 public abstract class Evolvable<T> {
     private T source;

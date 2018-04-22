@@ -1,8 +1,8 @@
-package com.slethron.evolution.population;
+package com.slethron.evolution.population.impl;
 
-import com.slethron.evolution.individual.NQueensEvolvable;
-import com.slethron.evolution.individual.interfaces.Evolvable;
-import com.slethron.evolution.population.interfaces.Population;
+import com.slethron.evolution.individual.impl.NQueensEvolvable;
+import com.slethron.evolution.individual.Evolvable;
+import com.slethron.evolution.population.Population;
 import com.slethron.evolution.type.NQueensBoard;
 
 import java.util.Arrays;

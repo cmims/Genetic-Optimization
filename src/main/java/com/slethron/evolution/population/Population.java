@@ -1,6 +1,6 @@
-package com.slethron.evolution.population.interfaces;
+package com.slethron.evolution.population;
 
-import com.slethron.evolution.individual.interfaces.Evolvable;
+import com.slethron.evolution.individual.Evolvable;
 
 public interface Population<E extends Evolvable> {
     Evolvable evolve();

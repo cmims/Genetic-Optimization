@@ -1,6 +1,6 @@
-package com.slethron.evolution.individual;
+package com.slethron.evolution.individual.impl;
 
-import com.slethron.evolution.individual.interfaces.Evolvable;
+import com.slethron.evolution.individual.Evolvable;
 import com.slethron.evolution.type.NQueensBoard;
 
 import java.util.Comparator;
@@ -19,15 +19,7 @@ public class NQueensEvolvable extends Evolvable<NQueensBoard> {
     @Override
     public NQueensBoard mutate() {
         var column = ThreadLocalRandom.current().nextInt(source().length());
-        var row = ThreadLocalRandom.current().nextInt(99) < 5 ?
-                ThreadLocalRandom.current().nextInt(source().length()) :
-                source().get(column);
-        
-//        if (row > source().length() - 1) {
-//            row = 0;
-//        } else if (row < 0) {
-//            row = source().length() - 1;
-//        }
+        var row = ThreadLocalRandom.current().nextInt(source().length());
         
         var mutated = new NQueensBoard(source());
         mutated.set(column, row);
