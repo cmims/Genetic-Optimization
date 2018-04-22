@@ -23,11 +23,11 @@ public class NQueensEvolvable extends Evolvable<NQueensBoard> {
                 ThreadLocalRandom.current().nextInt(source().length()) :
                 source().get(column);
         
-        if (row > source().length() - 1) {
-            row = 0;
-        } else if (row < 0) {
-            row = source().length() - 1;
-        }
+//        if (row > source().length() - 1) {
+//            row = 0;
+//        } else if (row < 0) {
+//            row = source().length() - 1;
+//        }
         
         var mutated = new NQueensBoard(source());
         mutated.set(column, row);

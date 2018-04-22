@@ -37,14 +37,8 @@ public class StringEvolvable extends Evolvable<String> {
     public String mutate() {
         var index = ThreadLocalRandom.current().nextInt(source().length());
         var mutation = ThreadLocalRandom.current().nextInt(99) < 5 ?
-                ThreadLocalRandom.current().nextInt(126 - 32) + 32 :
+                ThreadLocalRandom.current().nextInt(32, 126) :
                 source().charAt(index);
-        
-        if (mutation > 126) {
-            mutation = 32;
-        } else if (mutation < 32) {
-            mutation = 126;
-        }
         
         return sb.delete(0, sb.length())
                 .append(source(), 0, index)
