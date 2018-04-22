@@ -33,14 +33,15 @@ class NQueensPopulationTest {
     
     @Test
     void getSolutionFor24Queens() {
-        var population = new NQueensPopulation(1000, 24);
+        var n = 24;
+        var population = new NQueensPopulation(1000, n);
         
         NANO_TIMER.start();
         var result = population.evolve();
         NANO_TIMER.stop();
         
         System.out.println(result);
-        System.out.println("Solution found in " + NANO_TIMER.toString());
+        System.out.println("Solution for n = " + n + "found in " + NANO_TIMER.toString());
     }
     
     @Test
