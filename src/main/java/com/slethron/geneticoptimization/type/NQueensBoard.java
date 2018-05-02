@@ -2,7 +2,6 @@ package com.slethron.geneticoptimization.type;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.IntStream;
 
 public class NQueensBoard {
     private int[] board;
@@ -39,19 +38,6 @@ public class NQueensBoard {
         
         return nQueensBoard;
     }
-    
-//    public Long numberOfConflicts() {
-//        return IntStream.range(0, board.length)
-//                .unordered().parallel()
-//                .filter(currentQueen ->
-//                    IntStream.range(currentQueen, board.length)
-//                            .filter(nextQueen ->
-//                                    board[currentQueen] == board[nextQueen]
-//                                            || Math.abs(board[nextQueen] - board[currentQueen])
-//                                                == Math.abs(nextQueen - currentQueen)
-//                            ).count() > 0
-//                ).count();
-//    }
     
     public int numberOfConflicts() {
         var numberOfConflicts = 0;
