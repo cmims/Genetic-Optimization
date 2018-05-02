@@ -10,7 +10,7 @@ public class RandomUtil {
     public static String generateRandomString(int length) {
         return IntStream.range(0, length)
                 .unordered().parallel()
-                .mapToObj(i -> ThreadLocalRandom.current().nextInt(126 - 32) + 32)
+                .mapToObj(i -> ThreadLocalRandom.current().nextInt(32, 127))
                 .map(Character::toChars)
                 .map(String::valueOf)
                 .collect(Collectors.joining());
