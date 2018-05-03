@@ -33,7 +33,7 @@ class NQueensProblemTest {
         NANO_TIMER.stop();
         
         System.out.println("Solution: " + solution);
-        System.out.println("Solution for n=" + " found in " + NANO_TIMER.toString());
+        System.out.println("Solution for n=" + n + " found in " + NANO_TIMER.toString());
     }
     
     @Test

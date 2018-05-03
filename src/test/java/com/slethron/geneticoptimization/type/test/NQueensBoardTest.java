@@ -33,13 +33,13 @@ class NQueensBoardTest {
         var nQueensBoard = new NQueensBoard(new int[length]);
         
         assertEquals(length, nQueensBoard.length());
-        
     }
     
     @Test
     void numberOfConflictsReturnsNumberOfConflictsForGivenNQueensBoard() {
-        var nQueensBoard = new NQueensBoard(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
         var expectedNumberOfConflicts = 77;
+        var nQueensBoard = new NQueensBoard(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+        
         var numberOfConflicts = nQueensBoard.numberOfConflicts();
         assertEquals(expectedNumberOfConflicts, numberOfConflicts);
     }

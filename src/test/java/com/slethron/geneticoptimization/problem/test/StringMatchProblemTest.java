@@ -58,6 +58,4 @@ class StringMatchProblemTest {
             assertTrue(child.charAt(i) == parentA.charAt(i) || child.charAt(i) == parentB.charAt(i));
         }
     }
-    
-    
 }
