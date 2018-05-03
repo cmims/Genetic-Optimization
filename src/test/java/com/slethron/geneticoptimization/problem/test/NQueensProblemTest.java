@@ -5,8 +5,7 @@ import com.slethron.geneticoptimization.type.NQueensBoard;
 import com.slethron.util.NanoTimer;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class NQueensProblemTest {
     private static final NanoTimer NANO_TIMER = new NanoTimer();
@@ -17,7 +16,7 @@ class NQueensProblemTest {
         var nQueensProblem = new NQueensProblem(n);
         
         NANO_TIMER.start();
-        var solution = nQueensProblem.solve(10000, 1000, .06);
+        var solution = nQueensProblem.solve(10000, 1000, .05);
         NANO_TIMER.stop();
         
         System.out.println("Solution: " + solution);
@@ -25,48 +24,52 @@ class NQueensProblemTest {
     }
     
     @Test
+    void solveFor48Queens() {
+        var n = 48;
+        var nQueensProblem = new NQueensProblem(n);
+        
+        NANO_TIMER.start();
+        var solution = nQueensProblem.solve(10000, 1000, .05);
+        NANO_TIMER.stop();
+        
+        System.out.println("Solution: " + solution);
+        System.out.println("Solution for n=" + " found in " + NANO_TIMER.toString());
+    }
+    
+    @Test
     void generateInitialPopulationOfSize100OfNEquals12Boards() {
         var size = 100;
         var n = 12;
         var nQueensProblem = new NQueensProblem(n);
-        var population = nQueensProblem.generateInitialPopulation(100);
+        var population = nQueensProblem.generateInitialPopulation(size);
         
-        assertEquals(100, population.size());
+        assertEquals(size, population.size());
         for (NQueensBoard nQueensBoard : population) {
             assertNotNull(nQueensBoard);
-            assertEquals(12, nQueensBoard.length());
+            assertEquals(n, nQueensBoard.length());
         }
     }
     
     @Test
-    void getReturnsRowForQueenInColumn() {
-        var column = 0;
-        var board = new int[] {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
-        var nQueensBoard = new NQueensBoard(board);
-        
-        assertEquals(board[0], nQueensBoard.get(column));
-    }
-    
-    @Test
-    void setAssignsTheQueenInColumnToRow() {
-        var column = 0;
-        var newRow = 11;
-        var board = new int[] {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
-        var nQueensBoard = new NQueensBoard(board);
-        
-        nQueensBoard.set(column, newRow);
-        
-        assertEquals(newRow, nQueensBoard.get(column));
-    }
-    
-    @Test
-    void lengthReturnsLengthOfGivenNQueensBoard() {
+    void generateIndividualFromParentsGeneratesChildThatHasElementsFromOneOrBothParents() {
         var length = 12;
-        var board = new int[12];
-        var nQueensBoard = new NQueensBoard(board);
+        var parentA = NQueensBoard.generateRandomBoard(length);
+        var parentB = NQueensBoard.generateRandomBoard(length);
         
-        assertEquals(length, nQueensBoard.length());
+        var nQueensProblem = new NQueensProblem(length);
+        var child = nQueensProblem.generateIndividualFromParents(parentA, parentB);
         
-        
+        assertEquals(length, child.length());
+        for (var i = 0; i < child.length(); i++) {
+            assertTrue(child.get(i) == parentA.get(i) || child.get(i) == parentB.get(i));
+        }
+    }
+    
+    @Test
+    void mutateChangesTheQueenInOneRandomColumnToARandomRow() {
+        var nQueensBoard = new NQueensBoard(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+        var nQueensProblem = new NQueensProblem(nQueensBoard.length());
+        var mutated = nQueensProblem.mutate(nQueensBoard);
+        assertNotEquals(nQueensBoard, mutated);
     }
 }

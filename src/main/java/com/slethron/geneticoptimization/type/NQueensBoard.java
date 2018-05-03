@@ -1,7 +1,7 @@
 package com.slethron.geneticoptimization.type;
 
 import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class NQueensBoard {
     private int[] board;
@@ -31,9 +31,10 @@ public class NQueensBoard {
     }
     
     public static NQueensBoard generateRandomBoard(int n) {
+        var random = new Random();
         var nQueensBoard = new NQueensBoard(n);
         for (var c = 0; c < nQueensBoard.length(); c++) {
-            nQueensBoard.set(c, ThreadLocalRandom.current().nextInt(nQueensBoard.length()));
+            nQueensBoard.set(c, random.nextInt(nQueensBoard.length()));
         }
         
         return nQueensBoard;

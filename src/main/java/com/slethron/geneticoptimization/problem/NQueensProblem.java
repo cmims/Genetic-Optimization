@@ -32,7 +32,6 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     
     @Override
     public NQueensBoard generateIndividualFromParents(NQueensBoard parentA, NQueensBoard parentB) {
-        
         var split = random.nextInt(parentA.length());
         var board = new int[parentA.length()];
         for (var i = 0; i < parentA.length(); i++) {
@@ -48,8 +47,8 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     
     @Override
     public NQueensBoard mutate(NQueensBoard individual) {
-        var column = ThreadLocalRandom.current().nextInt(individual.length());
-        var row = ThreadLocalRandom.current().nextInt(individual.length());
+        var column = random.nextInt(individual.length());
+        var row = random.nextInt(individual.length());
         
         var mutated = new NQueensBoard(individual);
         mutated.set(column, row);
