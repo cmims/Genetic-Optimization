@@ -1,26 +1,34 @@
 package com.slethron.geneticoptimization.type.test;
 
 import com.slethron.geneticoptimization.type.NQueensBoard;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class NQueensBoardTest {
+    private int[] board;
+    private NQueensBoard nQueensBoard;
+    
+    @BeforeEach
+    void beforeEach() {
+        board = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        nQueensBoard = new NQueensBoard(board);
+    }
+    
     @Test
     void getReturnsRowForQueenInColumn() {
-        var column = 0;
-        var board = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-        var nQueensBoard = new NQueensBoard(board);
-        
-        assertEquals(board[0], nQueensBoard.get(column));
+        for (var column = 0; column < nQueensBoard.length(); column++) {
+            assertEquals(board[column], nQueensBoard.get(column));
+        }
     }
     
     @Test
     void setAssignsTheQueenInSpecifiedColumnToRow() {
         var column = 0;
         var newRow = 11;
-        var nQueensBoard = new NQueensBoard(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+        var nQueensBoard = new NQueensBoard(board);
         
         nQueensBoard.set(column, newRow);
         
@@ -29,37 +37,23 @@ class NQueensBoardTest {
     
     @Test
     void lengthReturnsLengthOfGivenNQueensBoard() {
-        var length = 12;
-        var nQueensBoard = new NQueensBoard(new int[length]);
-        
-        assertEquals(length, nQueensBoard.length());
-    }
-    
-    @Test
-    void numberOfConflictsReturnsNumberOfConflictsForGivenNQueensBoard() {
-        var expectedNumberOfConflicts = 77;
-        var nQueensBoard = new NQueensBoard(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
-        
-        var numberOfConflicts = nQueensBoard.numberOfConflicts();
-        assertEquals(expectedNumberOfConflicts, numberOfConflicts);
-    }
-    
-    @Test
-    void equalsReturnsFalseForBoardsThatAreNotEqualAndToStringMethodWorks() {
-        var nQueensBoardA = new NQueensBoard(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
-        var nQueensBoardB = new NQueensBoard(nQueensBoardA);
-        nQueensBoardB.set(0, 1);
-        
-        assertNotEquals(nQueensBoardA, nQueensBoardB);
-        assertNotEquals(nQueensBoardA.toString(), nQueensBoardB.toString());
+        assertEquals(board.length, nQueensBoard.length());
     }
     
     @Test
     void equalsReturnsTrueForBoardsThatAreEqualAndToStringMethodWorks() {
-        var nQueensBoardA = new NQueensBoard(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
-        var nQueensBoardB = new NQueensBoard(nQueensBoardA);
+        var nQueensBoard2 = new NQueensBoard(nQueensBoard);
         
-        assertEquals(nQueensBoardA, nQueensBoardB);
-        assertEquals(nQueensBoardA.toString(), nQueensBoardB.toString());
+        assertEquals(nQueensBoard, nQueensBoard2);
+        assertEquals(nQueensBoard.toString(), nQueensBoard2.toString());
+    }
+    
+    @Test
+    void equalsReturnsFalseForBoardsThatAreNotEqualAndToStringMethodWorks() {
+        var nQueensBoard2 = new NQueensBoard(nQueensBoard);
+        nQueensBoard2.set(0, 1);
+        
+        assertNotEquals(nQueensBoard, nQueensBoard2);
+        assertNotEquals(nQueensBoard.toString(), nQueensBoard2.toString());
     }
 }

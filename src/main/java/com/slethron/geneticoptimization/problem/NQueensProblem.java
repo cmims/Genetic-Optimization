@@ -2,14 +2,14 @@ package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.type.NQueensBoard;
+import com.slethron.util.NanoTimer;
+import com.slethron.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
+import static java.util.Objects.isNull;
 
 public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     private Random random;
@@ -24,7 +24,7 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     public List<NQueensBoard> generateInitialPopulation(int populationSize) {
         var population = new ArrayList<NQueensBoard>();
         for (var i = 0; i < populationSize; i++) {
-            population.add(NQueensBoard.generateRandomBoard(n));
+            population.add(RandomUtil.generateRandomNQueensBoard(n));
         }
         
         return population;
@@ -46,18 +46,47 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     }
     
     @Override
-    public NQueensBoard mutate(NQueensBoard individual) {
-        var column = random.nextInt(individual.length());
-        var row = random.nextInt(individual.length());
-        
+    public NQueensBoard mutate(NQueensBoard individual, double rateOfMutation) {
         var mutated = new NQueensBoard(individual);
-        mutated.set(column, row);
+        for (var column = 0; column < individual.length(); column++) {
+            if (random.nextDouble() <= rateOfMutation) {
+                var row = random.nextInt(individual.length());
+                mutated.set(column, row);
+            }
+        }
         
         return mutated;
     }
     
     @Override
     public double fitness(NQueensBoard individual) {
-        return individual.numberOfConflicts();
+        var numberOfConflicts = 0;
+        for (var currentQueen = 0; currentQueen < individual.length() - 1; currentQueen++) {
+            for (var nextQueen = currentQueen + 1; nextQueen < individual.length(); nextQueen++) {
+                if (individual.get(currentQueen) == individual.get(nextQueen)) {
+                    numberOfConflicts++;
+                    continue;
+                }
+                if (Math.abs(individual.get(nextQueen) - individual.get(currentQueen)) == Math.abs(nextQueen - currentQueen)) {
+                    numberOfConflicts++;
+                }
+            }
+        }
+        
+        return numberOfConflicts;
+    }
+    
+    public static void main(String[] args) {
+        var nanoTimer = new NanoTimer();
+        
+        var n = 24;
+        var nQueensProblem = new NQueensProblem(n);
+        
+        nanoTimer.start();
+        var solution = nQueensProblem.solve(10000, 1000, .05, .25);
+        nanoTimer.stop();
+    
+        System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());
+        System.out.println(solution);
     }
 }

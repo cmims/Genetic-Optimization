@@ -1,11 +1,14 @@
 package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.GeneticOptimizer;
+import com.slethron.util.NanoTimer;
 import com.slethron.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static java.util.Objects.isNull;
 
 public class StringMatchProblem implements GeneticOptimizer<String> {
     private Random random;
@@ -42,15 +45,18 @@ public class StringMatchProblem implements GeneticOptimizer<String> {
     }
     
     @Override
-    public String mutate(String individual) {
-        var index = random.nextInt(individual.length());
-        var mutation = random.nextInt(individual.length());
+    public String mutate(String individual, double rateOfMutation) {
+        var sb = new StringBuilder();
+        for (var i = 0; i < individual.length(); i++) {
+            if (random.nextDouble() <= rateOfMutation) {
+                var mutation = random.nextInt(127 - 32) + 32;
+                sb.append(Character.toChars(mutation));
+            } else {
+                sb.append(individual.charAt(i));
+            }
+        }
         
-        return new StringBuilder()
-                .append(individual, 0, index)
-                .append(Character.toChars(mutation))
-                .append(individual,index + 1, individual.length())
-                .toString();
+        return sb.toString();
     }
     
     @Override
@@ -61,5 +67,19 @@ public class StringMatchProblem implements GeneticOptimizer<String> {
         }
         
         return fitVal;
+    }
+    
+    public static void main(String[] args) {
+        var nanoTimer = new NanoTimer();
+        
+        var target = "Hello, World!";
+        var stringMatchProblem = new StringMatchProblem(target);
+        
+        nanoTimer.start();
+        var solution = stringMatchProblem.solve(10000, 1000, .05, .25);
+        nanoTimer.stop();
+    
+        System.out.println("Solution for target='" + target + "' found in " + nanoTimer.toString());
+        System.out.println("Solution: " + solution);
     }
 }

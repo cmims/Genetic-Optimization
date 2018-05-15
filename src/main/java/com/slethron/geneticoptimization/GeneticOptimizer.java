@@ -7,27 +7,26 @@ import java.util.Random;
 
 public interface GeneticOptimizer<E> {
     
-    default E solve(int populationSize, int generationLimit, double rateOfMutation) {
+    default E solve(int populationSize, int generationLimit, double mutationRate, double fittestSampleRatio) {
         var random = new Random();
         var population = generateInitialPopulation(populationSize);
         
         for (var generation = 0; generation < generationLimit; generation++) {
             population.sort(Comparator.comparingDouble(this::fitness));
+    
+            if (fitness(population.get(0)) == 0) {
+                return population.get(0);
+            }
             
             var nextGeneration = new ArrayList<E>();
             for (var individual = 0; individual < populationSize; individual++) {
+                Long sampleBound = Math.round(populationSize * fittestSampleRatio);
                 var child = generateIndividualFromParents(
-                        population.get(random.nextInt(populationSize / 4)),
-                        population.get(random.nextInt(populationSize / 4))
+                        population.get(random.nextInt(sampleBound.intValue())),
+                        population.get(random.nextInt(sampleBound.intValue()))
                 );
                 
-                if (random.nextInt(99) < ((rateOfMutation * 100) - 1)) {
-                    child = mutate(child);
-                }
-                
-                if (fitness(child) == 0) {
-                    return child;
-                }
+                child = mutate(child, mutationRate);
                 
                 nextGeneration.add(child);
             }
@@ -42,7 +41,7 @@ public interface GeneticOptimizer<E> {
     
     E generateIndividualFromParents(E parentA, E parentB);
     
-    E mutate(E individual);
+    E mutate(E individual, double mutationRate);
     
     double fitness(E individual);
 }
