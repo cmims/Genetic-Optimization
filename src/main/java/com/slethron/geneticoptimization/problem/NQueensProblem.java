@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static java.util.Objects.isNull;
-
 public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     private Random random;
     private int n;
@@ -46,10 +44,10 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     }
     
     @Override
-    public NQueensBoard mutate(NQueensBoard individual, double rateOfMutation) {
+    public NQueensBoard mutate(NQueensBoard individual, double mutationRate) {
         var mutated = new NQueensBoard(individual);
         for (var column = 0; column < individual.length(); column++) {
-            if (random.nextDouble() <= rateOfMutation) {
+            if (random.nextDouble() <= mutationRate) {
                 var row = random.nextInt(individual.length());
                 mutated.set(column, row);
             }
