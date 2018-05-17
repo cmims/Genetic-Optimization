@@ -5,9 +5,10 @@ import com.slethron.geneticoptimization.type.NQueensBoard;
 import com.slethron.util.NanoTimer;
 import com.slethron.util.RandomUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     private Random random;
@@ -20,12 +21,10 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     
     @Override
     public List<NQueensBoard> generateInitialPopulation(int populationSize) {
-        var population = new ArrayList<NQueensBoard>();
-        for (var i = 0; i < populationSize; i++) {
-            population.add(RandomUtil.generateRandomNQueensBoard(n));
-        }
-        
-        return population;
+        return IntStream.range(0, populationSize)
+                .parallel()
+                .mapToObj(nQueensBoard -> RandomUtil.generateRandomNQueensBoard(n))
+                .collect(Collectors.toList());
     }
     
     @Override
