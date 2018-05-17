@@ -50,22 +50,22 @@ public class NQueensBoard {
         return true;
     }
     
-//    @Override
-//    public String toString() {
-//        var sb = new StringBuilder();
-//        for (var column : board) {
-//            for (var j = 0; j < board.length; j++) {
-//                if (j == column) {
-//                    sb.append("Q ");
-//                } else {
-//                    sb.append("* ");
-//                }
-//            }
-//            sb.append('\n');
-//        }
-//
-//        return sb.toString();
-//    }
+    public String drawAsciiBoard(char queen, char space) {
+        var sb = new StringBuilder();
+        for (var column : board) {
+            for (var j = 0; j < board.length; j++) {
+                if (j == column) {
+                    sb.append(queen);
+                } else {
+                    sb.append(space);
+                }
+                sb.append(" ");
+            }
+            sb.append('\n');
+        }
+
+        return sb.toString();
+    }
     
     @Override
     public String toString() {

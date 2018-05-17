@@ -85,5 +85,6 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     
         System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());
         System.out.println(solution);
+        System.out.println(solution.drawAsciiBoard('&', '_'));
     }
 }
