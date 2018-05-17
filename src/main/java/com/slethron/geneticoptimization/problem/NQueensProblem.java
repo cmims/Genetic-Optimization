@@ -22,7 +22,7 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     @Override
     public List<NQueensBoard> generateInitialPopulation(int populationSize) {
         return IntStream.range(0, populationSize)
-                .parallel()
+                .parallel().unordered()
                 .mapToObj(nQueensBoard -> RandomUtil.generateRandomNQueensBoard(n))
                 .collect(Collectors.toList());
     }
