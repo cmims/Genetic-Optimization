@@ -76,11 +76,11 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     public static void main(String[] args) {
         var nanoTimer = new NanoTimer();
         
-        var n = 24;
+        var n = 1024;
         var nQueensProblem = new NQueensProblem(n);
         
         nanoTimer.start();
-        var solution = nQueensProblem.solve(10000, 1000, .05, .25);
+        var solution = nQueensProblem.solve(10000, 100, .06, .25);
         nanoTimer.stop();
     
         System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());
