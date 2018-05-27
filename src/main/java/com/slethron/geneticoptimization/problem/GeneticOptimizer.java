@@ -1,12 +1,11 @@
-package com.slethron.geneticoptimization;
+package com.slethron.geneticoptimization.problem;
 
-//import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public interface GeneticOptimizer<E> {
+interface GeneticOptimizer<E> {
     
     default E solve(int populationSize, int generationLimit, double mutationRate, double fittestSampleRatio) {
         var random = new Random();
@@ -27,25 +26,9 @@ public interface GeneticOptimizer<E> {
                     }).sorted(Comparator.comparingDouble(this::fitness))
                     .collect(Collectors.toList());
             
-            population.sort(Comparator.comparingDouble(this::fitness));
-            
             if (fitness(population.get(0)) == 0) {
                 return population.get(0);
             }
-
-//            var nextGeneration = new ArrayList<E>();
-//            for (var individual = 0; individual < populationSize; individual++) {
-//                var sampleBound = (int) Math.round(populationSize * fittestSampleRatio);
-//                var child = generateIndividualFromParents(
-//                        population.get(random.nextInt(sampleBound)), population.get(random.nextInt(sampleBound))
-//                );
-//
-//                child = mutate(child, mutationRate);
-//
-//                nextGeneration.add(child);
-//            }
-//
-//            population = nextGeneration;
         }
         
         return population.get(0);

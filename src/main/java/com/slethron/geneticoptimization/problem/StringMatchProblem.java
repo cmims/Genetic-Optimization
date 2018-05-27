@@ -1,6 +1,5 @@
 package com.slethron.geneticoptimization.problem;
 
-import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.util.NanoTimer;
 import com.slethron.util.RandomUtil;
 

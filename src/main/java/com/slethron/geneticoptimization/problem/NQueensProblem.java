@@ -1,6 +1,5 @@
 package com.slethron.geneticoptimization.problem;
 
-import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.type.NQueensBoard;
 import com.slethron.util.NanoTimer;
 import com.slethron.util.RandomUtil;
@@ -64,27 +63,30 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
                     numberOfConflicts++;
                     continue;
                 }
-                if (Math.abs(individual.get(nextQueen) - individual.get(currentQueen)) == Math.abs(nextQueen - currentQueen)) {
+                if (Math.abs(individual.get(nextQueen) - individual.get(currentQueen))
+                        == Math.abs(nextQueen - currentQueen)) {
                     numberOfConflicts++;
                 }
             }
         }
-        
+    
         return numberOfConflicts;
     }
     
     public static void main(String[] args) {
         var nanoTimer = new NanoTimer();
         
-        var n = 1024;
+        var n = 48;
         var nQueensProblem = new NQueensProblem(n);
         
         nanoTimer.start();
-        var solution = nQueensProblem.solve(10000, 100, .06, .25);
+        var solution = nQueensProblem.solve(1000, 1000, .06, .25);
         nanoTimer.stop();
     
         System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());
+        System.out.println("Fitness of solution is: " + nQueensProblem.fitness(solution));
         System.out.println(solution);
         System.out.println(solution.drawAsciiBoard('&', '_'));
+        
     }
 }
