@@ -17,9 +17,18 @@ public class Knapsack {
         this.items = new ArrayList<>();
     }
     
+    public int getTotalWeight() {
+        var totalWeight = 0;
+        for (var item : items) {
+            totalWeight += item.getWeight();
+        }
+        
+        return totalWeight;
+    }
+    
     public int getTotalValue() {
         var totalValue = 0;
-        for (KnapsackItem item : items) {
+        for (var item : items) {
             totalValue += item.getValue();
         }
         
@@ -28,19 +37,6 @@ public class Knapsack {
     
     public List<KnapsackItem> getItems() {
         return items;
-    }
-    
-    public boolean canFitItem(KnapsackItem item) {
-        items.add(item);
-        var totalWeight = getTotalWeight();
-        items.remove(item);
-        
-        return totalWeight <= maxWeight;
-    }
-    
-    public void replaceItem(KnapsackItem item, KnapsackItem replacementItem) {
-        items.remove(item);
-        items.add(replacementItem);
     }
     
     public boolean put(KnapsackItem item) {
@@ -52,13 +48,16 @@ public class Knapsack {
         return false;
     }
     
-    private int getTotalWeight() {
-        var totalWeight = 0;
-        for (KnapsackItem item : items) {
-            totalWeight += item.getWeight();
-        }
+    public void remove(KnapsackItem item) {
+        items.remove(item);
+    }
+    
+    private boolean canFitItem(KnapsackItem item) {
+        items.add(item);
+        var totalWeight = getTotalWeight();
+        items.remove(item);
         
-        return totalWeight;
+        return totalWeight <= maxWeight;
     }
     
     @Override
@@ -66,12 +65,28 @@ public class Knapsack {
         var builder = new StringBuilder();
         builder.append("Knapsack: {\n\tmaxWeight = ")
                 .append(maxWeight);
-        for (KnapsackItem item : items) {
+        for (var item : items) {
             builder.append(",\n\t")
                     .append(item.toString());
         }
         builder.append("\n}");
         
         return builder.toString();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Knapsack)) return false;
+        
+        var knapsack = (Knapsack) o;
+        
+        for (var item : this.getItems()) {
+            if (!knapsack.getItems().contains(item)) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

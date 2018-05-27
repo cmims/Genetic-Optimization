@@ -26,7 +26,7 @@ class BitStringProblemTest {
         var population = bitStringProblem.generateInitialPopulation(size);
         
         assertEquals(size, population.size());
-        for (BitString individual : population) {
+        for (var individual : population) {
             assertNotNull(individual);
             assertEquals(length, individual.length());
         }

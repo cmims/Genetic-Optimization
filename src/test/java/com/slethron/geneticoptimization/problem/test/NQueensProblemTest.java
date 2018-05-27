@@ -25,7 +25,7 @@ class NQueensProblemTest {
         var population = nQueensProblem.generateInitialPopulation(size);
         
         assertEquals(size, population.size());
-        for (NQueensBoard nQueensBoard : population) {
+        for (var nQueensBoard : population) {
             assertNotNull(nQueensBoard);
             assertEquals(n, nQueensBoard.length());
         }

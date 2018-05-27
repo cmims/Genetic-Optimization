@@ -26,7 +26,7 @@ class StringMatchProblemTest {
         var population = stringMatchProblem.generateInitialPopulation(size);
         
         assertEquals(size, population.size());
-        for (String item : population) {
+        for (var item : population) {
             assertNotNull(item);
             assertEquals(target.length(), item.length());
         }

@@ -1,13 +1,12 @@
 package com.slethron.geneticoptimization.problem;
 
+import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.util.NanoTimer;
 import com.slethron.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import static java.util.Objects.isNull;
 
 public class StringMatchProblem implements GeneticOptimizer<String> {
     private Random random;

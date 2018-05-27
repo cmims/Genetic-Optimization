@@ -32,4 +32,9 @@ class RandomUtilTest {
             assertTrue(randomNQueensBoard.get(i) >= 0 && randomNQueensBoard.get(i) < n);
         }
     }
+    
+    @Test
+    void generateRandomKnapsackOf10Items() {
+    
+    }
 }

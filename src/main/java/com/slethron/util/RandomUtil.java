@@ -82,7 +82,7 @@ public class RandomUtil {
     public static Knapsack generateRandomKnapsack(int maxWeight, List<KnapsackItem> itemsToPut) {
         var _itemsToPut = new ArrayList<>(itemsToPut);
         var knapsack = new Knapsack(maxWeight);
-        for (KnapsackItem item : itemsToPut) {
+        for (var item : itemsToPut) {
             if (_itemsToPut.size() > 1) {
                 var itemToPut = _itemsToPut.get(ThreadLocalRandom.current().nextInt(_itemsToPut.size()));
                 knapsack.put(itemToPut);

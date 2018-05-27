@@ -1,11 +1,11 @@
-package com.slethron.geneticoptimization.problem;
+package com.slethron.geneticoptimization;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-interface GeneticOptimizer<E> {
+public interface GeneticOptimizer<E> {
     
     default E solve(int populationSize, int generationLimit, double mutationRate, double fittestSampleRatio) {
         var random = new Random();

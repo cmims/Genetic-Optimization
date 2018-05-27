@@ -1,5 +1,6 @@
 package com.slethron.geneticoptimization.problem;
 
+import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.type.Knapsack;
 import com.slethron.geneticoptimization.type.KnapsackItem;
 import com.slethron.util.NanoTimer;
@@ -9,13 +10,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-/**
- * Design of this problem is not ideal when the itemsToPut need to be rationally
- * selected such that not all of the boards generated are overweight or it is
- * impossible to fill up the bag and have remaining items and there is
- * enough diversity within the range of items to be able to achieve a greater
- * variability of knapsacks (and therefore greater potential for optimization).
- */
 public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     private Random random;
     private int maxWeight;
@@ -66,21 +60,23 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     public Knapsack generateIndividualFromParents(Knapsack parentA, Knapsack parentB) {
         var child = new Knapsack(maxWeight);
         var itemsToPut = new ArrayList<>(parentA.getItems());
-        for (KnapsackItem item : parentB.getItems()) {
+        for (var item : parentB.getItems()) {
             if (!itemsToPut.contains(item)) {
                 itemsToPut.add(item);
             }
-    
+            
         }
+        
         var numberOfItems = itemsToPut.size();
         for (var i = 0; i < numberOfItems; i++) {
-            if (i < numberOfItems - 1) {
-                var itemToPut = itemsToPut.get(random.nextInt(itemsToPut.size()));
-                child.put(itemToPut);
-                itemsToPut.remove(itemToPut);
-            } else {
-                child.put(itemsToPut.get(0));
+            if (i == numberOfItems - 1) {
+            
             }
+            var itemToPut = itemsToPut.get(random.nextInt(itemsToPut.size()));
+            itemsToPut.get(0);
+            
+            child.put(itemToPut);
+            itemsToPut.remove(itemToPut);
         }
         
         return child;
@@ -89,10 +85,11 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     @Override
     public Knapsack mutate(Knapsack individual, double mutationRate) {
         var mutated = new Knapsack(individual);
-        for (KnapsackItem item : itemsToPut) {
+        for (var item : itemsToPut) {
             if (random.nextDouble() <= mutationRate) {
                 var replacementItem = itemsToPut.get(random.nextInt(itemsToPut.size()));
-                mutated.replaceItem(item, replacementItem);
+                mutated.remove(item);
+                mutated.put(replacementItem);
             }
         }
         
@@ -117,6 +114,9 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
                 new int[]{14, 17, 10, 8, 3, 10, 51, 9, 25, 6, 9});
         
         var itemsToPut = knapsackProblem.getItemsToPut();
+        for (var item : itemsToPut) {
+            System.out.println(item);
+        }
         
         nanoTimer.start();
         var solution = knapsackProblem.solve(1000, 1000, .06, .25);

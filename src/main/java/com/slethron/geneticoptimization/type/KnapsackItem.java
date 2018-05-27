@@ -18,11 +18,11 @@ public class KnapsackItem {
         return itemId;
     }
     
-    int getValue() {
+    public int getValue() {
         return value;
     }
     
-    int getWeight() {
+    public int getWeight() {
         return weight;
     }
     
@@ -31,9 +31,9 @@ public class KnapsackItem {
         if (this == o) return true;
         if (!(o instanceof KnapsackItem)) return false;
         
-        KnapsackItem that = (KnapsackItem) o;
+        var item = (KnapsackItem) o;
         
-        return getItemId() == that.getItemId();
+        return getItemId() == item.getItemId();
     }
     
     @Override
