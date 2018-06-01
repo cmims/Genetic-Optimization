@@ -1,8 +1,6 @@
 package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.problem.NQueensProblem;
-import com.slethron.geneticoptimization.type.NQueensBoard;
-import com.slethron.util.NanoTimer;
 import com.slethron.util.RandomUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

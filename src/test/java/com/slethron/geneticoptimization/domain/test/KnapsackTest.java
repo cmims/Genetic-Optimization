@@ -1,7 +1,7 @@
-package com.slethron.geneticoptimization.type.test;
+package com.slethron.geneticoptimization.domain.test;
 
-import com.slethron.geneticoptimization.type.Knapsack;
-import com.slethron.geneticoptimization.type.KnapsackItem;
+import com.slethron.geneticoptimization.domain.Knapsack;
+import com.slethron.geneticoptimization.domain.KnapsackItem;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ class KnapsackTest {
         var knapsack = new Knapsack(5);
         var itemTooBig = new KnapsackItem(10, 10);
         var item = new KnapsackItem(5, 5);
-        
         
         assertFalse(knapsack.put(itemTooBig));
         assertTrue(knapsack.put(item));
@@ -56,5 +55,17 @@ class KnapsackTest {
         knapsack.put(item2);
         assertEquals(item1.getWeight() + item2.getWeight(), knapsack.getTotalWeight());
         assertEquals(item1.getValue() + item2.getValue(), knapsack.getTotalValue());
+    }
+    
+    @Test
+    void toStringLooksLike() {
+        var item1 = new KnapsackItem(10, 5);
+        var item2 = new KnapsackItem(15, 4);
+        
+        var knapsack = new Knapsack(40);
+        knapsack.put(item1);
+        knapsack.put(item2);
+    
+        System.out.println(knapsack);
     }
 }

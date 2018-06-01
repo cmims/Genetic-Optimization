@@ -1,9 +1,9 @@
 package com.slethron.util;
 
-import com.slethron.geneticoptimization.type.BitString;
-import com.slethron.geneticoptimization.type.Knapsack;
-import com.slethron.geneticoptimization.type.KnapsackItem;
-import com.slethron.geneticoptimization.type.NQueensBoard;
+import com.slethron.geneticoptimization.domain.BitString;
+import com.slethron.geneticoptimization.domain.Knapsack;
+import com.slethron.geneticoptimization.domain.KnapsackItem;
+import com.slethron.geneticoptimization.domain.NQueensBoard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +12,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Utility class used by this project to generate Random objects of various types to be used in
- * generating large collections or populations of those objects. I felt that these methods didn't
- * properly belong in their respective type classes because there are already constructors that are
+ * Utility class that generates Random objects of various types to be used in
+ * generating large collections or populations of those objects. These methods didn't
+ * properly belong in their respective domain classes because there are already constructors that are
  * provided. Also, as for objects like String (java.lang.String), it was necessary to have this
- * class as a helper because their is no type class that exists as a means of defining the object as
- * the subject of the problem class.
+ * class as a helper because their is no domain class that exists, where these methods would be placed,
+ * as a means of defining the object as the subject of its problem class.
  */
 public class RandomUtil {
+    private static final String KNAPSACK_MAXWEIGHT_TOO_LARGE = "Total value of items to put in knapsack must be" +
+            " greater than the max weight of the knapsack.";
     
     private RandomUtil() {
     }
@@ -75,20 +77,33 @@ public class RandomUtil {
     }
     
     /**
-     * @param maxWeight
-     * @param itemsToPut
-     * @return
+     * Generates a knapsack object containing some of the items from a specified list of items. The items
+     * are permutated in a way such that they are:
+     *  1) random
+     *  2) not all of the items specified in the list are also in the knapsack
+     *
+     * It is necessary to defend against the scenario where all items from itemsToPut
+     * have already been exhausted and selecting another item from the list will
+     * result in and error for attempting to generate a random number with upperBound 0.
+     *
+     * @param maxWeight The maxWeight of the knapsack object being generated
+     * @param itemsToPut The items to randomly put in the bag
+     * @return The generated random Knapsack object
      */
     public static Knapsack generateRandomKnapsack(int maxWeight, List<KnapsackItem> itemsToPut) {
-        var _itemsToPut = new ArrayList<>(itemsToPut);
+        var items = new ArrayList<>(itemsToPut);
         var knapsack = new Knapsack(maxWeight);
-        for (var item : itemsToPut) {
-            if (_itemsToPut.size() > 1) {
-                var itemToPut = _itemsToPut.get(ThreadLocalRandom.current().nextInt(_itemsToPut.size()));
-                knapsack.put(itemToPut);
-                _itemsToPut.remove(itemToPut);
+        while(true) {
+            if (items.size() <= knapsack.getItems().size()) {
+                throw new IllegalArgumentException(KNAPSACK_MAXWEIGHT_TOO_LARGE);
+            }
+            var itemToPut = items.get(ThreadLocalRandom.current().nextInt(items.size()
+                    - knapsack.getItems().size()));
+            
+            if (knapsack.put(itemToPut)) {
+                items.remove(itemToPut);
             } else {
-                knapsack.put(_itemsToPut.get(0));
+                break;
             }
         }
         

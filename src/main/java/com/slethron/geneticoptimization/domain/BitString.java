@@ -1,4 +1,4 @@
-package com.slethron.geneticoptimization.type;
+package com.slethron.geneticoptimization.domain;
 
 import java.util.Objects;
 

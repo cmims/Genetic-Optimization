@@ -1,7 +1,7 @@
 package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.GeneticOptimizer;
-import com.slethron.geneticoptimization.type.NQueensBoard;
+import com.slethron.geneticoptimization.domain.NQueensBoard;
 import com.slethron.util.NanoTimer;
 import com.slethron.util.RandomUtil;
 

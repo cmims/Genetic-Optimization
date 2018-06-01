@@ -1,4 +1,4 @@
-package com.slethron.geneticoptimization.type;
+package com.slethron.geneticoptimization.domain;
 
 import java.util.Objects;
 import java.util.Random;
@@ -43,9 +43,6 @@ public class KnapsackItem {
     
     @Override
     public String toString() {
-        return "Item: {\nItemId = " + itemId
-                + ",\n weight = " + weight
-                + ",\n value = " + value
-                + "\n}";
+        return "(id=" + itemId + ", w=" + weight + ", v=" + value + ")";
     }
 }

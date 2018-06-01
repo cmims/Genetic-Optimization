@@ -1,4 +1,4 @@
-group 'com.slethron.geneticoptimization'
+//group 'com.slethron.geneticoptimization'
 version '0.1.0'
 
 apply plugin: 'java'

@@ -1,6 +1,6 @@
-package com.slethron.geneticoptimization.type.test;
+package com.slethron.geneticoptimization.domain.test;
 
-import com.slethron.geneticoptimization.type.KnapsackItem;
+import com.slethron.geneticoptimization.domain.KnapsackItem;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

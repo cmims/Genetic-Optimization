@@ -1,6 +1,6 @@
-package com.slethron.geneticoptimization.type.test;
+package com.slethron.geneticoptimization.domain.test;
 
-import com.slethron.geneticoptimization.type.NQueensBoard;
+import com.slethron.geneticoptimization.domain.NQueensBoard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +28,7 @@ class NQueensBoardTest {
     void setAssignsTheQueenInSpecifiedColumnToRow() {
         var column = 0;
         var newRow = 11;
-        var nQueensBoard = new NQueensBoard(board);
+        nQueensBoard = new NQueensBoard(board);
         
         nQueensBoard.set(column, newRow);
         

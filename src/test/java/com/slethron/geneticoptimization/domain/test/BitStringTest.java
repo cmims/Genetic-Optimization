@@ -1,6 +1,6 @@
-package com.slethron.geneticoptimization.type.test;
+package com.slethron.geneticoptimization.domain.test;
 
-import com.slethron.geneticoptimization.type.BitString;
+import com.slethron.geneticoptimization.domain.BitString;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

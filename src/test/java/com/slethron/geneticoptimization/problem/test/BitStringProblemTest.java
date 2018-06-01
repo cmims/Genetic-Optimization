@@ -1,7 +1,6 @@
 package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.problem.BitStringProblem;
-import com.slethron.geneticoptimization.type.BitString;
 import com.slethron.util.RandomUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

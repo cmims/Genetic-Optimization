@@ -1,8 +1,8 @@
 package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.GeneticOptimizer;
-import com.slethron.geneticoptimization.type.Knapsack;
-import com.slethron.geneticoptimization.type.KnapsackItem;
+import com.slethron.geneticoptimization.domain.Knapsack;
+import com.slethron.geneticoptimization.domain.KnapsackItem;
 import com.slethron.util.NanoTimer;
 import com.slethron.util.RandomUtil;
 
@@ -26,7 +26,7 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     
     @Override
     public Knapsack solve(int populationSize, int generationLimit, double mutationRate, double fittestSampleRatio) {
-        var random = new Random();
+        random = new Random();
         var population = generateInitialPopulation(populationSize);
         
         for (var generation = 0; generation < generationLimit; generation++) {
@@ -59,24 +59,30 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     @Override
     public Knapsack generateIndividualFromParents(Knapsack parentA, Knapsack parentB) {
         var child = new Knapsack(maxWeight);
-        var itemsToPut = new ArrayList<>(parentA.getItems());
+        var itemsFromParents = new ArrayList<>(parentA.getItems());
         for (var item : parentB.getItems()) {
-            if (!itemsToPut.contains(item)) {
-                itemsToPut.add(item);
+            if (!itemsFromParents.contains(item)) {
+                itemsFromParents.add(item);
             }
             
         }
         
-        var numberOfItems = itemsToPut.size();
-        for (var i = 0; i < numberOfItems; i++) {
-            if (i == numberOfItems - 1) {
-            
+        var success = true;
+        while (success) {
+            if (itemsFromParents.isEmpty()) {
+                break;
             }
-            var itemToPut = itemsToPut.get(random.nextInt(itemsToPut.size()));
-            itemsToPut.get(0);
+            var item = itemsFromParents.get(random.nextInt(itemsFromParents.size()));
+            success = child.put(item);
+            itemsFromParents.remove(item);
+        }
+        
+        if (!itemsFromParents.isEmpty()) {
+            itemsFromParents.sort(Comparator.comparingDouble(KnapsackItem::getValue));
             
-            child.put(itemToPut);
-            itemsToPut.remove(itemToPut);
+            for (KnapsackItem item : itemsFromParents) {
+                child.put(item);
+            }
         }
         
         return child;
@@ -85,11 +91,16 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     @Override
     public Knapsack mutate(Knapsack individual, double mutationRate) {
         var mutated = new Knapsack(individual);
-        for (var item : itemsToPut) {
+        for (KnapsackItem item : individual.getItems()) {
             if (random.nextDouble() <= mutationRate) {
-                var replacementItem = itemsToPut.get(random.nextInt(itemsToPut.size()));
-                mutated.remove(item);
-                mutated.put(replacementItem);
+                while (true) {
+                    var replacementItem = itemsToPut.get(random.nextInt(itemsToPut.size()));
+                    if (!mutated.getItems().contains(replacementItem)) {
+                        mutated.remove(item);
+                        mutated.put(replacementItem);
+                        break;
+                    }
+                }
             }
         }
         
@@ -101,7 +112,7 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
         return individual.getTotalValue();
     }
     
-    private List<KnapsackItem> getItemsToPut() {
+    public List<KnapsackItem> getItemsToPut() {
         return itemsToPut;
     }
     
@@ -123,6 +134,9 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
         nanoTimer.stop();
         
         var itemsInContainer = solution.getItems();
+        for (KnapsackItem item : itemsInContainer) {
+            System.out.println(item);
+        }
         
         System.out.println("Solution for maxWeight=" + maxWeight + " and selected items found in "
                 + nanoTimer.toString());
