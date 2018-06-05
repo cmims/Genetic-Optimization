@@ -33,7 +33,9 @@ public class KnapsackItem {
         
         var item = (KnapsackItem) o;
         
-        return getItemId() == item.getItemId();
+        if (getItemId() != item.getItemId()) return false;
+        if (getWeight() != item.getWeight()) return false;
+        return getValue() == item.getValue();
     }
     
     @Override

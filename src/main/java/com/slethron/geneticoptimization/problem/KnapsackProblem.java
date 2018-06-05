@@ -59,30 +59,17 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     @Override
     public Knapsack generateIndividualFromParents(Knapsack parentA, Knapsack parentB) {
         var child = new Knapsack(maxWeight);
-        var itemsFromParents = new ArrayList<>(parentA.getItems());
+        var items = new ArrayList<>(parentA.getItems());
         for (var item : parentB.getItems()) {
-            if (!itemsFromParents.contains(item)) {
-                itemsFromParents.add(item);
+            if (!items.contains(item)) {
+                items.add(item);
             }
-            
         }
         
-        var success = true;
-        while (success) {
-            if (itemsFromParents.isEmpty()) {
-                break;
-            }
-            var item = itemsFromParents.get(random.nextInt(itemsFromParents.size()));
-            success = child.put(item);
-            itemsFromParents.remove(item);
-        }
-        
-        if (!itemsFromParents.isEmpty()) {
-            itemsFromParents.sort(Comparator.comparingDouble(KnapsackItem::getValue));
-            
-            for (KnapsackItem item : itemsFromParents) {
-                child.put(item);
-            }
+        while (!items.isEmpty()) {
+            var itemToPut = items.get(random.nextInt(items.size()));
+            child.put(itemToPut);
+            items.remove(itemToPut);
         }
         
         return child;
@@ -90,16 +77,20 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     
     @Override
     public Knapsack mutate(Knapsack individual, double mutationRate) {
+        var items = new ArrayList<>(itemsToPut);
         var mutated = new Knapsack(individual);
-        for (KnapsackItem item : individual.getItems()) {
+        for (var i = mutated.getItems().size(); i >= 1; i--) {
             if (random.nextDouble() <= mutationRate) {
                 while (true) {
-                    var replacementItem = itemsToPut.get(random.nextInt(itemsToPut.size()));
+                    var replacementItem = items.get(random.nextInt(items.size()));
                     if (!mutated.getItems().contains(replacementItem)) {
-                        mutated.remove(item);
-                        mutated.put(replacementItem);
-                        break;
+                        mutated.getItems().remove(i - 1);
+                        if (mutated.put(replacementItem)) {
+                            break;
+                        }
+                        return individual;
                     }
+                    items.remove(replacementItem);
                 }
             }
         }
@@ -121,7 +112,7 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
         
         var maxWeight = 48;
         var knapsackProblem = new KnapsackProblem(maxWeight,
-                new int[]{10, 15, 25, 15, 6, 4, 2, 1, 5, 12, 18},
+                new int[]{10, 15, 25, 15, 6, 4, 2, 13, 10, 12, 18},
                 new int[]{14, 17, 10, 8, 3, 10, 51, 9, 25, 6, 9});
         
         var itemsToPut = knapsackProblem.getItemsToPut();

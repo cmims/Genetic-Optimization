@@ -11,14 +11,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class KnapsackProblemTest {
+class KnapsackProblemTest {
     private int maxWeight;
     private KnapsackProblem knapsackProblem;
     private List<KnapsackItem> items;
     
     @BeforeEach
-    public void beforeEach() {
-        maxWeight = 60;
+    void beforeEach() {
+        maxWeight = 40;
         var weightsOfItems = new int[] { 10, 5, 24, 6, 4, 3, 8, 9, 12, 13, 8, 1, 1, 2, 4, 2 };
         var valuesOfItems = new int[] { 24, 80, 50, 4, 15, 20, 19, 50, 60, 80, 5, 12, 16, 18, 21, 5 };
         knapsackProblem = new KnapsackProblem(maxWeight, weightsOfItems, valuesOfItems);
@@ -26,7 +26,7 @@ public class KnapsackProblemTest {
     }
     
     @Test
-    public void generateInitialPopulationOfSize100OfKnapsacksOfMaxWeight200() {
+    void generateInitialPopulationOfSize100ContainingKnapsacksOfMaxWeight200() {
         var size = 100;
         var population = knapsackProblem.generateInitialPopulation(size);
         
@@ -46,9 +46,8 @@ public class KnapsackProblemTest {
         var child = knapsackProblem.generateIndividualFromParents(parentA, parentB);
         
         assertEquals(maxWeight, child.getMaxWeight());
-        for (var i = 0; i < child.getItems().size(); i++) {
-            assertTrue(child.getItems().get(i) == parentA.getItems().get(i)
-                    || child.getItems().get(i) == parentB.getItems().get(i));
+        for (var item : child.getItems()) {
+            assertTrue(parentA.getItems().contains(item) || parentB.getItems().contains(item));
         }
     }
 }

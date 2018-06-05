@@ -36,7 +36,6 @@ public class RandomUtil {
      */
     public static String generateRandomString(int length) {
         return IntStream.range(0, length)
-                .unordered().parallel()
                 .mapToObj(i -> ThreadLocalRandom.current().nextInt(127 - 32) + 32)
                 .map(Character::toChars)
                 .map(String::valueOf)
@@ -79,32 +78,28 @@ public class RandomUtil {
     /**
      * Generates a knapsack object containing some of the items from a specified list of items. The items
      * are permutated in a way such that they are:
-     *  1) random
-     *  2) not all of the items specified in the list are also in the knapsack
+     * 1) random
+     * 2) not all of the items specified in the list are also in the knapsack
+     * <p>
+     * It is necessary to have remaining items in the list after execution of this method.
+     * IllegalArgumentException is thrown if the case where the items to put are exhausted.
      *
-     * It is necessary to defend against the scenario where all items from itemsToPut
-     * have already been exhausted and selecting another item from the list will
-     * result in and error for attempting to generate a random number with upperBound 0.
-     *
-     * @param maxWeight The maxWeight of the knapsack object being generated
+     * @param maxWeight  The maxWeight of the knapsack object being generated
      * @param itemsToPut The items to randomly put in the bag
      * @return The generated random Knapsack object
      */
     public static Knapsack generateRandomKnapsack(int maxWeight, List<KnapsackItem> itemsToPut) {
         var items = new ArrayList<>(itemsToPut);
         var knapsack = new Knapsack(maxWeight);
-        while(true) {
-            if (items.size() <= knapsack.getItems().size()) {
-                throw new IllegalArgumentException(KNAPSACK_MAXWEIGHT_TOO_LARGE);
-            }
-            var itemToPut = items.get(ThreadLocalRandom.current().nextInt(items.size()
-                    - knapsack.getItems().size()));
-            
+        for (var i = items.size(); i >= 1; i--) {
+            var itemToPut = items.get(ThreadLocalRandom.current().nextInt(items.size()));
             if (knapsack.put(itemToPut)) {
                 items.remove(itemToPut);
-            } else {
-                break;
             }
+        }
+        
+        if (items.isEmpty()) {
+            throw new IllegalArgumentException(KNAPSACK_MAXWEIGHT_TOO_LARGE);
         }
         
         return knapsack;
