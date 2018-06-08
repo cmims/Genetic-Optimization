@@ -1,27 +1,26 @@
 package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.problem.StringMatchProblem;
-import com.slethron.util.NanoTimer;
 import com.slethron.util.RandomUtil;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-class StringMatchProblemTest {
+public class StringMatchProblemTest {
     private String target;
     private StringMatchProblem stringMatchProblem;
     
-    @BeforeEach
-    void beforeEach() {
+    @Before
+    public void beforeEach() {
         target = "Hello, World!";
         stringMatchProblem = new StringMatchProblem(target);
     }
     
     @Test
-    void generateInitialPopulationOfSize100OfLength10Strings() {
+    public void generateInitialPopulationOfSize100OfLength10Strings() {
         var size = 100;
         var population = stringMatchProblem.generateInitialPopulation(size);
         
@@ -33,7 +32,7 @@ class StringMatchProblemTest {
     }
     
     @Test
-    void generateIndividualFromParentsGeneratesChildWithElementsFromOneOrBothParents() {
+    public void generateIndividualFromParentsGeneratesChildWithElementsFromOneOrBothParents() {
         var parentA = RandomUtil.generateRandomString(target.length());
         var parentB = RandomUtil.generateRandomString(target.length());
         

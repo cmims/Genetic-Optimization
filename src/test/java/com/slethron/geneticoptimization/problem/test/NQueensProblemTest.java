@@ -2,23 +2,25 @@ package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.problem.NQueensProblem;
 import com.slethron.util.RandomUtil;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-class NQueensProblemTest {
+public class NQueensProblemTest {
     private int n;
     private NQueensProblem nQueensProblem;
     
-    @BeforeEach
-    void beforeEach() {
+    @Before
+    public void beforeEach() {
         n = 12;
         nQueensProblem = new NQueensProblem(n);
     }
     
     @Test
-    void generateInitialPopulationOfSize100OfNEquals12Boards() {
+    public void generateInitialPopulationOfSize100OfNEquals12Boards() {
         var size = 100;
         var population = nQueensProblem.generateInitialPopulation(size);
         
@@ -30,7 +32,7 @@ class NQueensProblemTest {
     }
     
     @Test
-    void generateIndividualFromParentsGeneratesChildThatHasElementsFromOneOrBothParents() {
+    public void generateIndividualFromParentsGeneratesChildThatHasElementsFromOneOrBothParents() {
         var parentA = RandomUtil.generateRandomNQueensBoard(n);
         var parentB = RandomUtil.generateRandomNQueensBoard(n);
         

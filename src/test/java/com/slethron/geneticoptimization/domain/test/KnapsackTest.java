@@ -2,19 +2,17 @@ package com.slethron.geneticoptimization.domain.test;
 
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.domain.KnapsackItem;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
 
-class KnapsackTest {
+public class KnapsackTest {
     
     @Test
-    void putFailsWhenItemToBig() {
+    public void putFailsWhenAttemptingToPutItemInBagToExceedMaxWeight() {
         var knapsack = new Knapsack(5);
         var itemTooBig = new KnapsackItem(10, 10);
         var item = new KnapsackItem(5, 5);
@@ -24,7 +22,7 @@ class KnapsackTest {
     }
     
     @Test
-    void getItemsReturnsEqualListOfItems() {
+    public void getItemsReturnsListOfItemsPlacedInTheKnapsack() {
         var random = new Random();
         var itemsToPut = new ArrayList<KnapsackItem>();
         for (var i = 0; i < 10; i++) {
@@ -46,7 +44,7 @@ class KnapsackTest {
     }
     
     @Test
-    void getTotalWeightAndGetTotalValueAreAccurate() {
+    public void getTotalWeightAndGetTotalValueAreAccurate() {
         var item1 = new KnapsackItem(10, 5);
         var item2 = new KnapsackItem(10, 5);
         
@@ -58,14 +56,23 @@ class KnapsackTest {
     }
     
     @Test
-    void toStringLooksLike() {
-        var item1 = new KnapsackItem(10, 5);
-        var item2 = new KnapsackItem(15, 4);
+    public void equalsReturnsTrueForKnapsacksThatAreTheSameAndFalseForKnapsacksThatArent() {
+        var knapsack = new Knapsack(10);
+        var knapsack2 = new Knapsack(10);
         
-        var knapsack = new Knapsack(40);
-        knapsack.put(item1);
-        knapsack.put(item2);
-    
-        System.out.println(knapsack);
+        var knapsackItem1 = new KnapsackItem(4, 2);
+        var knapsackItem2 = new KnapsackItem(4, 1);
+        
+        knapsack.put(knapsackItem1);
+        knapsack.put(knapsackItem2);
+        
+        knapsack2.put(knapsackItem1);
+        knapsack2.put(knapsackItem2);
+        
+        assertEquals(knapsack, knapsack2);
+        
+        knapsack.put(new KnapsackItem(2,4));
+        
+        assertNotEquals(knapsack, knapsack2);
     }
 }

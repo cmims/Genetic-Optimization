@@ -1,15 +1,15 @@
 package com.slethron.geneticoptimization.domain.test;
 
 import com.slethron.geneticoptimization.domain.KnapsackItem;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
-class KanpsackItemTest {
+public class KanpsackItemTest {
     
     @Test
-    void itemsOfSimilarValueAndWeightAreNotEqual() {
+    public void itemsOfSimilarValueAndWeightAreNotEqual() {
         var weightA = 10;
         var valueA = 5;
         var weightB = 8;

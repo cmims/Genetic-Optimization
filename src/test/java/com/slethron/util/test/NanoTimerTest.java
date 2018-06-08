@@ -1,17 +1,16 @@
 package com.slethron.util.test;
 
 import com.slethron.util.NanoTimer;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-
-class NanoTimerTest {
+public class NanoTimerTest {
     
     @Test
-    void verifyRunTimerAndSleepFor1SecondOnMainThread() throws InterruptedException {
+    public void verifyRunTimerAndSleepFor1SecondOnMainThread() throws InterruptedException {
         var timer = new NanoTimer();
         timer.start();
         Thread.sleep(1000);
@@ -21,7 +20,7 @@ class NanoTimerTest {
     }
     
     @Test
-    void testingOfVariousScenarios() throws InterruptedException {
+    public void testingOfVariousScenarios() throws InterruptedException {
         var timer = new NanoTimer();
         /* Get the error string returned by timer for later use */
         var timerError = timer.toString();

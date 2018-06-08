@@ -2,25 +2,25 @@ package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.problem.BitStringProblem;
 import com.slethron.util.RandomUtil;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-class BitStringProblemTest {
+public class BitStringProblemTest {
     private int length;
     private BitStringProblem bitStringProblem;
     
-    @BeforeEach
-    void beforeEach() {
+    @Before
+    public void beforeEach() {
         length = 10;
         bitStringProblem = new BitStringProblem(length);
     }
     
     @Test
-    void generateInitialPopulationOfSize100OfLength10BitStrings() {
+    public void generateInitialPopulationOfSize100OfLength10BitStrings() {
         var size = 100;
         var population = bitStringProblem.generateInitialPopulation(size);
         
@@ -32,7 +32,7 @@ class BitStringProblemTest {
     }
     
     @Test
-    void generateIndividualFromParentsGeneratesChildWithElementsFromOneOrBothParents() {
+    public void generateIndividualFromParentsGeneratesChildWithElementsFromOneOrBothParents() {
         var parentA = RandomUtil.generateRandomBitString(length);
         var parentB = RandomUtil.generateRandomBitString(length);
         

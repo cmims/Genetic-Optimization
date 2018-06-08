@@ -1,6 +1,6 @@
 package com.slethron.geneticoptimization.domain;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 public class NQueensBoard {
     private int[] board;
@@ -63,7 +63,7 @@ public class NQueensBoard {
             }
             sb.append('\n');
         }
-
+        
         return sb.toString();
     }
     
@@ -78,13 +78,12 @@ public class NQueensBoard {
             }
         }
         builder.append("]");
-
+        
         return builder.toString();
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(board, board.length);
+        return Arrays.hashCode(board);
     }
 }
-

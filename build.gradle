@@ -2,7 +2,6 @@ group 'com.slethron.geneticoptimization'
 version '0.1.0'
 
 apply plugin: 'java'
-apply plugin: 'jacoco'
 
 sourceCompatibility = 10
 
@@ -11,15 +10,5 @@ repositories {
 }
 
 dependencies {
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.2.0'
-}
-
-jacoco {
-    reportsDir = file("$buildDir/reports/jacoco")
-}
-
-jacocoTestReport {
-    reports {
-        html.destination file("${buildDir}/jacoco")
-    }
+    testCompile 'junit:junit:4.12'
 }

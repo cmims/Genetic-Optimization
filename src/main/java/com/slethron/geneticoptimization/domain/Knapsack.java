@@ -1,11 +1,10 @@
 package com.slethron.geneticoptimization.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Knapsack {
     private int maxWeight;
-    private List<KnapsackItem> items;
+    private Set<KnapsackItem> items;
     
     public Knapsack(Knapsack knapsack) {
         maxWeight = knapsack.maxWeight;
@@ -14,7 +13,7 @@ public class Knapsack {
     
     public Knapsack(int maxWeight) {
         this.maxWeight = maxWeight;
-        this.items = new ArrayList<>();
+        this.items = new HashSet<>();
     }
     
     public int getTotalWeight() {
@@ -36,7 +35,7 @@ public class Knapsack {
     }
     
     public List<KnapsackItem> getItems() {
-        return items;
+        return new ArrayList<>(items);
     }
     
     public int getMaxWeight() {
@@ -52,10 +51,6 @@ public class Knapsack {
         return false;
     }
     
-    public void remove(KnapsackItem item) {
-        items.remove(item);
-    }
-    
     private boolean canFitItem(KnapsackItem item) {
         return getTotalWeight() + item.getWeight() <= maxWeight;
     }
@@ -66,9 +61,10 @@ public class Knapsack {
         builder.append("Knapsack: {maxWeight=")
                 .append(maxWeight)
                 .append(", ");
-        for (var i = 0; i < items.size(); i++) {
-            builder.append(items.get(i).toString());
-            if (i != items.size() - 1) {
+        var knapsackItems = getItems();
+        for (var i = 0; i < knapsackItems.size(); i++) {
+            builder.append(knapsackItems.get(i).toString());
+            if (i != knapsackItems.size() - 1) {
                 builder.append(", ");
             }
             
@@ -96,8 +92,8 @@ public class Knapsack {
     
     @Override
     public int hashCode() {
-        int result = maxWeight;
-        result = 31 * result + (getItems() != null ? getItems().hashCode() : 0);
-        return result;
+        return 31 * maxWeight + (items != null ? items.hashCode() : 0);
     }
+    
+    
 }
