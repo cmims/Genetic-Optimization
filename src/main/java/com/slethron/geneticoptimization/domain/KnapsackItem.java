@@ -1,6 +1,5 @@
 package com.slethron.geneticoptimization.domain;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class KnapsackItem {
@@ -40,7 +39,7 @@ public class KnapsackItem {
     
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, value, weight);
+        return itemId;
     }
     
     @Override

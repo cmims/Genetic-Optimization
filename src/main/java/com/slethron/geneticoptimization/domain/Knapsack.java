@@ -92,8 +92,6 @@ public class Knapsack {
     
     @Override
     public int hashCode() {
-        return 31 * maxWeight + (items != null ? items.hashCode() : 0);
+        return 31 * maxWeight + items.hashCode();
     }
-    
-    
 }
