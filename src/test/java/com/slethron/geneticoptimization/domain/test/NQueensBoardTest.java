@@ -25,7 +25,7 @@ public class NQueensBoardTest {
     }
     
     @Test
-    public void setAssignsTheQueenInSpecifiedColumnToRow() {
+    public void setAssignsTheQueenInSpecifiedColumnToSpecifiedRow() {
         var column = 0;
         var newRow = 11;
         nQueensBoard = new NQueensBoard(board);
