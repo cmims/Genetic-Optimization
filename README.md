@@ -1,29 +1,50 @@
 <H3>Genetic Optimization</H3>
+<p>
+    Genetic Optimization is the processes of using random genetic processes to find more desirable solutions for
+    optimization problems. This can be done in many ways, but the most common (used in this project) can be illustrated
+    as a series of repeatedly executed phases:
+</p>
 
-Genetic Optimization is the processes of using random genetic processes to find more desirable solutions for
-optimization problems. This can be done in many ways, but the most common (used in this project) can be illustrated as a
-series of repeatedly executed phases:
 1. Population Definition: Define the set of individuals (known as the population), that will be optimized. This can be a
 predefined set of individuals, a set from a previously optimized population, or generated randomly.
-2. Fitness Evaluation: Score each individual by evaluating their fitness values.
-3. Natural Selection: Define a subset of the population that represents the individuals with the best fitness values.
-4. Reproduction: Generate a new population of child individuals by repeatedly selecting two parent individuals randomly
+1. Fitness Evaluation: Score each individual by evaluating their fitness values.
+1. Natural Selection: Define a subset of the population that represents the individuals with the best fitness values.
+1. Reproduction: Generate a new population of child individuals by repeatedly selecting two parent individuals randomly
 from the <i>best fitness</i> subset and reproducing them. The children will express features of one or both parents.
-5. Mutation: Allow the chance for each child's genetics to be mutated. It should be possible for a child to experience
+1. Mutation: Allow the chance for each child's genetics to be mutated. It should be possible for a child to experience
 multiple mutations that are either harmful or beneficial to the individual's fitness value.
-6. Repeat the process with the resulting population. The process can be executed an undefined number of times (sochastic
+1. Repeat the process with the resulting population. The process can be executed an undefined number of times (sochastic
 optimization) or until the desired result is obtained (deterministic optimization).
-<H5>Deterministic vs Sochastic Optimization</H5>
-In <i>Sochastic Optimization</i>, execute the process as many times as is necessary to observe convergence.
-<i>Convergence</i> means there are very minute differences between individuals of the same generation and very little
-change per generation in genetic diversity. Theoretically, as long as the population has not converged, the average
-fitness of each generation should progressively increase.
 
-For some problems, after one of the individuals has obtained the desired solution, it is no longer beneficial to
-continue executing the process because it cannot result in a better individual. When the population converges and the
-fitness values also converge, then it is a <i>deterministic optimization</i> problem. In these problems, the fitness
-has a maximum possible value. It may make sense to design these such that the individual that represents the desired
-solution
+<H5>Deterministic vs Sochastic Optimization</H5>
+
+<p>
+    In <i>Sochastic Optimization</i>, execute the process as many times as is necessary to observe convergence.
+    <i>Convergence</i> means there are very minute differences between individuals of the same generation and very
+    little change per generation in genetic diversity. Theoretically, as long as the population has not converged, the
+    average fitness of each generation should progressively increase.
+</p>
+<p>
+    For some problems, after one of the individuals has obtained the desired solution, it is no longer beneficial to
+    continue executing the process because it cannot result in a better individual. When the population converges and
+    the fitness values also converge, then it is a <i>deterministic optimization</i> problem. In these problems, the
+    fitness has a maximum possible value. It may make sense to design these such that the individual that represents the
+    desired solution holds a fitness of 0. This would make a lower fitness better than a higher one, with 0 implying a
+    solution has been found.
+</p>
+
+___
+<H5>Implemented Problems</H5>
+
+<p>
+    The problems implemented in this example project are listed below:
+</p>
+
+- N-Queens Problem
+- Knapsack Problem
+- String-Match Problem
+- Bit-String Problem
+
 ___
 <H6>Terms</H6>
 
@@ -39,7 +60,10 @@ expresses features of one or both parents.
 (the individuals that will live to reproduce)
 - <i>Convergence</i> - very minute differences between individuals of the same generation and very little
 change per generation in genetic diversity can be observed during the process
+
 ___
 <H6>src</H6>
 
+- https://github.com/JKnighten/genetic-optimization
+- https://www.electricmonk.nl/log/2011/09/28/evolutionary-algorithm-evolving-hello-world/
 - https://neos-guide.org/optimization-tree
