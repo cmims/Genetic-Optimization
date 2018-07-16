@@ -106,12 +106,12 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     
     public static void main(String[] args) {
         var numberOfItems = 10;
-        var maxItemWeight = 50;
+        var maxItemWeightValue = 50;
         var random = new Random();
         var nanoTimer = new NanoTimer();
 
         var itemsToPut = IntStream.range(0, numberOfItems)
-                .mapToObj(i -> new KnapsackItem(random.nextInt(maxItemWeight), random.nextInt(maxItemWeight)))
+                .mapToObj(i -> new KnapsackItem(random.nextInt(maxItemWeightValue), random.nextInt(maxItemWeightValue)))
                 .collect(Collectors.toList());
 
         for (var item : itemsToPut) {
