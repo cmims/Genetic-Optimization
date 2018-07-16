@@ -15,13 +15,10 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     private int maxWeight;
     private List<KnapsackItem> itemsToPut;
     
-    public KnapsackProblem(int maxWeight, int[] weightsOfItems, int[] valuesOfItems) {
+    public KnapsackProblem(int maxWeight, List<KnapsackItem> itemsToPut) {
         random = new Random();
         this.maxWeight = maxWeight;
-        itemsToPut = new ArrayList<>();
-        for (var i = 0; i < weightsOfItems.length; i++) {
-            itemsToPut.add(new KnapsackItem(weightsOfItems[i], valuesOfItems[i]));
-        }
+        this.itemsToPut = itemsToPut;
     }
     
     @Override
@@ -108,26 +105,25 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     }
     
     public static void main(String[] args) {
+        var numberOfItems = 10;
+        var maxItemWeight = 50;
+        var random = new Random();
         var nanoTimer = new NanoTimer();
-        
-        var maxWeight = 48;
-        var knapsackProblem = new KnapsackProblem(maxWeight,
-                new int[]{10, 15, 25, 15, 6, 4, 2, 13, 10, 12, 18},
-                new int[]{14, 17, 10, 8, 3, 10, 51, 9, 25, 6, 9});
-        
-        var itemsToPut = knapsackProblem.getItemsToPut();
+
+        var itemsToPut = IntStream.range(0, numberOfItems)
+                .mapToObj(i -> new KnapsackItem(random.nextInt(maxItemWeight), random.nextInt(maxItemWeight)))
+                .collect(Collectors.toList());
+
         for (var item : itemsToPut) {
             System.out.println(item);
         }
+
+        var maxWeight = random.nextInt(100) + 50;
+        var knapsackProblem = new KnapsackProblem(maxWeight, itemsToPut);
         
         nanoTimer.start();
         var solution = knapsackProblem.solve(1000, 1000, .06, .25);
         nanoTimer.stop();
-        
-        var itemsInContainer = solution.getItems();
-        for (KnapsackItem item : itemsInContainer) {
-            System.out.println(item);
-        }
         
         System.out.println("Solution for maxWeight=" + maxWeight + " and selected items found in "
                 + nanoTimer.toString());

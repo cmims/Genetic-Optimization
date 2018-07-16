@@ -36,7 +36,7 @@ public class NanoTimer {
         if (isTimeRecorded) {
             var exeTimeSec = (post - pre) / 1000000000L;
             var exeTimeMil = ((post - pre) % 1000000000L) / 1000000L;
-            return exeTimeSec + "." + exeTimeMil + " s";
+            return exeTimeSec + "." + exeTimeMil + " seconds";
         } else {
             return "No time recorded.";
         }

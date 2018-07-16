@@ -44,6 +44,6 @@ public class KnapsackItem {
     
     @Override
     public String toString() {
-        return "(id=" + itemId + ", w=" + weight + ", v=" + value + ")";
+        return "id=" + itemId + ", w=" + weight + ", v=" + value;
     }
 }
