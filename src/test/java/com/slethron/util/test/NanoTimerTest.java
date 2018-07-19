@@ -10,16 +10,6 @@ import static org.junit.Assert.assertTrue;
 public class NanoTimerTest {
     
     @Test
-    public void verifyRunTimerAndSleepFor1SecondOnMainThread() throws InterruptedException {
-        var timer = new NanoTimer();
-        timer.start();
-        Thread.sleep(1000);
-        timer.stop();
-        
-        assertEquals("1", String.valueOf(timer.toString().charAt(0)));
-    }
-    
-    @Test
     public void testingOfVariousScenarios() throws InterruptedException {
         var timer = new NanoTimer();
         /* Get the error string returned by timer for later use */
@@ -41,18 +31,15 @@ public class NanoTimerTest {
         /* Clearing the timer a second time should not cause an error */
         timer.clear();
         assertTrue(timer.isStarted());
-        /* Sleep the main thread for a second in order to assert against the timer */
-        Thread.sleep(1000);
         /* Stop the timer */
         timer.stop();
         assertFalse(timer.isStarted());
-        /* Assert the timer has recorded 1 second, ignore milliseconds */
-        assertEquals("1", String.valueOf(timer.toString().charAt(0)));
         /* Stopping the timer again should not cause an error */
         timer.stop();
         assertFalse(timer.isStarted());
         /* Clear the recorded time */
         timer.clear();
+        /* Error is returned if toString is called when no time is recorded */
         assertEquals(timerError, timer.toString());
     }
 }
