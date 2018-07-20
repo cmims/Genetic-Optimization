@@ -1,4 +1,4 @@
-package com.slethron.util;
+package com.slethron.geneticoptimization.util;
 
 import com.slethron.geneticoptimization.domain.BitString;
 import com.slethron.geneticoptimization.domain.Knapsack;

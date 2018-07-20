@@ -2,13 +2,12 @@ package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.domain.KnapsackItem;
 import com.slethron.geneticoptimization.problem.KnapsackProblem;
-import com.slethron.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomUtil;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,7 +24,7 @@ public class KnapsackProblemTest {
         var weightsOfItems = new int[]{10, 5, 24, 6, 4, 3, 8, 9, 12, 13, 8, 1, 1, 2, 4, 2};
         var valuesOfItems = new int[]{24, 80, 50, 4, 15, 20, 19, 50, 60, 80, 5, 12, 16, 18, 21, 5};
         for (var i = 0; i < weightsOfItems.length; i++) {
-            items.add(new KnapsackItem(weightsOfItems[i], valuesOfItems[i]));
+            items.add(new KnapsackItem(i, weightsOfItems[i], valuesOfItems[i]));
         }
         knapsackProblem = new KnapsackProblem(maxWeight, items);
     }

@@ -1,7 +1,7 @@
 package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.problem.NQueensProblem;
-import com.slethron.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomUtil;
 import org.junit.Before;
 import org.junit.Test;
 

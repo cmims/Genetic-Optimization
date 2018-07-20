@@ -2,13 +2,12 @@ package com.slethron.geneticoptimization;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public interface GeneticOptimizer<E> {
     
     default E solve(int populationSize, int generationLimit, double mutationRate, double fittestSampleRatio) {
-        var random = new Random();
         var population = generateInitialPopulation(populationSize);
         
         for (var generation = 0; generation < generationLimit; generation++) {
@@ -17,8 +16,8 @@ public interface GeneticOptimizer<E> {
                     .map(individual -> {
                         var sampleBound = (int) Math.round(populationSize * fittestSampleRatio);
                         var child = generateIndividualFromParents(
-                                p.get(random.nextInt(sampleBound)), p.get(random.nextInt(sampleBound))
-                        );
+                                p.get(ThreadLocalRandom.current().nextInt(sampleBound)),
+                                p.get(ThreadLocalRandom.current().nextInt(sampleBound)));
                         
                         child = mutate(child, mutationRate);
                         

@@ -1,6 +1,6 @@
-package com.slethron.util.test;
+package com.slethron.geneticoptimization.util.test;
 
-import com.slethron.util.NanoTimer;
+import com.slethron.geneticoptimization.util.NanoTimer;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

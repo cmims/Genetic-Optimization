@@ -2,8 +2,8 @@ package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.domain.BitString;
-import com.slethron.util.NanoTimer;
-import com.slethron.util.RandomUtil;
+import com.slethron.geneticoptimization.util.NanoTimer;
+import com.slethron.geneticoptimization.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.List;

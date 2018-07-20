@@ -14,8 +14,8 @@ public class KnapsackTest {
     @Test
     public void putFailsWhenAttemptingToPutItemInBagToExceedMaxWeight() {
         var knapsack = new Knapsack(5);
-        var itemTooBig = new KnapsackItem(10, 10);
-        var item = new KnapsackItem(5, 5);
+        var itemTooBig = new KnapsackItem(10, 10, 10);
+        var item = new KnapsackItem(5, 5, 5);
         
         assertFalse(knapsack.put(itemTooBig));
         assertTrue(knapsack.put(item));
@@ -26,9 +26,7 @@ public class KnapsackTest {
         var random = new Random();
         var itemsToPut = new ArrayList<KnapsackItem>();
         for (var i = 0; i < 10; i++) {
-            itemsToPut.add(new KnapsackItem(
-                    random.nextInt(10), random.nextInt(10)
-            ));
+            itemsToPut.add(new KnapsackItem(i, random.nextInt(10), random.nextInt(10)));
         }
         
         var knapsack = new Knapsack(20);
@@ -45,8 +43,8 @@ public class KnapsackTest {
     
     @Test
     public void getTotalWeightAndGetTotalValueAreAccurate() {
-        var item1 = new KnapsackItem(10, 5);
-        var item2 = new KnapsackItem(10, 5);
+        var item1 = new KnapsackItem(0, 10, 5);
+        var item2 = new KnapsackItem(1, 10, 5);
         
         var knapsack = new Knapsack(40);
         knapsack.put(item1);
@@ -56,12 +54,12 @@ public class KnapsackTest {
     }
     
     @Test
-    public void equalsReturnsTrueForKnapsacksThatAreTheSameAndFalseForKnapsacksThatArent() {
+    public void equalsReturnsTrueForKnapsacksThatAreTheSameAndFalseForKnapsacksThatAreNot() {
         var knapsack = new Knapsack(10);
         var knapsack2 = new Knapsack(10);
         
-        var knapsackItem1 = new KnapsackItem(4, 2);
-        var knapsackItem2 = new KnapsackItem(4, 1);
+        var knapsackItem1 = new KnapsackItem(0, 4, 2);
+        var knapsackItem2 = new KnapsackItem(1, 4, 1);
         
         knapsack.put(knapsackItem1);
         knapsack.put(knapsackItem2);
@@ -71,7 +69,7 @@ public class KnapsackTest {
         
         assertEquals(knapsack, knapsack2);
         
-        knapsack.put(new KnapsackItem(2,4));
+        knapsack.put(new KnapsackItem(2, 2,4));
         
         assertNotEquals(knapsack, knapsack2);
     }

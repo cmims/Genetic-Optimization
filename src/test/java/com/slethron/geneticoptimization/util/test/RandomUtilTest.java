@@ -1,6 +1,6 @@
-package com.slethron.util.test;
+package com.slethron.geneticoptimization.util.test;
 
-import com.slethron.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomUtil;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

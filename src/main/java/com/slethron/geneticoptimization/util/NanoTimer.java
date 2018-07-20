@@ -1,22 +1,22 @@
-package com.slethron.util;
+package com.slethron.geneticoptimization.util;
 
 public class NanoTimer {
     private boolean isTimeRecorded;
     private boolean isStarted;
-    private long pre;
-    private long post;
+    private long start;
+    private long stop;
     
     public void start() {
         if (isTimeRecorded) {
             isTimeRecorded = false;
         }
-        pre = System.nanoTime();
+        start = System.nanoTime();
         isStarted = true;
     }
     
     public void stop() {
         if (isStarted) {
-            post = System.nanoTime();
+            stop = System.nanoTime();
             isStarted = false;
             isTimeRecorded = true;
         }
@@ -34,8 +34,8 @@ public class NanoTimer {
     
     public String toString() {
         if (isTimeRecorded) {
-            var exeTimeSec = (post - pre) / 1000000000L;
-            var exeTimeMil = ((post - pre) % 1000000000L) / 1000000L;
+            var exeTimeSec = (stop - start) / 1000000000L;
+            var exeTimeMil = ((stop - start) % 1000000000L) / 1000000L;
             return exeTimeSec + "." + exeTimeMil + " seconds";
         } else {
             return "No time recorded.";

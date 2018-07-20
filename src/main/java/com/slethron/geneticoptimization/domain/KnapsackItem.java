@@ -1,19 +1,17 @@
 package com.slethron.geneticoptimization.domain;
 
-import java.util.Random;
-
 public class KnapsackItem {
     private int itemId;
     private int value;
     private int weight;
     
-    public KnapsackItem(int weight, int value) {
-        itemId = new Random().nextInt();
+    public KnapsackItem(int itemId, int weight, int value) {
+        this.itemId = itemId;
         this.weight = weight;
         this.value = value;
     }
     
-    private int getItemId() {
+    public int getItemId() {
         return itemId;
     }
     

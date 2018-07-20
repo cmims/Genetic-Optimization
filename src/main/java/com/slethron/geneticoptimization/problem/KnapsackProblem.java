@@ -3,10 +3,11 @@ package com.slethron.geneticoptimization.problem;
 import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.domain.KnapsackItem;
-import com.slethron.util.NanoTimer;
-import com.slethron.util.RandomUtil;
+import com.slethron.geneticoptimization.util.NanoTimer;
+import com.slethron.geneticoptimization.util.RandomUtil;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -23,7 +24,6 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     
     @Override
     public Knapsack solve(int populationSize, int generationLimit, double mutationRate, double fittestSampleRatio) {
-        random = new Random();
         var population = generateInitialPopulation(populationSize);
         
         for (var generation = 0; generation < generationLimit; generation++) {
@@ -32,8 +32,8 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
                     .map(individual -> {
                         var sampleBound = (int) Math.round(populationSize * fittestSampleRatio);
                         var child = generateIndividualFromParents(
-                                p.get(random.nextInt(sampleBound)), p.get(random.nextInt(sampleBound))
-                        );
+                                p.get(ThreadLocalRandom.current().nextInt(sampleBound)),
+                                p.get(ThreadLocalRandom.current().nextInt(sampleBound)));
                         
                         child = mutate(child, mutationRate);
                         
@@ -100,10 +100,6 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
         return individual.getTotalValue();
     }
     
-    public List<KnapsackItem> getItemsToPut() {
-        return itemsToPut;
-    }
-    
     public static void main(String[] args) {
         var numberOfItems = 10;
         var maxItemWeightValue = 50;
@@ -111,7 +107,7 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
         var nanoTimer = new NanoTimer();
 
         var itemsToPut = IntStream.range(0, numberOfItems)
-                .mapToObj(i -> new KnapsackItem(random.nextInt(maxItemWeightValue), random.nextInt(maxItemWeightValue)))
+                .mapToObj(i -> new KnapsackItem(i, random.nextInt(maxItemWeightValue), random.nextInt(maxItemWeightValue)))
                 .collect(Collectors.toList());
 
         for (var item : itemsToPut) {
