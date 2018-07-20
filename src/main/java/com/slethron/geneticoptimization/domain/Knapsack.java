@@ -1,6 +1,9 @@
 package com.slethron.geneticoptimization.domain;
 
-import java.util.*;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Knapsack {
     private int maxWeight;
