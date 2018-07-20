@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 public class NanoTimerTest {
     
     @Test
-    public void testingOfVariousScenarios() throws InterruptedException {
+    public void testingOfVariousScenarios() {
         var timer = new NanoTimer();
         /* Get the error string returned by timer for later use */
         var timerError = timer.toString();

@@ -6,7 +6,9 @@ import com.slethron.util.RandomUtil;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -19,12 +21,15 @@ public class KnapsackProblemTest {
     @Before
     public void beforeEach() {
         maxWeight = 40;
-        var weightsOfItems = new int[] { 10, 5, 24, 6, 4, 3, 8, 9, 12, 13, 8, 1, 1, 2, 4, 2 };
-        var valuesOfItems = new int[] { 24, 80, 50, 4, 15, 20, 19, 50, 60, 80, 5, 12, 16, 18, 21, 5 };
-        knapsackProblem = new KnapsackProblem(maxWeight, weightsOfItems, valuesOfItems);
-        items = knapsackProblem.getItemsToPut();
+        items = new ArrayList<>();
+        var weightsOfItems = new int[]{10, 5, 24, 6, 4, 3, 8, 9, 12, 13, 8, 1, 1, 2, 4, 2};
+        var valuesOfItems = new int[]{24, 80, 50, 4, 15, 20, 19, 50, 60, 80, 5, 12, 16, 18, 21, 5};
+        for (var i = 0; i < weightsOfItems.length; i++) {
+            items.add(new KnapsackItem(weightsOfItems[i], valuesOfItems[i]));
+        }
+        knapsackProblem = new KnapsackProblem(maxWeight, items);
     }
-    
+
     @Test
     public void generateInitialPopulationOfSize100ContainingKnapsacksOfMaxWeight200() {
         var size = 100;

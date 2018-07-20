@@ -80,7 +80,7 @@ public class RandomUtil {
      * are permutated in a way such that they are:
      * 1) random
      * 2) not all of the items specified in the list are also in the knapsack
-     * <p>
+     *
      * It is necessary to have remaining items in the list after execution of this method.
      * IllegalArgumentException is thrown if the case where the items to put are exhausted.
      *
