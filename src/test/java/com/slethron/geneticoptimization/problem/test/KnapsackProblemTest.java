@@ -1,6 +1,6 @@
 package com.slethron.geneticoptimization.problem.test;
 
-import com.slethron.geneticoptimization.domain.KnapsackItem;
+import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.problem.KnapsackProblem;
 import com.slethron.geneticoptimization.util.RandomUtil;
 import org.junit.Before;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class KnapsackProblemTest {
     private int maxWeight;
     private KnapsackProblem knapsackProblem;
-    private List<KnapsackItem> items;
+    private List<Knapsack.KnapsackItem> items;
     
     @Before
     public void beforeEach() {
@@ -24,7 +24,7 @@ public class KnapsackProblemTest {
         var weightsOfItems = new int[]{10, 5, 24, 6, 4, 3, 8, 9, 12, 13, 8, 1, 1, 2, 4, 2};
         var valuesOfItems = new int[]{24, 80, 50, 4, 15, 20, 19, 50, 60, 80, 5, 12, 16, 18, 21, 5};
         for (var i = 0; i < weightsOfItems.length; i++) {
-            items.add(new KnapsackItem(i, weightsOfItems[i], valuesOfItems[i]));
+            items.add(new Knapsack.KnapsackItem(i, weightsOfItems[i], valuesOfItems[i]));
         }
         knapsackProblem = new KnapsackProblem(maxWeight, items);
     }

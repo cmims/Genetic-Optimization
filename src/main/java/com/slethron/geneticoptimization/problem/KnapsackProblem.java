@@ -2,7 +2,6 @@ package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.domain.Knapsack;
-import com.slethron.geneticoptimization.domain.KnapsackItem;
 import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.RandomUtil;
 
@@ -14,9 +13,9 @@ import java.util.stream.IntStream;
 public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     private Random random;
     private int maxWeight;
-    private List<KnapsackItem> itemsToPut;
+    private List<Knapsack.KnapsackItem> itemsToPut;
     
-    public KnapsackProblem(int maxWeight, List<KnapsackItem> itemsToPut) {
+    public KnapsackProblem(int maxWeight, List<Knapsack.KnapsackItem> itemsToPut) {
         random = new Random();
         this.maxWeight = maxWeight;
         this.itemsToPut = itemsToPut;
@@ -107,7 +106,7 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
         var nanoTimer = new NanoTimer();
 
         var itemsToPut = IntStream.range(0, numberOfItems)
-                .mapToObj(i -> new KnapsackItem(i, random.nextInt(maxItemWeightValue), random.nextInt(maxItemWeightValue)))
+                .mapToObj(i -> new Knapsack.KnapsackItem(i, random.nextInt(maxItemWeightValue), random.nextInt(maxItemWeightValue)))
                 .collect(Collectors.toList());
 
         for (var item : itemsToPut) {

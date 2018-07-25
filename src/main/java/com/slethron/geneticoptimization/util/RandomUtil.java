@@ -2,7 +2,6 @@ package com.slethron.geneticoptimization.util;
 
 import com.slethron.geneticoptimization.domain.BitString;
 import com.slethron.geneticoptimization.domain.Knapsack;
-import com.slethron.geneticoptimization.domain.KnapsackItem;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
 
 import java.util.ArrayList;
@@ -88,7 +87,7 @@ public class RandomUtil {
      * @param itemsToPut The items to randomly put in the bag
      * @return The generated random Knapsack object
      */
-    public static Knapsack generateRandomKnapsack(int maxWeight, List<KnapsackItem> itemsToPut) {
+    public static Knapsack generateRandomKnapsack(int maxWeight, List<Knapsack.KnapsackItem> itemsToPut) {
         var items = new ArrayList<>(itemsToPut);
         var knapsack = new Knapsack(maxWeight);
         for (var i = items.size(); i >= 1; i--) {
