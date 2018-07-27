@@ -64,6 +64,5 @@ change per generation in genetic diversity can be observed during the process
 ___
 <H6>src</H6>
 
-- https://github.com/JKnighten/genetic-optimization
 - https://www.electricmonk.nl/log/2011/09/28/evolutionary-algorithm-evolving-hello-world/
 - https://neos-guide.org/optimization-tree
