@@ -77,7 +77,7 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     public static void main(String[] args) {
         var nanoTimer = new NanoTimer();
         
-        var n = 48;
+        var n = 24;
         var nQueensProblem = new NQueensProblem(n);
         
         nanoTimer.start();
@@ -86,8 +86,8 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     
         System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());
         System.out.println("Fitness of solution is: " + nQueensProblem.fitness(solution));
+        System.out.println("(Fitness of 0.0 is solved, greater than 0 is unsolved)");
         System.out.println(solution);
-        System.out.println(solution.drawAsciiBoard('&', '_'));
-        
+        System.out.println(solution.drawAsciiBoard('&', '.'));
     }
 }

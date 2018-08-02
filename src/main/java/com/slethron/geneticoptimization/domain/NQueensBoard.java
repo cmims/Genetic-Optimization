@@ -25,31 +25,6 @@ public class NQueensBoard {
         return board.length;
     }
     
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        
-        if (!(obj instanceof NQueensBoard)) {
-            return false;
-        }
-        
-        var e = (NQueensBoard) obj;
-        
-        if (e.length() != length()) {
-            return false;
-        }
-        
-        for (var i = 0; i < length(); i++) {
-            if (e.get(i) != get(i)) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
     public String drawAsciiBoard(char queen, char space) {
         var sb = new StringBuilder();
         for (var column : board) {
@@ -80,6 +55,31 @@ public class NQueensBoard {
         builder.append("]");
         
         return builder.toString();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        
+        if (!(obj instanceof NQueensBoard)) {
+            return false;
+        }
+        
+        var e = (NQueensBoard) obj;
+        
+        if (e.length() != length()) {
+            return false;
+        }
+        
+        for (var i = 0; i < length(); i++) {
+            if (e.get(i) != get(i)) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     @Override
