@@ -1,9 +1,16 @@
 package com.slethron.geneticoptimization.util.test;
 
+import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.util.RandomUtil;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class RandomUtilTest {
@@ -34,6 +41,22 @@ public class RandomUtilTest {
     
     @Test
     public void generateRandomKnapsackOf10Items() {
-    
+        // Generate 15 items of weight>=10 and knapsack maxWeight of 150 so test never fails
+        var numberOfItems = 15;
+        var maxItemWeightValue = 50;
+        var random = new Random();
+        var maxKnapsackWeight = random.nextInt(100) + 50;
+        
+        var itemsToPut = IntStream.range(0, numberOfItems)
+                .mapToObj(i -> new Knapsack.KnapsackItem(i, random.nextInt(maxItemWeightValue), random.nextInt(maxItemWeightValue)))
+                .collect(Collectors.toList());
+        
+        var randomKnapsack = RandomUtil.generateRandomKnapsack(maxKnapsackWeight, itemsToPut);
+        
+        assertTrue(numberOfItems > randomKnapsack.getItems().size());
+        assertEquals(maxKnapsackWeight, randomKnapsack.getMaxWeight());
+        for (var item : randomKnapsack.getItems()) {
+            assertTrue(itemsToPut.contains(item));
+        }
     }
 }

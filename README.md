@@ -13,13 +13,13 @@ predefined set of individuals, a set from a previously optimized population, or 
 from the <i>best fitness</i> subset and reproducing them. The children will express features of one or both parents.
 1. Mutation: Allow the chance for each child's genetics to be mutated. It should be possible for a child to experience
 multiple mutations that are either harmful or beneficial to the individual's fitness value.
-1. Repeat the process with the resulting population. The process can be executed an undefined number of times (sochastic
+1. Repeat the process with the resulting population. The process can be executed an undefined number of times (stochastic
 optimization) or until the desired result is obtained (deterministic optimization).
 
-<H5>Deterministic vs Sochastic Optimization</H5>
+<H5>Deterministic vs Stochastic Optimization</H5>
 
 <p>
-    In <i>Sochastic Optimization</i>, execute the process as many times as is necessary to observe convergence.
+    In <i>Stochastic Optimization</i>, execute the process as many times as is necessary to observe convergence.
     <i>Convergence</i> means there are very minute differences between individuals of the same generation and very
     little change per generation in genetic diversity. Theoretically, as long as the population has not converged, the
     average fitness of each generation should progressively increase.
