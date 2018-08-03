@@ -4,13 +4,11 @@ import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.util.RandomUtil;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class RandomUtilTest {

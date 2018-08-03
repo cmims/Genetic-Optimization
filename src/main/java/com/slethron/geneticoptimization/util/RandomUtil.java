@@ -3,12 +3,9 @@ package com.slethron.geneticoptimization.util;
 import com.slethron.geneticoptimization.domain.BitString;
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
-import com.slethron.geneticoptimization.domain.SudokuBoard;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

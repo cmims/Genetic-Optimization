@@ -1,9 +1,9 @@
 package com.slethron.geneticoptimization.domain;
 
-import java.util.Set;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
 
 public class Knapsack {
     public static class KnapsackItem {
@@ -145,6 +145,6 @@ public class Knapsack {
 
     @Override
     public int hashCode() {
-        return 31 * maxWeight + items.hashCode();
+        return maxWeight + items.hashCode();
     }
 }

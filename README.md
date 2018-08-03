@@ -40,10 +40,11 @@ ___
     The problems implemented in this example project are listed below:
 </p>
 
-- N-Queens Problem
-- Knapsack Problem
-- String-Match Problem
 - Bit-String Problem
+- Knapsack Problem
+- N-Queens Problem
+- String-Match Problem
+- Sudoku
 
 ___
 <H6>Terms</H6>
