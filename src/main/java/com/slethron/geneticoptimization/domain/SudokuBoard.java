@@ -2,18 +2,16 @@ package com.slethron.geneticoptimization.domain;
 
 import javafx.util.Pair;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SudokuBoard {
     private int[][] board;
-    
-    //List<Pair<column, row>>
     private List<Pair<Integer, Integer>> staticCells;
     
     public SudokuBoard(SudokuBoard source) {
         board = source.board.clone();
-        staticCells = new ArrayList<>(source.staticCells);
+        staticCells = source.staticCells;
     }
     
     public SudokuBoard(int[][] board, List<Pair<Integer, Integer>> staticCells) {
@@ -27,6 +25,28 @@ public class SudokuBoard {
     
     public void set(int column, int row, int value) {
         board[column][row] = value;
+    }
+    
+    public int[][] getBoard() {
+        return board;
+    }
+    
+    public List<Pair<Integer, Integer>> getStaticCells() {
+        return staticCells;
+    }
+    
+    @Override
+    public String toString() {
+        var builder = new StringBuilder();
+        for (var column = 0; column < board.length; column++) {
+            for (var row = 0; row < board.length; row++) {
+                builder.append(get(column, row));
+                builder.append(" ");
+            }
+            builder.append('\n');
+        }
+        
+        return builder.toString();
     }
     
     @Override
@@ -49,6 +69,18 @@ public class SudokuBoard {
             }
         }
         
+        for (var i = 0; i < staticCells.size(); i++) {
+            if (staticCells.get(i).getKey().equals(e.staticCells.get(i).getKey())
+                    && staticCells.get(i).getValue().equals(e.staticCells.get(i).getValue())) {
+                return false;
+            }
+        }
+        
         return true;
+    }
+    
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(board);
     }
 }

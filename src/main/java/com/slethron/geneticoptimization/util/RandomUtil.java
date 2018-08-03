@@ -3,9 +3,12 @@ package com.slethron.geneticoptimization.util;
 import com.slethron.geneticoptimization.domain.BitString;
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
+import com.slethron.geneticoptimization.domain.SudokuBoard;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,11 +22,7 @@ import java.util.stream.IntStream;
  * as a means of defining the object as the subject of its problem class.
  */
 public class RandomUtil {
-    private static final String KNAPSACK_MAXWEIGHT_TOO_LARGE = "Total value of items to put in knapsack must be" +
-            " greater than the max weight of the knapsack.";
-    
-    private RandomUtil() {
-    }
+    private RandomUtil() { }
     
     /**
      * Generates a string containing random UTF-16 characters. An arbitrary integer within the bounds of
@@ -98,7 +97,8 @@ public class RandomUtil {
         }
         
         if (items.isEmpty()) {
-            throw new IllegalArgumentException(KNAPSACK_MAXWEIGHT_TOO_LARGE);
+            throw new IllegalArgumentException("Total value of items to put in knapsack must be" +
+                    " greater than the max weight of the knapsack.");
         }
         
         return knapsack;

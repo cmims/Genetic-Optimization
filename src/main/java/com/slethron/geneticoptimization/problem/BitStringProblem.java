@@ -1,6 +1,7 @@
 package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.GeneticOptimizer;
+import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.BitString;
 import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.RandomUtil;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BitStringProblem implements GeneticOptimizer<BitString> {
+public class BitStringProblem extends PopulationGenerator<BitString> implements GeneticOptimizer<BitString> {
     private Random random;
     private int length;
     
@@ -19,7 +20,7 @@ public class BitStringProblem implements GeneticOptimizer<BitString> {
     }
     
     @Override
-    public List<BitString> generateInitialPopulation(int populationSize) {
+    public List<BitString> generatePopulation(int populationSize) {
         var population = new ArrayList<BitString>();
         for (var i = 0; i < populationSize; i++) {
             population.add(RandomUtil.generateRandomBitString(length));
@@ -72,7 +73,8 @@ public class BitStringProblem implements GeneticOptimizer<BitString> {
         var bitStringProblem = new BitStringProblem(length);
         
         nanoTimer.start();
-        var solution = bitStringProblem.solve(10000, 1000, .05, .25);
+        var population = bitStringProblem.generatePopulation(10000);
+        var solution = bitStringProblem.optimize(population, 1000, .05, .25);
         nanoTimer.stop();
         
         System.out.print("Solution: ");

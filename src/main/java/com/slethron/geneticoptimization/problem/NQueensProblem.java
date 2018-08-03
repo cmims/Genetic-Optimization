@@ -1,6 +1,7 @@
 package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.GeneticOptimizer;
+import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.RandomUtil;
@@ -10,7 +11,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
+public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements GeneticOptimizer<NQueensBoard> {
     private Random random;
     private int n;
     
@@ -20,7 +21,7 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
     }
     
     @Override
-    public List<NQueensBoard> generateInitialPopulation(int populationSize) {
+    public List<NQueensBoard> generatePopulation(int populationSize) {
         return IntStream.range(0, populationSize)
                 .parallel().unordered()
                 .mapToObj(nQueensBoard -> RandomUtil.generateRandomNQueensBoard(n))
@@ -81,7 +82,8 @@ public class NQueensProblem implements GeneticOptimizer<NQueensBoard> {
         var nQueensProblem = new NQueensProblem(n);
         
         nanoTimer.start();
-        var solution = nQueensProblem.solve(1000, 1000, .06, .25);
+        var population = nQueensProblem.generatePopulation(1000);
+        var solution = nQueensProblem.optimize(population, 1000, .06, .25);
         nanoTimer.stop();
     
         System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());

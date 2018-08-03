@@ -30,9 +30,9 @@ public class KnapsackProblemTest {
     }
 
     @Test
-    public void generateInitialPopulationOfSize100ContainingKnapsacksOfMaxWeight200() {
+    public void generatePopulationOfSize100ContainingKnapsacksOfMaxWeight200() {
         var size = 100;
-        var population = knapsackProblem.generateInitialPopulation(size);
+        var population = knapsackProblem.generatePopulation(size);
         
         assertEquals(size, population.size());
         for (var knapsack : population) {

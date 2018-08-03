@@ -1,5 +1,6 @@
 package com.slethron.geneticoptimization.problem.test;
 
+import com.slethron.geneticoptimization.domain.NQueensBoard;
 import com.slethron.geneticoptimization.problem.NQueensProblem;
 import com.slethron.geneticoptimization.util.RandomUtil;
 import org.junit.Before;
@@ -20,9 +21,9 @@ public class NQueensProblemTest {
     }
     
     @Test
-    public void generateInitialPopulationOfSize100OfNEquals12Boards() {
+    public void generatePopulationOfSize100OfNEquals12Boards() {
         var size = 100;
-        var population = nQueensProblem.generateInitialPopulation(size);
+        var population = nQueensProblem.generatePopulation(size);
         
         assertEquals(size, population.size());
         for (var nQueensBoard : population) {
@@ -42,5 +43,14 @@ public class NQueensProblemTest {
         for (var i = 0; i < child.length(); i++) {
             assertTrue(child.get(i) == parentA.get(i) || child.get(i) == parentB.get(i));
         }
+    }
+    
+    @Test
+    public void getFitnessOfSpecifiedBoard() {
+        var expectedFitness = 78;
+        var board = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+        var nQueensBoard = new NQueensBoard(board);
+    
+        assertEquals(expectedFitness, nQueensProblem.fitness(nQueensBoard), 0);
     }
 }

@@ -14,15 +14,15 @@ public class StringMatchProblemTest {
     private StringMatchProblem stringMatchProblem;
     
     @Before
-    public void beforeEach() {
+    public void before() {
         target = "Hello, World!";
         stringMatchProblem = new StringMatchProblem(target);
     }
     
     @Test
-    public void generateInitialPopulationOfSize100OfLength10Strings() {
+    public void generatePopulationOfSize100OfLength10Strings() {
         var size = 100;
-        var population = stringMatchProblem.generateInitialPopulation(size);
+        var population = stringMatchProblem.generatePopulation(size);
         
         assertEquals(size, population.size());
         for (var item : population) {

@@ -7,14 +7,12 @@ import java.util.stream.Collectors;
 
 public interface GeneticOptimizer<E> {
     
-    default E solve(int populationSize, int generationLimit, double mutationRate, double fittestSampleRatio) {
-        var population = generateInitialPopulation(populationSize);
-        
+    default E optimize(List<E> population, int generationLimit, double mutationRate, double fittestSampleRatio) {
         for (var generation = 0; generation < generationLimit; generation++) {
             var p = population;
             population = population.parallelStream()
                     .map(individual -> {
-                        var sampleBound = (int) Math.round(populationSize * fittestSampleRatio);
+                        var sampleBound = (int) Math.rint(p.size() * fittestSampleRatio);
                         var child = generateIndividualFromParents(
                                 p.get(ThreadLocalRandom.current().nextInt(sampleBound)),
                                 p.get(ThreadLocalRandom.current().nextInt(sampleBound)));
@@ -32,8 +30,6 @@ public interface GeneticOptimizer<E> {
         
         return population.get(0);
     }
-    
-    List<E> generateInitialPopulation(int populationSize);
     
     E generateIndividualFromParents(E parentA, E parentB);
     

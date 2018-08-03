@@ -1,6 +1,7 @@
 package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.GeneticOptimizer;
+import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.RandomUtil;
@@ -10,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
+public class KnapsackProblem extends PopulationGenerator<Knapsack> implements GeneticOptimizer<Knapsack> {
     private Random random;
     private int maxWeight;
     private List<Knapsack.KnapsackItem> itemsToPut;
@@ -22,14 +23,12 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     }
     
     @Override
-    public Knapsack solve(int populationSize, int generationLimit, double mutationRate, double fittestSampleRatio) {
-        var population = generateInitialPopulation(populationSize);
-        
+    public Knapsack optimize(List<Knapsack> population, int generationLimit, double mutationRate, double fittestSampleRatio) {
         for (var generation = 0; generation < generationLimit; generation++) {
             var p = population;
             population = population.parallelStream()
                     .map(individual -> {
-                        var sampleBound = (int) Math.round(populationSize * fittestSampleRatio);
+                        var sampleBound = (int) Math.round(p.size() * fittestSampleRatio);
                         var child = generateIndividualFromParents(
                                 p.get(ThreadLocalRandom.current().nextInt(sampleBound)),
                                 p.get(ThreadLocalRandom.current().nextInt(sampleBound)));
@@ -45,7 +44,7 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
     }
     
     @Override
-    public List<Knapsack> generateInitialPopulation(int populationSize) {
+    public List<Knapsack> generatePopulation(int populationSize) {
         return IntStream.range(0, populationSize)
                 .parallel().unordered()
                 .mapToObj(knapsack -> RandomUtil.generateRandomKnapsack(maxWeight, itemsToPut))
@@ -117,7 +116,8 @@ public class KnapsackProblem implements GeneticOptimizer<Knapsack> {
         var knapsackProblem = new KnapsackProblem(maxWeight, itemsToPut);
         
         nanoTimer.start();
-        var solution = knapsackProblem.solve(1000, 1000, .06, .25);
+        var population = knapsackProblem.generatePopulation(10000);
+        var solution = knapsackProblem.optimize(population, 1000, .06, .25);
         nanoTimer.stop();
         
         System.out.println("Solution for maxWeight=" + maxWeight + " and selected items found in "
