@@ -2,21 +2,29 @@ package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.problem.SudokuProblem;
+import com.slethron.geneticoptimization.util.SudokuBoardUtil;
 import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
 public class SudokuProblemTest {
     private SudokuProblem sudokuProblem;
-    private SudokuBoard boardX = initBoardX();
+    private SudokuBoard boardX;
     
     @Before
     public void before() {
         sudokuProblem = new SudokuProblem();
+        boardX = SudokuBoardUtil.getUnsolvedBoardX();
+        
+        for (var column = 0; column < 9; column++) {
+            for (var row = 0; row < 9; row++) {
+                if (boardX.get(column, row) == 0) {
+                    boardX.set(column, row, 1);
+                }
+            }
+        }
     }
     
     @Test
@@ -62,39 +70,5 @@ public class SudokuProblemTest {
     public void getFitnessOfBoardX() {
         var expectedFitness = 542;
         assertEquals(expectedFitness, sudokuProblem.fitness(boardX), 0);
-    }
-    
-    private SudokuBoard initBoardX() {
-        var board = new int[][] {
-                { 4, 0, 0, 0, 0, 2, 8, 3, 0 },
-                { 0, 8, 0, 1, 0, 4, 0, 0, 2 },
-                { 7, 0, 6, 0, 8, 0, 5, 0, 0 },
-                { 1, 0, 0, 0, 0, 7, 0, 5, 0 },
-                { 2, 7, 0, 5, 0, 0, 0, 1, 9 },
-                { 0, 3, 0, 9, 4, 0, 0, 0, 6 },
-                { 0, 0, 8, 0, 9, 0, 7, 0, 5 },
-                { 3, 0, 0, 8, 0, 6, 0, 9, 0 },
-                { 0, 4, 2, 7, 0, 0, 0, 0, 3 }
-        };
-        
-        var staticCells = new ArrayList<Pair<Integer, Integer>>() {{
-            for (var i = 0; i < board.length; i++) {
-                for (var j = 0; j < board.length; j++) {
-                    if (board[i][j] != 0) {
-                        add(new Pair<>(i, j));
-                    }
-                }
-            }
-        }};
-        
-        for (var i = 0; i < board.length; i++) {
-            for (var j = 0; j < board.length; j++) {
-                if (board[i][j] == 0) {
-                    board[i][j] = 1;
-                }
-            }
-        }
-        
-        return new SudokuBoard(board, staticCells);
     }
 }

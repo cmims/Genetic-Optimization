@@ -3,11 +3,9 @@ package com.slethron.geneticoptimization.util;
 import com.slethron.geneticoptimization.domain.BitString;
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
-import com.slethron.geneticoptimization.domain.SudokuBoard;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -78,7 +76,7 @@ public class RandomUtil {
      * are permutated in a way such that they are:
      * 1) random
      * 2) not all of the items specified in the list are also in the knapsack
-     * <p>
+     *
      * It is necessary to have remaining items in the list after execution of this method.
      * IllegalArgumentException is thrown if the case where the items to put are exhausted.
      *
@@ -103,83 +101,4 @@ public class RandomUtil {
         
         return knapsack;
     }
-    
-    public static SudokuBoard generateRandomSudokuBoard() {
-        var random = new Random();
-        var board = new int[9][9];
-        for (var column = 0; column < board.length; column++) {
-            for (var row = 0; row < board.length; row++) {
-                board[column][row] = 0;
-            }
-        }
-        for (var column = 0; column < 9; column++) {
-            for (var row = 0; row < 9; ) {
-                var num = random.nextInt(9) + 1;
-                
-                var numberOfConflicts = 0;
-                for (var i = 0; i < 9; i++) {
-                    if (i != column && board[i][row] == num) {
-                        numberOfConflicts++;
-                        
-                    }
-                    if (i != row && board[column][i] == num) {
-                        numberOfConflicts++;
-                    }
-                }
-                
-                int subGridOriginY = 0;
-                int subGridOriginX = 0;
-                if (column < 3 && row < 3) {
-                    subGridOriginY = 0;
-                    subGridOriginX = 0;
-                } else if (column < 3 && row < 6) {
-                    subGridOriginY = 0;
-                    subGridOriginX = 3;
-                } else if (column < 3 && row < 9) {
-                    subGridOriginY = 0;
-                    subGridOriginX = 6;
-                } else if (column < 6 && row < 3) {
-                    subGridOriginY = 3;
-                    subGridOriginX = 0;
-                } else if (column < 6 && row < 6) {
-                    subGridOriginY = 3;
-                    subGridOriginX = 3;
-                } else if (column < 6 && row < 9) {
-                    subGridOriginY = 3;
-                    subGridOriginX = 6;
-                } else if (column < 9 && row < 3) {
-                    subGridOriginY = 6;
-                    subGridOriginX = 0;
-                } else if (column < 9 && row < 6) {
-                    subGridOriginY = 6;
-                    subGridOriginX = 3;
-                } else if (column < 9 && row < 9) {
-                    subGridOriginY = 6;
-                    subGridOriginX = 6;
-                }
-                
-                for (var i = subGridOriginY; i < subGridOriginY + 3; i++) {
-                    for (var j = subGridOriginX; j < subGridOriginX + 3; j++) {
-                        if (i != column && j != row && board[i][j] == num) {
-                            numberOfConflicts++;
-                        }
-                    }
-                }
-                
-                if (numberOfConflicts == 0) {
-                    row++;
-                }
-            }
-        }
-        
-        for (var column = 0; column < 9; column++) {
-            for (var row = 0; row < 9; row++) {
-            
-            }
-        }
-        
-        return null;
-    }
-    
-    
 }

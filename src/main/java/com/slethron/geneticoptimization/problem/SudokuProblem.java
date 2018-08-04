@@ -3,9 +3,9 @@ package com.slethron.geneticoptimization.problem;
 import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
+import com.slethron.geneticoptimization.util.SudokuBoardUtil;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -79,15 +79,15 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
                     }
                 }
                 
-                int subGridOriginY = 0;
-                int subGridOriginX = 0;
+                int subGridOriginY;
+                int subGridOriginX;
                 if (column < 3 && row < 3) {
                     subGridOriginY = 0;
                     subGridOriginX = 0;
                 } else if (column < 3 && row < 6) {
                     subGridOriginY = 0;
                     subGridOriginX = 3;
-                } else if (column < 3 && row < 9) {
+                } else if (column < 3) {
                     subGridOriginY = 0;
                     subGridOriginX = 6;
                 } else if (column < 6 && row < 3) {
@@ -96,16 +96,16 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
                 } else if (column < 6 && row < 6) {
                     subGridOriginY = 3;
                     subGridOriginX = 3;
-                } else if (column < 6 && row < 9) {
+                } else if (column < 6) {
                     subGridOriginY = 3;
                     subGridOriginX = 6;
-                } else if (column < 9 && row < 3) {
+                } else if (row < 3) {
                     subGridOriginY = 6;
                     subGridOriginX = 0;
-                } else if (column < 9 && row < 6) {
+                } else if (row < 6) {
                     subGridOriginY = 6;
                     subGridOriginX = 3;
-                } else if (column < 9 && row < 9) {
+                } else {
                     subGridOriginY = 6;
                     subGridOriginX = 6;
                 }
@@ -125,41 +125,18 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
     
     public static void main(String[] args) {
         var random = new Random();
-        var board = new int[][] {
-                { 4, 0, 0, 0, 0, 2, 8, 3, 0 },
-                { 0, 8, 0, 1, 0, 4, 0, 0, 2 },
-                { 7, 0, 6, 0, 8, 0, 5, 0, 0 },
-                { 1, 0, 0, 0, 0, 7, 0, 5, 0 },
-                { 2, 7, 0, 5, 0, 0, 0, 1, 9 },
-                { 0, 3, 0, 9, 4, 0, 0, 0, 6 },
-                { 0, 0, 8, 0, 9, 0, 7, 0, 5 },
-                { 3, 0, 0, 8, 0, 6, 0, 9, 0 },
-                { 0, 4, 2, 7, 0, 0, 0, 0, 3 }
-        };
-        
-        var staticCells = new ArrayList<Pair<Integer, Integer>>() {{
-            for (var i = 0; i < board.length; i++) {
-                for (var j = 0; j < board.length; j++) {
-                    if (board[i][j] != 0) {
-                        add(new Pair<>(i, j));
-                    }
-                }
-            }
-        }};
-        
-        var sudokuBoard = new SudokuBoard(board, staticCells);
-        System.out.println("Starting with board: ");
-        System.out.println(sudokuBoard);
-        
-        for (var i = 0; i < board.length; i++) {
-            for (var j = 0; j < board.length; j++) {
-                if (board[i][j] == 0) {
-                    board[i][j] = random.nextInt(9) + 1;
+        var sudokuBoard = SudokuBoardUtil.getUnsolvedBoardX();
+    
+        for (var i = 0; i < 9; i++) {
+            for (var j = 0; j < 9; j++) {
+                if (sudokuBoard.get(i, j) == 0) {
+                    sudokuBoard.set(i, j, random.nextInt(9) + 1);
                 }
             }
         }
-        
-        sudokuBoard = new SudokuBoard(board, staticCells);
+    
+        System.out.println("Starting with board: ");
+        System.out.println(sudokuBoard);
         var nanoTimer = new NanoTimer();
         var sudokuProblem = new SudokuProblem();
         

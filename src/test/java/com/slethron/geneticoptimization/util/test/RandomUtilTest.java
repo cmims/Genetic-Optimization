@@ -57,9 +57,4 @@ public class RandomUtilTest {
             assertTrue(itemsToPut.contains(item));
         }
     }
-
-    @Test
-    public void generateRandomSudokuBoardWith() {
-
-    }
 }
