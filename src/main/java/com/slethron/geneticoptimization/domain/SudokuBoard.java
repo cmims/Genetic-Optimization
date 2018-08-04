@@ -39,9 +39,15 @@ public class SudokuBoard {
     public String toString() {
         var builder = new StringBuilder();
         for (var column = 0; column < board.length; column++) {
+            if (column == 3 || column == 6) {
+                builder.append("- - - + - - - + - - -\n");
+            }
             for (var row = 0; row < board.length; row++) {
-                builder.append(get(column, row));
+                builder.append(get(column, row) == 0 ? "." : get(column, row));
                 builder.append(" ");
+                if (row == 2 || row == 5) {
+                    builder.append("| ");
+                }
             }
             builder.append('\n');
         }

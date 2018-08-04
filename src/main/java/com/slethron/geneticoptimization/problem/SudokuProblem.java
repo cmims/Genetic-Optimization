@@ -68,6 +68,8 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
             for (var row = 0; row < 9; row++) {
                 var num = individual.get(column, row);
                 
+                if (num == 0) break;
+                
                 for (var i = 0; i < 9; i++) {
                     if (i != column && individual.getBoard()[i][row] == num) {
                         numberOfConflicts++;
@@ -135,15 +137,6 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
                 { 0, 4, 2, 7, 0, 0, 0, 0, 3 }
         };
         
-        for (int[] column : board) {
-            for (var j = 0; j < board.length; j++) {
-                System.out.print(column[j] == 0 ? ". " : column[j] + " ");
-                if (j == 8) {
-                    System.out.println();
-                }
-            }
-        }
-        
         var staticCells = new ArrayList<Pair<Integer, Integer>>() {{
             for (var i = 0; i < board.length; i++) {
                 for (var j = 0; j < board.length; j++) {
@@ -154,6 +147,10 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
             }
         }};
         
+        var sudokuBoard = new SudokuBoard(board, staticCells);
+        System.out.println("Starting with board: ");
+        System.out.println(sudokuBoard);
+        
         for (var i = 0; i < board.length; i++) {
             for (var j = 0; j < board.length; j++) {
                 if (board[i][j] == 0) {
@@ -162,7 +159,7 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
             }
         }
         
-        var sudokuBoard = new SudokuBoard(board, staticCells);
+        sudokuBoard = new SudokuBoard(board, staticCells);
         var nanoTimer = new NanoTimer();
         var sudokuProblem = new SudokuProblem();
         
@@ -170,7 +167,7 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
         var population = sudokuProblem.generatePopulationFromIndividual(100, sudokuBoard);
         var solution = sudokuProblem.optimize(population, 1000, .05, .25);
         nanoTimer.stop();
-    
+        
         System.out.println();
         System.out.println("Solution for board: ");
         System.out.println(solution);

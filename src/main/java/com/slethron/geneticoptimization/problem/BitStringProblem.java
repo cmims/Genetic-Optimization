@@ -62,7 +62,7 @@ public class BitStringProblem extends PopulationGenerator<BitString> implements 
                 fitVal++;
             }
         }
-    
+        
         return fitVal;
     }
     

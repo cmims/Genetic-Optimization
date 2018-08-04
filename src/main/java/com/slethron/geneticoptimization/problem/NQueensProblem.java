@@ -71,7 +71,7 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
                 }
             }
         }
-    
+        
         return numberOfConflicts;
     }
     
@@ -85,7 +85,7 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
         var population = nQueensProblem.generatePopulation(1000);
         var solution = nQueensProblem.optimize(population, 1000, .06, .25);
         nanoTimer.stop();
-    
+        
         System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());
         System.out.println("Fitness of solution is: " + nQueensProblem.fitness(solution));
         System.out.println("(Fitness of 0.0 is solved, greater than 0 is unsolved)");

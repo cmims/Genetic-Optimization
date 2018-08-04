@@ -78,7 +78,7 @@ public class StringMatchProblem extends PopulationGenerator<String> implements G
         var population = stringMatchProblem.generatePopulation(10000);
         var solution = stringMatchProblem.optimize(population, 1000, .05, .25);
         nanoTimer.stop();
-    
+        
         System.out.println("Solution for target='" + target + "' found in " + nanoTimer.toString());
         System.out.println("Solution: " + solution);
     }

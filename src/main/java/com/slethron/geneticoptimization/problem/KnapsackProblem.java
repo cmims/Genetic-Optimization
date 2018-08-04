@@ -106,15 +106,15 @@ public class KnapsackProblem extends PopulationGenerator<Knapsack> implements Ge
         var maxItemWeightValue = 50;
         var random = new Random();
         var nanoTimer = new NanoTimer();
-
+        
         var itemsToPut = IntStream.range(0, numberOfItems)
                 .mapToObj(i -> new Knapsack.KnapsackItem(i, random.nextInt(maxItemWeightValue), random.nextInt(maxItemWeightValue)))
                 .collect(Collectors.toList());
-
+        
         for (var item : itemsToPut) {
             System.out.println(item);
         }
-
+        
         var maxWeight = random.nextInt(100) + 50;
         var knapsackProblem = new KnapsackProblem(maxWeight, itemsToPut);
         
