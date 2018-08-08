@@ -2,7 +2,7 @@ package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.domain.NQueensBoard;
 import com.slethron.geneticoptimization.problem.NQueensProblem;
-import com.slethron.geneticoptimization.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,8 +32,8 @@ public class NQueensProblemTest {
     
     @Test
     public void generateIndividualFromParentsGeneratesChildThatHasElementsFromOneOrBothParents() {
-        var parentA = RandomUtil.generateRandomNQueensBoard(n);
-        var parentB = RandomUtil.generateRandomNQueensBoard(n);
+        var parentA = RandomGeneratorUtil.generateRandomNQueensBoard(n);
+        var parentB = RandomGeneratorUtil.generateRandomNQueensBoard(n);
         
         var child = nQueensProblem.generateIndividualFromParents(parentA, parentB);
         

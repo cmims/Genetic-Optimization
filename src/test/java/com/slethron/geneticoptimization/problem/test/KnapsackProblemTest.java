@@ -2,7 +2,7 @@ package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.problem.KnapsackProblem;
-import com.slethron.geneticoptimization.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,8 +44,8 @@ public class KnapsackProblemTest {
     
     @Test
     public void generateIndividualFromParentsGeneratesChildThatHasElementsFromOneOrBothParents() {
-        var parentA = RandomUtil.generateRandomKnapsack(maxWeight, items);
-        var parentB = RandomUtil.generateRandomKnapsack(maxWeight, items);
+        var parentA = RandomGeneratorUtil.generateRandomKnapsack(maxWeight, items);
+        var parentB = RandomGeneratorUtil.generateRandomKnapsack(maxWeight, items);
         
         var child = knapsackProblem.generateIndividualFromParents(parentA, parentB);
         

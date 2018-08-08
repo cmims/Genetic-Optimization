@@ -4,7 +4,7 @@ import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
-import com.slethron.geneticoptimization.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 
 import java.util.List;
 import java.util.Random;
@@ -24,7 +24,7 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
     public List<NQueensBoard> generatePopulation(int populationSize) {
         return IntStream.range(0, populationSize)
                 .parallel().unordered()
-                .mapToObj(nQueensBoard -> RandomUtil.generateRandomNQueensBoard(n))
+                .mapToObj(nQueensBoard -> RandomGeneratorUtil.generateRandomNQueensBoard(n))
                 .collect(Collectors.toList());
     }
     

@@ -1,7 +1,7 @@
 package com.slethron.geneticoptimization.util.test;
 
 import com.slethron.geneticoptimization.domain.Knapsack;
-import com.slethron.geneticoptimization.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 import org.junit.Test;
 
 import java.util.Random;
@@ -15,14 +15,14 @@ public class RandomUtilTest {
     @Test
     public void generateRandomStringOf25Characters() {
         var length = 25;
-        var randomString = RandomUtil.generateRandomString(length);
+        var randomString = RandomGeneratorUtil.generateRandomString(length);
         assertEquals(length, randomString.length());
     }
     
     @Test
     public void generateRandomBitStringOf25Bits() {
         var length = 25;
-        var randomBitString = RandomUtil.generateRandomBitString(length);
+        var randomBitString = RandomGeneratorUtil.generateRandomBitString(length);
         for (var i = 0; i < length; i++) {
             assertTrue(randomBitString.get(i) || !randomBitString.get(i));
         }
@@ -31,7 +31,7 @@ public class RandomUtilTest {
     @Test
     public void generateRandomNQueensBoardOfNEquals12() {
         var n = 12;
-        var randomNQueensBoard = RandomUtil.generateRandomNQueensBoard(n);
+        var randomNQueensBoard = RandomGeneratorUtil.generateRandomNQueensBoard(n);
         for (var i = 0; i < n; i++) {
             assertTrue(randomNQueensBoard.get(i) >= 0 && randomNQueensBoard.get(i) < n);
         }
@@ -49,7 +49,7 @@ public class RandomUtilTest {
                 .mapToObj(i -> new Knapsack.KnapsackItem(i, random.nextInt(maxItemWeightValue), random.nextInt(maxItemWeightValue)))
                 .collect(Collectors.toList());
         
-        var randomKnapsack = RandomUtil.generateRandomKnapsack(maxKnapsackWeight, itemsToPut);
+        var randomKnapsack = RandomGeneratorUtil.generateRandomKnapsack(maxKnapsackWeight, itemsToPut);
         
         assertTrue(numberOfItems > randomKnapsack.getItems().size());
         assertEquals(maxKnapsackWeight, randomKnapsack.getMaxWeight());

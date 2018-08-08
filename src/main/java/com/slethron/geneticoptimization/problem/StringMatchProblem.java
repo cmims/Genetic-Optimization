@@ -3,7 +3,7 @@ package com.slethron.geneticoptimization.problem;
 import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.util.NanoTimer;
-import com.slethron.geneticoptimization.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class StringMatchProblem extends PopulationGenerator<String> implements G
     public List<String> generatePopulation(int populationSize) {
         var population = new ArrayList<String>();
         for (var i = 0; i < populationSize; i++) {
-            population.add(RandomUtil.generateRandomString(target.length()));
+            population.add(RandomGeneratorUtil.generateRandomString(target.length()));
         }
         
         return population;
