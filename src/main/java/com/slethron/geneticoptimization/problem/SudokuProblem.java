@@ -4,7 +4,6 @@ import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.SudokuBoardUtil;
-import javafx.util.Pair;
 
 import java.util.List;
 import java.util.Random;
@@ -48,7 +47,7 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
         var mutated = new SudokuBoard(individual);
         for (var i = 0; i < 9; i++) {
             for (var j = 0; j < 9; j++) {
-                if (individual.getStaticCells().contains(new Pair<>(i, j))) {
+                if (individual.isStatic(i, j)) {
                     continue;
                 }
                 if (random.nextDouble() <= mutationRate) {
