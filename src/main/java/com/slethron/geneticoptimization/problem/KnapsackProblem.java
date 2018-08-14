@@ -4,7 +4,7 @@ import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.util.NanoTimer;
-import com.slethron.geneticoptimization.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -50,7 +50,7 @@ public class KnapsackProblem extends PopulationGenerator<Knapsack> implements Ge
     public List<Knapsack> generatePopulation(int populationSize) {
         return IntStream.range(0, populationSize)
                 .parallel().unordered()
-                .mapToObj(knapsack -> RandomUtil.generateRandomKnapsack(maxWeight, itemsToPut))
+                .mapToObj(knapsack -> RandomGeneratorUtil.generateRandomKnapsack(maxWeight, itemsToPut))
                 .collect(Collectors.toList());
     }
     

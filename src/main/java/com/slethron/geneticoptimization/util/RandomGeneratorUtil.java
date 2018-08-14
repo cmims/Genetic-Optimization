@@ -18,8 +18,8 @@ import java.util.stream.IntStream;
  * class as a helper because their is no domain class that exists, where these methods would be placed,
  * as a means of defining the object as the subject of its problem class.
  */
-public class RandomUtil {
-    private RandomUtil() {
+public class RandomGeneratorUtil {
+    private RandomGeneratorUtil() {
     }
     
     /**

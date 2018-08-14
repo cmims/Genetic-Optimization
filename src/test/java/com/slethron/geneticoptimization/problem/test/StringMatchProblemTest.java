@@ -1,7 +1,7 @@
 package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.problem.StringMatchProblem;
-import com.slethron.geneticoptimization.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,8 +31,8 @@ public class StringMatchProblemTest {
     
     @Test
     public void generateIndividualFromParentsGeneratesChildWithElementsFromOneOrBothParents() {
-        var parentA = RandomUtil.generateRandomString(target.length());
-        var parentB = RandomUtil.generateRandomString(target.length());
+        var parentA = RandomGeneratorUtil.generateRandomString(target.length());
+        var parentB = RandomGeneratorUtil.generateRandomString(target.length());
         
         var child = stringMatchProblem.generateIndividualFromParents(parentA, parentB);
         

@@ -4,7 +4,7 @@ import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.BitString;
 import com.slethron.geneticoptimization.util.NanoTimer;
-import com.slethron.geneticoptimization.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class BitStringProblem extends PopulationGenerator<BitString> implements 
     public List<BitString> generatePopulation(int populationSize) {
         var population = new ArrayList<BitString>();
         for (var i = 0; i < populationSize; i++) {
-            population.add(RandomUtil.generateRandomBitString(length));
+            population.add(RandomGeneratorUtil.generateRandomBitString(length));
         }
         
         return population;

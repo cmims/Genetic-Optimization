@@ -1,7 +1,7 @@
 package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.problem.BitStringProblem;
-import com.slethron.geneticoptimization.util.RandomUtil;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,8 +31,8 @@ public class BitStringProblemTest {
     
     @Test
     public void generateIndividualFromParentsGeneratesChildWithElementsFromOneOrBothParents() {
-        var parentA = RandomUtil.generateRandomBitString(length);
-        var parentB = RandomUtil.generateRandomBitString(length);
+        var parentA = RandomGeneratorUtil.generateRandomBitString(length);
+        var parentB = RandomGeneratorUtil.generateRandomBitString(length);
         
         var child = bitStringProblem.generateIndividualFromParents(parentA, parentB);
         

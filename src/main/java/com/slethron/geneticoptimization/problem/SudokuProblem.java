@@ -5,6 +5,7 @@ import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.SudokuBoardUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -123,16 +124,18 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
     }
     
     public static void main(String[] args) {
-        var random = new Random();
+//        var random = new Random();
         var sudokuBoard = SudokuBoardUtil.getUnsolvedBoardX();
-    
-        for (var i = 0; i < 9; i++) {
-            for (var j = 0; j < 9; j++) {
-                if (sudokuBoard.get(i, j) == 0) {
-                    sudokuBoard.set(i, j, random.nextInt(9) + 1);
-                }
-            }
-        }
+//        var board = new int[9][9];
+//        var staticCells = new ArrayList<Pair<Integer, Integer>>();
+//        var sudokuBoard = new SudokuBoard(board, staticCells);
+//        for (var i = 0; i < 9; i++) {
+//            for (var j = 0; j < 9; j++) {
+//                if (sudokuBoard.get(i, j) == 0) {
+//                    sudokuBoard.set(i, j, random.nextInt(9) + 1);
+//                }
+//            }
+//        }
     
         System.out.println("Starting with board: ");
         System.out.println(sudokuBoard);
