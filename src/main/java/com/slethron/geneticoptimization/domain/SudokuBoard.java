@@ -1,51 +1,56 @@
 package com.slethron.geneticoptimization.domain;
 
-import javafx.util.Pair;
-
 import java.util.Arrays;
-import java.util.List;
 
 public class SudokuBoard {
     private int[][] board;
-    private List<Pair<Integer, Integer>> staticCells;
+    private boolean[][] staticCells;
     
     public SudokuBoard(SudokuBoard source) {
         board = source.board.clone();
         staticCells = source.staticCells;
     }
     
-    public SudokuBoard(int[][] board, List<Pair<Integer, Integer>> staticCells) {
+    public SudokuBoard(int[][] board, boolean[][] staticCells) {
         this.board = board;
         this.staticCells = staticCells;
     }
     
-    public int get(int column, int row) {
-        return board[column][row];
+    public int get(int row, int column) {
+        return board[row][column];
     }
     
-    public void set(int column, int row, int value) {
-        board[column][row] = value;
+    public boolean set(int row, int column, int value) {
+        if (isStatic(row, column)) {
+            return false;
+        }
+        board[row][column] = value;
+        return true;
     }
     
     public int[][] getBoard() {
         return board;
     }
     
-    public List<Pair<Integer, Integer>> getStaticCells() {
+    public boolean[][] getStaticCells() {
         return staticCells;
+    }
+    
+    public boolean isStatic(int row, int column) {
+        return staticCells[row][column];
     }
     
     @Override
     public String toString() {
         var builder = new StringBuilder();
-        for (var column = 0; column < board.length; column++) {
-            if (column == 3 || column == 6) {
+        for (var row = 0; row < board.length; row++) {
+            if (row == 3 || row == 6) {
                 builder.append("- - - + - - - + - - -\n");
             }
-            for (var row = 0; row < board.length; row++) {
-                builder.append(get(column, row) == 0 ? "." : get(column, row));
+            for (var column = 0; column < board.length; column++) {
+                builder.append(get(row, column) == 0 ? "." : get(row, column));
                 builder.append(" ");
-                if (row == 2 || row == 5) {
+                if (column == 2 || column == 5) {
                     builder.append("| ");
                 }
             }
@@ -68,17 +73,18 @@ public class SudokuBoard {
         var e = (SudokuBoard) obj;
         
         for (var i = 0; i < board.length; i++) {
-            for (var j = 0; j < board.length; j++) {
+            for (var j = 0; j < board[i].length; j++) {
                 if (e.get(i, j) != get(i, j)) {
                     return false;
                 }
             }
         }
         
-        for (var i = 0; i < staticCells.size(); i++) {
-            if (staticCells.get(i).getKey().equals(e.staticCells.get(i).getKey())
-                    && staticCells.get(i).getValue().equals(e.staticCells.get(i).getValue())) {
-                return false;
+        for (var i = 0; i < staticCells.length; i++) {
+            for (var j = 0; j < staticCells[i].length; j++) {
+                if (e.isStatic(i, j) != isStatic(i, j)) {
+                    return false;
+                }
             }
         }
         

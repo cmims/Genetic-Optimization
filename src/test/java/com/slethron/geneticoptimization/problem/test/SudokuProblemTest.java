@@ -18,10 +18,10 @@ public class SudokuProblemTest {
         sudokuProblem = new SudokuProblem();
         boardX = SudokuBoardUtil.getUnsolvedBoardX();
         
-        for (var column = 0; column < 9; column++) {
-            for (var row = 0; row < 9; row++) {
-                if (boardX.get(column, row) == 0) {
-                    boardX.set(column, row, 1);
+        for (var row = 0; row < 9; row++) {
+            for (var column = 0; column < 9; column++) {
+                if (boardX.get(row, column) == 0) {
+                    boardX.set(row, column, 1);
                 }
             }
         }
@@ -30,8 +30,8 @@ public class SudokuProblemTest {
     @Test
     public void boardXHas1WhereStaticCellsAreNot() {
         for (var i = 0; i < boardX.getBoard().length; i++) {
-            for (var j = 0; j < boardX.getBoard().length; j++) {
-                if (!boardX.getStaticCells().contains(new Pair<>(i, j))) {
+            for (var j = 0; j < boardX.getBoard()[i].length; j++) {
+                if (!boardX.isStatic(i, j)) {
                     assertEquals(1, boardX.get(i, j), 0);
                 }
             }
@@ -46,7 +46,7 @@ public class SudokuProblemTest {
         assertEquals(size, population.size());
         for (var sudokuBoard : population) {
             assertNotNull(sudokuBoard);
-            assertEquals(boardX.getStaticCells(), sudokuBoard.getStaticCells());
+            assertArrayEquals(boardX.getStaticCells(), sudokuBoard.getStaticCells());
         }
     }
     
@@ -58,9 +58,9 @@ public class SudokuProblemTest {
         
         var child = sudokuProblem.generateIndividualFromParents(parentA, parentB);
         
-        assertEquals(boardX.getStaticCells(), child.getStaticCells());
+        assertArrayEquals(boardX.getStaticCells(), child.getStaticCells());
         for (var i = 0; i < child.getBoard().length; i++) {
-            for (var j = 0; j < child.getBoard().length; j++) {
+            for (var j = 0; j < child.getBoard()[i].length; j++) {
                 assertTrue(child.get(i, j) == parentA.get(i, j) || child.get(i, j) == parentB.get(i, j));
             }
         }
@@ -68,7 +68,7 @@ public class SudokuProblemTest {
     
     @Test
     public void getFitnessOfBoardX() {
-        var expectedFitness = 542;
+        var expectedFitness = 634;
         assertEquals(expectedFitness, sudokuProblem.fitness(boardX), 0);
     }
 }

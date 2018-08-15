@@ -11,6 +11,7 @@ public class SudokuBoardUtil {
     
     /**
      * Temporary method to use to get a SudokuBoard until further development of SudokuBoard generator
+     *
      * @return SudokuBoard X
      */
     public static SudokuBoard getUnsolvedBoardX() {
@@ -25,17 +26,16 @@ public class SudokuBoardUtil {
                 { 3, 0, 0, 8, 0, 6, 0, 9, 0 },
                 { 0, 4, 2, 7, 0, 0, 0, 0, 3 }
         };
-    
-        var staticCells = new ArrayList<Pair<Integer, Integer>>() {{
-            for (var i = 0; i < board.length; i++) {
-                for (var j = 0; j < board.length; j++) {
-                    if (board[i][j] != 0) {
-                        add(new Pair<>(i, j));
-                    }
+        
+        var staticCells = new boolean[9][9];
+        for (var i = 0; i < board.length; i++) {
+            for (var j = 0; j < board[i].length; j++) {
+                if (board[i][j] != 0) {
+                    staticCells[i][j] = true;
                 }
             }
-        }};
-    
+        }
+        
         return new SudokuBoard(board, staticCells);
     }
 }

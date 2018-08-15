@@ -28,12 +28,12 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
     
     @Override
     public SudokuBoard generateIndividualFromParents(SudokuBoard parentA, SudokuBoard parentB) {
-        var splitCol = random.nextInt(9);
         var splitRow = random.nextInt(9);
+        var splitCol = random.nextInt(9);
         var board = new int[9][9];
         for (var i = 0; i < 9; i++) {
             for (var j = 0; j < 9; j++) {
-                if (i <= splitCol && j <= splitRow) {
+                if (i <= splitRow && j <= splitCol) {
                     board[i][j] = parentA.get(i, j);
                 } else {
                     board[i][j] = parentB.get(i, j);
@@ -49,7 +49,7 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
         var mutated = new SudokuBoard(individual);
         for (var i = 0; i < 9; i++) {
             for (var j = 0; j < 9; j++) {
-                if (individual.getStaticCells().contains(new Pair<>(i, j))) {
+                if (individual.isStatic(i, j)) {
                     continue;
                 }
                 if (random.nextDouble() <= mutationRate) {
@@ -65,55 +65,27 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
     @Override
     public double fitness(SudokuBoard individual) {
         var numberOfConflicts = 0;
-        for (var column = 0; column < 9; column++) {
-            for (var row = 0; row < 9; row++) {
-                var num = individual.get(column, row);
+        for (var row = 0; row < 9; row++) {
+            for (var column = 0; column < 9; column++) {
+                var num = individual.get(row, column);
                 
                 if (num == 0) break;
                 
                 for (var i = 0; i < 9; i++) {
-                    if (i != column && individual.getBoard()[i][row] == num) {
+                    if (i != row && individual.getBoard()[i][column] == num) {
                         numberOfConflicts++;
                     }
-                    if (i != row && individual.getBoard()[column][i] == num) {
+                    if (i != column && individual.getBoard()[row][i] == num) {
                         numberOfConflicts++;
                     }
                 }
                 
-                int subGridOriginY;
-                int subGridOriginX;
-                if (column < 3 && row < 3) {
-                    subGridOriginY = 0;
-                    subGridOriginX = 0;
-                } else if (column < 3 && row < 6) {
-                    subGridOriginY = 0;
-                    subGridOriginX = 3;
-                } else if (column < 3) {
-                    subGridOriginY = 0;
-                    subGridOriginX = 6;
-                } else if (column < 6 && row < 3) {
-                    subGridOriginY = 3;
-                    subGridOriginX = 0;
-                } else if (column < 6 && row < 6) {
-                    subGridOriginY = 3;
-                    subGridOriginX = 3;
-                } else if (column < 6) {
-                    subGridOriginY = 3;
-                    subGridOriginX = 6;
-                } else if (row < 3) {
-                    subGridOriginY = 6;
-                    subGridOriginX = 0;
-                } else if (row < 6) {
-                    subGridOriginY = 6;
-                    subGridOriginX = 3;
-                } else {
-                    subGridOriginY = 6;
-                    subGridOriginX = 6;
-                }
+                var subGridOriginRow = (row / 3) * 3;
+                var subGridOriginCol = (column / 3) * 3;
                 
-                for (var i = subGridOriginY; i < subGridOriginY + 3; i++) {
-                    for (var j = subGridOriginX; j < subGridOriginX + 3; j++) {
-                        if (i != column && j != row && individual.getBoard()[i][j] == num) {
+                for (var i = subGridOriginRow; i < subGridOriginRow + 3; i++) {
+                    for (var j = subGridOriginCol; j < subGridOriginCol + 3; j++) {
+                        if (!(i == row && j == column) && individual.get(i, j) == num) {
                             numberOfConflicts++;
                         }
                     }
@@ -125,18 +97,7 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
     }
     
     public static void main(String[] args) {
-//        var random = new Random();
         var sudokuBoard = SudokuBoardUtil.getUnsolvedBoardX();
-//        var board = new int[9][9];
-//        var staticCells = new ArrayList<Pair<Integer, Integer>>();
-//        var sudokuBoard = new SudokuBoard(board, staticCells);
-//        for (var i = 0; i < 9; i++) {
-//            for (var j = 0; j < 9; j++) {
-//                if (sudokuBoard.get(i, j) == 0) {
-//                    sudokuBoard.set(i, j, random.nextInt(9) + 1);
-//                }
-//            }
-//        }
     
         System.out.println("Starting with board: ");
         System.out.println(sudokuBoard);
