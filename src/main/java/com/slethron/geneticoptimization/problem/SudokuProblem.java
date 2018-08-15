@@ -4,7 +4,6 @@ import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.SudokuBoardUtil;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
