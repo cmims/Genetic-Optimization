@@ -125,7 +125,13 @@ public class KnapsackProblem extends PopulationGenerator<Knapsack> implements Ge
         
         System.out.println("Solution for maxWeight=" + maxWeight + " and selected items found in "
                 + nanoTimer.toString());
-        System.out.println("Fitness of solution is: " + knapsackProblem.fitness(solution));
+        System.out.println("Fitness of knapsack is: "
+                + knapsackProblem.fitness(solution)
+                + " (value="
+                + solution.getTotalValue()
+                + ", weight="
+                + solution.getTotalWeight()
+                + ")");
         System.out.println(solution);
     }
 }
