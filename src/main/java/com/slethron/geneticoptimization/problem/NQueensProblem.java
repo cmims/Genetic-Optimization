@@ -78,12 +78,12 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
     public static void main(String[] args) {
         var nanoTimer = new NanoTimer();
         
-        var n = 24;
+        var n = 48;
         var nQueensProblem = new NQueensProblem(n);
         
         nanoTimer.start();
         var population = nQueensProblem.generatePopulation(1000);
-        var solution = nQueensProblem.optimize(population, 1000, .06, .25);
+        var solution = nQueensProblem.optimize(population, 1000, .05, .25);
         nanoTimer.stop();
         
         System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());

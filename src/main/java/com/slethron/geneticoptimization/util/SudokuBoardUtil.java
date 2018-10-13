@@ -1,9 +1,6 @@
 package com.slethron.geneticoptimization.util;
 
 import com.slethron.geneticoptimization.domain.SudokuBoard;
-import javafx.util.Pair;
-
-import java.util.ArrayList;
 
 public class SudokuBoardUtil {
     private SudokuBoardUtil() {

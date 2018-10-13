@@ -120,7 +120,7 @@ public class KnapsackProblem extends PopulationGenerator<Knapsack> implements Ge
         
         nanoTimer.start();
         var population = knapsackProblem.generatePopulation(10000);
-        var solution = knapsackProblem.optimize(population, 1000, .06, .25);
+        var solution = knapsackProblem.optimize(population, 1000, .05, .25);
         nanoTimer.stop();
         
         System.out.println("Solution for maxWeight=" + maxWeight + " and selected items found in "
