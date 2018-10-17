@@ -22,12 +22,12 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
         var splitRow = random.nextInt(SudokuBoard.SIZE);
         var splitCol = random.nextInt(SudokuBoard.SIZE);
         var board = new int[SudokuBoard.SIZE][SudokuBoard.SIZE];
-        for (var i = 0; i < SudokuBoard.SIZE; i++) {
-            for (var j = 0; j < SudokuBoard.SIZE; j++) {
-                if (i <= splitRow && j <= splitCol) {
-                    board[i][j] = parentA.get(i, j);
+        for (var row = 0; row < SudokuBoard.SIZE; row++) {
+            for (var column = 0; column < SudokuBoard.SIZE; column++) {
+                if (row <= splitRow && column <= splitCol) {
+                    board[row][column] = parentA.get(row, column);
                 } else {
-                    board[i][j] = parentB.get(i, j);
+                    board[row][column] = parentB.get(row, column);
                 }
             }
         }
@@ -38,14 +38,14 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
     @Override
     public SudokuBoard mutate(SudokuBoard individual, double mutationRate) {
         var mutated = individual.clone();
-        for (var i = 0; i < 9; i++) {
-            for (var j = 0; j < 9; j++) {
-                if (individual.isStatic(i, j)) {
+        for (var row = 0; row < SudokuBoard.SIZE; row++) {
+            for (var column = 0; column < SudokuBoard.SIZE; column++) {
+                if (individual.isStatic(row, column)) {
                     continue;
                 }
                 if (random.nextDouble() <= mutationRate) {
                     var value = random.nextInt(SudokuBoard.SIZE) + 1;
-                    mutated.set(i, j, value);
+                    mutated.set(row, column, value);
                 }
             }
         }
@@ -56,13 +56,13 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
     @Override
     public double fitness(SudokuBoard individual) {
         var numberOfConflicts = 0;
-        for (var row = 0; row < 9; row++) {
-            for (var column = 0; column < 9; column++) {
+        for (var row = 0; row < SudokuBoard.SIZE; row++) {
+            for (var column = 0; column < SudokuBoard.SIZE; column++) {
                 var num = individual.get(row, column);
                 
                 if (num == 0) break;
                 
-                for (var i = 0; i < 9; i++) {
+                for (var i = 0; i < SudokuBoard.SIZE; i++) {
                     if (i != row && individual.getBoard()[i][column] == num) {
                         numberOfConflicts++;
                     }
@@ -104,7 +104,7 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
         
         nanoTimer.start();
         var population = sudokuProblem.generatePopulationFromIndividual(100, sudokuBoard);
-        var solution = sudokuProblem.optimize(population, 10000, .05, .25);
+        var solution = sudokuProblem.optimize(population, 1000, .05, .25);
         nanoTimer.stop();
         
         System.out.println();
