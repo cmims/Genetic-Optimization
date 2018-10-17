@@ -2,8 +2,6 @@ package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.problem.SudokuProblem;
-import com.slethron.geneticoptimization.util.SudokuBoardUtil;
-import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
 

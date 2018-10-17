@@ -3,9 +3,8 @@ package com.slethron.geneticoptimization.problem;
 import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
-import com.slethron.geneticoptimization.util.SudokuBoardUtil;
+import com.slethron.geneticoptimization.util.SudokuGenerator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -18,20 +17,13 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
         random = new Random();
     }
     
-    public List<SudokuBoard> generatePopulationFromIndividual(int populationSize, SudokuBoard individual) {
-        return IntStream.range(0, populationSize)
-                .parallel().unordered()
-                .mapToObj(sudokuBoard -> mutate(individual, 1))
-                .collect(Collectors.toList());
-    }
-    
     @Override
     public SudokuBoard generateIndividualFromParents(SudokuBoard parentA, SudokuBoard parentB) {
-        var splitRow = random.nextInt(9);
-        var splitCol = random.nextInt(9);
-        var board = new int[9][9];
-        for (var i = 0; i < 9; i++) {
-            for (var j = 0; j < 9; j++) {
+        var splitRow = random.nextInt(SudokuBoard.SIZE);
+        var splitCol = random.nextInt(SudokuBoard.SIZE);
+        var board = new int[SudokuBoard.SIZE][SudokuBoard.SIZE];
+        for (var i = 0; i < SudokuBoard.SIZE; i++) {
+            for (var j = 0; j < SudokuBoard.SIZE; j++) {
                 if (i <= splitRow && j <= splitCol) {
                     board[i][j] = parentA.get(i, j);
                 } else {
@@ -45,14 +37,14 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
     
     @Override
     public SudokuBoard mutate(SudokuBoard individual, double mutationRate) {
-        var mutated = new SudokuBoard(individual);
+        var mutated = individual.clone();
         for (var i = 0; i < 9; i++) {
             for (var j = 0; j < 9; j++) {
                 if (individual.isStatic(i, j)) {
                     continue;
                 }
                 if (random.nextDouble() <= mutationRate) {
-                    var value = random.nextInt(9) + 1;
+                    var value = random.nextInt(SudokuBoard.SIZE) + 1;
                     mutated.set(i, j, value);
                 }
             }
@@ -95,21 +87,28 @@ public class SudokuProblem implements GeneticOptimizer<SudokuBoard> {
         return numberOfConflicts;
     }
     
+    private List<SudokuBoard> generatePopulationFromIndividual(int populationSize, SudokuBoard individual) {
+        return IntStream.range(0, populationSize)
+                .parallel().unordered()
+                .mapToObj(sudokuBoard -> mutate(individual, 1))
+                .collect(Collectors.toList());
+    }
+    
     public static void main(String[] args) {
-        var sudokuBoard = SudokuBoardUtil.getUnsolvedBoardX();
+        var nanoTimer = new NanoTimer();
+        var sudokuProblem = new SudokuProblem();
+        var sudokuBoard = new SudokuGenerator().generateRandomSolvableSudokuBoard();
     
         System.out.println("Starting with board: ");
         System.out.println(sudokuBoard);
-        var nanoTimer = new NanoTimer();
-        var sudokuProblem = new SudokuProblem();
         
         nanoTimer.start();
         var population = sudokuProblem.generatePopulationFromIndividual(100, sudokuBoard);
-        var solution = sudokuProblem.optimize(population, 1000, .05, .25);
+        var solution = sudokuProblem.optimize(population, 10000, .05, .25);
         nanoTimer.stop();
         
         System.out.println();
-        System.out.println("Solution for board: ");
+        System.out.println("Solution for board found in " + nanoTimer.toString());
         System.out.println(solution);
         System.out.println("Fitness of Solution: " + sudokuProblem.fitness(solution));
     }

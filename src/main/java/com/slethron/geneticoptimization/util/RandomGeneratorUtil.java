@@ -3,9 +3,9 @@ package com.slethron.geneticoptimization.util;
 import com.slethron.geneticoptimization.domain.BitString;
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
+import com.slethron.geneticoptimization.domain.SudokuBoard;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,8 +19,7 @@ import java.util.stream.IntStream;
  * as a means of defining the object as the subject of its problem class.
  */
 public class RandomGeneratorUtil {
-    private RandomGeneratorUtil() {
-    }
+    private RandomGeneratorUtil() { }
     
     /**
      * Generates a string containing random UTF-16 characters. An arbitrary integer within the bounds of
@@ -41,7 +40,7 @@ public class RandomGeneratorUtil {
     /**
      * Generates a BitString containing random boolean values.
      *
-     * @param length The bit length of the string of bits to be generated
+     * @param length The length of the string of bits to be generated
      * @return The generated random BitString
      */
     public static BitString generateRandomBitString(int length) {
@@ -78,7 +77,7 @@ public class RandomGeneratorUtil {
      * 2) not all of the items specified in the list are also in the knapsack
      *
      * It is necessary to have remaining items in the list after execution of this method.
-     * IllegalArgumentException is thrown if the case where the items to put are exhausted.
+     * IllegalArgumentException is thrown if the case where the items to put are exhausted is met.
      *
      * @param maxWeight  The maxWeight of the knapsack object being generated
      * @param itemsToPut The items to randomly put in the bag
@@ -100,5 +99,9 @@ public class RandomGeneratorUtil {
         }
         
         return knapsack;
+    }
+    
+    public static SudokuBoard generateRandomSolvableSudokuBoard() {
+        return new SudokuGenerator().generateRandomSolvableSudokuBoard();
     }
 }
