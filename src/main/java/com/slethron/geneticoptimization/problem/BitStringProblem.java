@@ -20,7 +20,7 @@ public class BitStringProblem extends PopulationGenerator<BitString> implements 
     }
     
     @Override
-    public List<BitString> generatePopulation(int populationSize) {
+    public List<BitString> generateInitialPopulation(int populationSize) {
         var population = new ArrayList<BitString>();
         for (var i = 0; i < populationSize; i++) {
             population.add(RandomGeneratorUtil.generateRandomBitString(length));
@@ -73,8 +73,9 @@ public class BitStringProblem extends PopulationGenerator<BitString> implements 
         var bitStringProblem = new BitStringProblem(length);
         
         nanoTimer.start();
-        var population = bitStringProblem.generatePopulation(10000);
-        var solution = bitStringProblem.optimize(population, 1000, .05, .25);
+        var population = bitStringProblem.generateInitialPopulation(10000);
+        population = bitStringProblem.optimize(population, 1000, .05, .25);
+        var solution = population.get(0);
         nanoTimer.stop();
         
         System.out.print("Solution: ");

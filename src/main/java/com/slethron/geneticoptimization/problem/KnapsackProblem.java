@@ -26,7 +26,7 @@ public class KnapsackProblem extends PopulationGenerator<Knapsack> implements Ge
     }
     
     @Override
-    public Knapsack optimize(List<Knapsack> population, int generationLimit, double mutationRate, double fittestSampleRatio) {
+    public List<Knapsack> optimize(List<Knapsack> population, int generationLimit, double mutationRate, double fittestSampleRatio) {
         for (var generation = 0; generation < generationLimit; generation++) {
             var p = population;
             population = population.parallelStream()
@@ -42,12 +42,12 @@ public class KnapsackProblem extends PopulationGenerator<Knapsack> implements Ge
                     }).sorted(Comparator.comparingDouble(this::fitness).reversed())
                     .collect(Collectors.toList());
         }
-        
-        return population.get(0);
+
+        return population;
     }
     
     @Override
-    public List<Knapsack> generatePopulation(int populationSize) {
+    public List<Knapsack> generateInitialPopulation(int populationSize) {
         return IntStream.range(0, populationSize)
                 .parallel().unordered()
                 .mapToObj(knapsack -> RandomGeneratorUtil.generateRandomKnapsack(maxWeight, itemsToPut))
@@ -119,8 +119,9 @@ public class KnapsackProblem extends PopulationGenerator<Knapsack> implements Ge
         var knapsackProblem = new KnapsackProblem(maxWeight, itemsToPut);
         
         nanoTimer.start();
-        var population = knapsackProblem.generatePopulation(10000);
-        var solution = knapsackProblem.optimize(population, 1000, .05, .25);
+        var population = knapsackProblem.generateInitialPopulation(10000);
+        population = knapsackProblem.optimize(population, 1000, .05, .25);
+        var solution = population.get(0);
         nanoTimer.stop();
         
         System.out.println("Solution for maxWeight=" + maxWeight + " and selected items found in "

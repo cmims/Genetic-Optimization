@@ -100,8 +100,4 @@ public class RandomGeneratorUtil {
         
         return knapsack;
     }
-    
-    public static SudokuBoard generateRandomSolvableSudokuBoard() {
-        return new SudokuGenerator().generateRandomSolvableSudokuBoard();
-    }
 }

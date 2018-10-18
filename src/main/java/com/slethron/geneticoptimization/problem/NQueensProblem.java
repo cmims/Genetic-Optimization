@@ -21,7 +21,7 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
     }
     
     @Override
-    public List<NQueensBoard> generatePopulation(int populationSize) {
+    public List<NQueensBoard> generateInitialPopulation(int populationSize) {
         return IntStream.range(0, populationSize)
                 .parallel().unordered()
                 .mapToObj(nQueensBoard -> RandomGeneratorUtil.generateRandomNQueensBoard(n))
@@ -78,12 +78,13 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
     public static void main(String[] args) {
         var nanoTimer = new NanoTimer();
         
-        var n = 48;
+        var n = 12;
         var nQueensProblem = new NQueensProblem(n);
         
         nanoTimer.start();
-        var population = nQueensProblem.generatePopulation(1000);
-        var solution = nQueensProblem.optimize(population, 1000, .05, .25);
+        var population = nQueensProblem.generateInitialPopulation(1000);
+        population = nQueensProblem.optimize(population, 1000, .05, .25);
+        var solution = population.get(0);
         nanoTimer.stop();
         
         System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());

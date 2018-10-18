@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 
 public interface GeneticOptimizer<E> {
     
-    default E optimize(List<E> population, int generationLimit, double mutationRate, double fittestSampleRatio) {
+    default List<E> optimize(List<E> population, int generationLimit, double mutationRate, double fittestSampleRatio) {
         for (var generation = 0; generation < generationLimit; generation++) {
             var p = population;
-            population = population.parallelStream()
+            population = p.parallelStream()
                     .map(individual -> {
                         var sampleBound = (int) Math.rint(p.size() * fittestSampleRatio);
                         var child = generateIndividualFromParents(
@@ -22,13 +22,9 @@ public interface GeneticOptimizer<E> {
                         return child;
                     }).sorted(Comparator.comparingDouble(this::fitness))
                     .collect(Collectors.toList());
-            
-            if (fitness(population.get(0)) == 0) {
-                return population.get(0);
-            }
         }
-        
-        return population.get(0);
+
+        return population;
     }
     
     E generateIndividualFromParents(E parentA, E parentB);

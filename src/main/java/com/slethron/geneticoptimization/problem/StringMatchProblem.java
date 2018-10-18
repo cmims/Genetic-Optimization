@@ -19,7 +19,7 @@ public class StringMatchProblem extends PopulationGenerator<String> implements G
     }
     
     @Override
-    public List<String> generatePopulation(int populationSize) {
+    public List<String> generateInitialPopulation(int populationSize) {
         var population = new ArrayList<String>();
         for (var i = 0; i < populationSize; i++) {
             population.add(RandomGeneratorUtil.generateRandomString(target.length()));
@@ -75,8 +75,9 @@ public class StringMatchProblem extends PopulationGenerator<String> implements G
         var stringMatchProblem = new StringMatchProblem(target);
         
         nanoTimer.start();
-        var population = stringMatchProblem.generatePopulation(10000);
-        var solution = stringMatchProblem.optimize(population, 1000, .05, .25);
+        var population = stringMatchProblem.generateInitialPopulation(10000);
+        population = stringMatchProblem.optimize(population, 1000, .05, .25);
+        var solution = population.get(0);
         nanoTimer.stop();
         
         System.out.println("Solution for target='" + target + "' found in " + nanoTimer.toString());
