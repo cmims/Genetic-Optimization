@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class RandomUtilTest {
+public class RandomGeneratorUtilTest {
     @Test
     public void generateRandomStringOf25Characters() {
         var length = 25;

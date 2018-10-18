@@ -20,7 +20,7 @@ public class BitStringProblemTest {
     @Test
     public void generatePopulationOfSize100OfLength10BitStrings() {
         var size = 100;
-        var population = bitStringProblem.generatePopulation(size);
+        var population = bitStringProblem.generateInitialPopulation(size);
         
         assertEquals(size, population.size());
         for (var individual : population) {

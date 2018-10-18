@@ -20,7 +20,7 @@ public class StringMatchProblemTest {
     @Test
     public void generatePopulationOfSize100OfLength10Strings() {
         var size = 100;
-        var population = stringMatchProblem.generatePopulation(size);
+        var population = stringMatchProblem.generateInitialPopulation(size);
         
         assertEquals(size, population.size());
         for (var item : population) {

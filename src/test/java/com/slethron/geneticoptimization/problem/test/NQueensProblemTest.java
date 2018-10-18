@@ -21,7 +21,7 @@ public class NQueensProblemTest {
     @Test
     public void generatePopulationOfSize100OfNEquals12Boards() {
         var size = 100;
-        var population = nQueensProblem.generatePopulation(size);
+        var population = nQueensProblem.generateInitialPopulation(size);
         
         assertEquals(size, population.size());
         for (var nQueensBoard : population) {
