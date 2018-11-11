@@ -52,7 +52,7 @@ public class SudokuProblem extends PopulationGenerator<SudokuBoard> implements G
 
     @Override
     public SudokuBoard mutate(SudokuBoard individual, double mutationRate) {
-        var mutated = individual.clone();
+        var mutated = new SudokuBoard(individual);
         for (var row = 0; row < SudokuBoard.SIZE; row++) {
             for (var column = 0; column < SudokuBoard.SIZE; column++) {
                 if (individual.isStatic(row, column)) {
@@ -104,7 +104,7 @@ public class SudokuProblem extends PopulationGenerator<SudokuBoard> implements G
 
     public static void main(String[] args) {
         var nanoTimer = new NanoTimer();
-        var sudokuBoard = new SudokuGenerator().generateRandomSolvableSudokuBoard();
+        var sudokuBoard = new SudokuGenerator().generateRandomSolvableSudokuBoard(20);
         var sudokuProblem = new SudokuProblem(sudokuBoard);
 
         System.out.println("Starting with board: ");

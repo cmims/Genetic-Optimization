@@ -2,7 +2,7 @@ package com.slethron.geneticoptimization.domain;
 
 import java.util.Arrays;
 
-public class SudokuBoard implements Cloneable {
+public class SudokuBoard {
     public static final int EMPTY = 0;
     public static final int SIZE = 9;
     
@@ -12,6 +12,17 @@ public class SudokuBoard implements Cloneable {
     public SudokuBoard() {
         board = new int[SIZE][SIZE];
         staticCells = new boolean[SIZE][SIZE];
+    }
+    
+    public SudokuBoard(SudokuBoard source) {
+        board = new int[SIZE][SIZE];
+        staticCells = new boolean[SIZE][SIZE];
+        for (var row = 0; row < SIZE; row++) {
+            for (var column = 0; column < SIZE; column++) {
+                board[row][column] = source.board[row][column];
+                staticCells[row][column] = source.staticCells[row][column];
+            }
+        }
     }
     
     public SudokuBoard(int[][] board, boolean[][] staticCells) {
@@ -43,12 +54,11 @@ public class SudokuBoard implements Cloneable {
         return staticCells[row][column];
     }
     
-    public boolean setStatic(int row, int column) {
-        if (get(row, column) == EMPTY) {
-            return false;
+    public void setStatic(int row, int column) {
+        if (get(row, column) == 0) {
+            throw new IllegalStateException("Empty cell cannot be static.");
         }
         staticCells[row][column] = true;
-        return true;
     }
     
     @Override
@@ -105,23 +115,5 @@ public class SudokuBoard implements Cloneable {
     @Override
     public int hashCode() {
         return Arrays.hashCode(board);
-    }
-    
-    @Override
-    public SudokuBoard clone() {
-        SudokuBoard clone = null;
-        try {
-            clone = (SudokuBoard) super.clone();
-            clone.board = board.clone();
-            clone.staticCells = staticCells.clone();
-            for (var i = 0; i < SIZE; i++) {
-                clone.board[i] = board[i].clone();
-                clone.staticCells[i] = staticCells[i].clone();
-            }
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        
-        return clone;
     }
 }

@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public interface GeneticOptimizer<E> {
-    
     default List<E> optimize(List<E> population, int generationLimit, double mutationRate, double fittestSampleRatio) {
         for (var generation = 0; generation < generationLimit; generation++) {
             var p = population;

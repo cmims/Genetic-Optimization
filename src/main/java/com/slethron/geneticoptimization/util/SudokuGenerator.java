@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SudokuGenerator {
+    private static final int MIN_REQ_NUM_FILLED_CELLS = 20;
+    private static final int MAX_NUM_RETRIES_TO_SOLVE = 50;
+    
     private class SudokuSolver {
         private boolean solve(SudokuBoard board) {
             for (var row = 0; row < SudokuBoard.SIZE; row++) {
@@ -99,12 +102,18 @@ public class SudokuGenerator {
      *
      * @return The generated random Sudoku board
      */
-    public SudokuBoard generateRandomSolvableSudokuBoard() {
+    public SudokuBoard generateRandomSolvableSudokuBoard(int numberOfFilledCells) {
+        if (numberOfFilledCells < MIN_REQ_NUM_FILLED_CELLS) {
+            throw new IllegalArgumentException("This generator can only generate boards with minimum "
+                    + MIN_REQ_NUM_FILLED_CELLS + " filled cells.");
+        }
+        
         var random = new Random();
         var board = generateRandomSolvedSudokuBoard();
         
         var removedCount = 0;
-        while (removedCount < 81 - 16) {
+        var noSolutionCount = 0;
+        while (removedCount < SudokuBoard.SIZE * SudokuBoard.SIZE - numberOfFilledCells) {
             var row = random.nextInt(SudokuBoard.SIZE);
             var column = random.nextInt(SudokuBoard.SIZE);
             var removed = board.get(row, column);
@@ -116,10 +125,13 @@ public class SudokuGenerator {
             board.set(row, column, SudokuBoard.EMPTY);
             removedCount++;
 
-            var isSolvable = isSolvable(board);
-            if (!isSolvable) {
+            if (!isSolvable(board)) {
                 board.set(row, column, removed);
-                break;
+                removedCount--;
+                noSolutionCount++;
+                if (noSolutionCount > MAX_NUM_RETRIES_TO_SOLVE) {
+                    break;
+                }
             }
         }
         
@@ -154,11 +166,11 @@ public class SudokuGenerator {
     }
     
     private boolean isSolvable(SudokuBoard board) {
-        return new SudokuSolver().solve(board.clone());
+        return new SudokuSolver().solve(new SudokuBoard(board));
     }
     
     public static void main(String[] args) {
         var sudokuGenerator = new SudokuGenerator();
-        System.out.println(sudokuGenerator.generateRandomSolvableSudokuBoard());
+        System.out.println(sudokuGenerator.generateRandomSolvableSudokuBoard(20));
     }
 }
