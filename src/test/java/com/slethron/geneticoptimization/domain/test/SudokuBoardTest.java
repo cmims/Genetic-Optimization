@@ -17,9 +17,8 @@ public class SudokuBoardTest {
     }
 
     @Test
-    public void equalsReturnsTrueForBoardsThatAreTheSameAndFalseForBoardsThatArentAndCloneWorksProperly() {
-        var board2 = board.clone();
-        assertEquals(board.get(0, 0), board2.get(0, 0));
+    public void equalsReturnsTrueForBoardsThatAreTheSameAndFalseForBoardsThatArent() {
+        var board2 = new SudokuBoard(board);
         assertEquals(board, board2);
         board2.set(0, 0, 2);
         assertNotEquals(board.get(0, 0), board2.get(0, 0));

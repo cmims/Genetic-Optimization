@@ -8,6 +8,7 @@ import com.slethron.geneticoptimization.util.SudokuGenerator;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -106,6 +107,7 @@ public class SudokuProblem extends PopulationGenerator<SudokuBoard> implements G
         var nanoTimer = new NanoTimer();
         var sudokuBoard = new SudokuGenerator().generateRandomSolvableSudokuBoard(20);
         var sudokuProblem = new SudokuProblem(sudokuBoard);
+        var scanner = new Scanner(System.in);
 
         System.out.println("Starting with board: ");
         System.out.println(sudokuBoard);
@@ -113,29 +115,38 @@ public class SudokuProblem extends PopulationGenerator<SudokuBoard> implements G
         var population = sudokuProblem.generateInitialPopulation(100);
         var solution = population.get(0);
 
-        nanoTimer.start();
-        var found = false;
-        for (var i = 1; i <= 10000; i++) {
-            population = sudokuProblem.optimize(population, 1, .05, .25);
+        while (true) {
+            nanoTimer.start();
+            var found = false;
+            for (var i = 1; i <= 10000; i++) {
+                population = sudokuProblem.optimize(population, 1, .05, .25);
 
-            if (sudokuProblem.fitness(population.get(0)) == 0) {
-                nanoTimer.stop();
-                solution = population.get(0);
-                found = true;
-                System.out.println("Solution found in " + nanoTimer.toString());
-                System.out.println("Found solved individual after " + i + " generations");
-                System.out.println(solution);
-                System.out.println("Fitness: " + sudokuProblem.fitness(solution));
-                break;
+                if (sudokuProblem.fitness(population.get(0)) == 0) {
+                    nanoTimer.stop();
+                    solution = population.get(0);
+                    found = true;
+                    System.out.println("Solution found in " + nanoTimer.toString());
+                    System.out.println("Found solved individual after " + i + " generations");
+                    System.out.println(solution);
+                    System.out.println("Fitness: " + sudokuProblem.fitness(solution));
+                    break;
+                }
             }
-        }
-        nanoTimer.stop();
+            nanoTimer.stop();
 
-        if (!found) {
-            System.out.println("Timer: " + nanoTimer.toString());
-            System.out.println("Best individual found: ");
-            System.out.println(population.get(0));
-            System.out.println("Fitness: " + sudokuProblem.fitness(population.get(0)));
+            if (found) {
+                break;
+            } else {
+                System.out.println("Timer: " + nanoTimer.toString());
+                System.out.println("Best individual found: ");
+                System.out.println(population.get(0));
+                System.out.println("Fitness: " + sudokuProblem.fitness(population.get(0)));
+
+                System.out.print("Continue optimizing the population? Enter 'n' to quit: ");
+                if (scanner.next().equalsIgnoreCase("n")) {
+                    break;
+                }
+            }
         }
     }
 }
