@@ -5,8 +5,9 @@ import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SplittableRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,6 +20,8 @@ import java.util.stream.IntStream;
  * as a means of defining the object as the subject of its problem class.
  */
 public class RandomGeneratorUtil {
+    private static final SplittableRandom RANDOM = new SplittableRandom();
+
     private RandomGeneratorUtil() { }
     
     private static final int UTF_16_UPPER_BOUND = 127;
@@ -33,8 +36,7 @@ public class RandomGeneratorUtil {
      */
     public static String generateRandomString(int length) {
         return IntStream.range(0, length)
-                .mapToObj(i -> ThreadLocalRandom.current().nextInt(UTF_16_UPPER_BOUND - UTF_16_LOWER_BOUND)
-                        + UTF_16_LOWER_BOUND)
+                .mapToObj(i -> RANDOM.nextInt(UTF_16_UPPER_BOUND - UTF_16_LOWER_BOUND) + UTF_16_LOWER_BOUND)
                 .map(Character::toChars)
                 .map(String::valueOf)
                 .collect(Collectors.joining());
@@ -50,7 +52,7 @@ public class RandomGeneratorUtil {
         var bits = new boolean[length];
         
         for (var i = 0; i < length; i++) {
-            bits[i] = ThreadLocalRandom.current().nextBoolean();
+            bits[i] = RANDOM.nextBoolean();
         }
         
         return new BitString(bits);
@@ -67,7 +69,7 @@ public class RandomGeneratorUtil {
     public static NQueensBoard generateRandomNQueensBoard(int n) {
         var board = new int[n];
         for (var i = 0; i < n; i++) {
-            board[i] = ThreadLocalRandom.current().nextInt(n);
+            board[i] = RANDOM.nextInt(n);
         }
         
         return new NQueensBoard(board);
@@ -90,7 +92,7 @@ public class RandomGeneratorUtil {
         var items = new ArrayList<>(itemsToPut);
         var knapsack = new Knapsack(maxWeight);
         for (var i = items.size(); i >= 1; i--) {
-            var itemToPut = items.get(ThreadLocalRandom.current().nextInt(items.size()));
+            var itemToPut = items.get(RANDOM.nextInt(items.size()));
             if (knapsack.put(itemToPut)) {
                 items.remove(itemToPut);
             }
@@ -111,7 +113,7 @@ public class RandomGeneratorUtil {
      * @param numberOfFilledCells The number of filled cells between
      * @return
      */
-    public static SudokuBoard generateRandomSolvableSudokuBoard(int numberOfFilledCells) {
+    public static SudokuBoard generateRandomSudokuBoard(int numberOfFilledCells) {
         if (numberOfFilledCells < MIN_REQ_NUM_FILLED_CELLS) {
             throw new IllegalArgumentException("This generator can only generate boards with minimum "
                     + MIN_REQ_NUM_FILLED_CELLS + " filled cells.");
@@ -120,13 +122,12 @@ public class RandomGeneratorUtil {
                     + "number of total cells.");
         }
     
-        var random = new SplittableRandom();
         var board = SudokuUtil.generateRandomSolvedSudokuBoard();
     
         var removedCount = 0;
         while (removedCount < SudokuBoard.SIZE * SudokuBoard.SIZE - numberOfFilledCells) {
-            var row = random.nextInt(SudokuBoard.SIZE);
-            var column = random.nextInt(SudokuBoard.SIZE);
+            var row = RANDOM.nextInt(SudokuBoard.SIZE);
+            var column = RANDOM.nextInt(SudokuBoard.SIZE);
             var removed = board.get(row, column);
         
             if (removed == SudokuBoard.EMPTY) {
@@ -154,6 +155,6 @@ public class RandomGeneratorUtil {
     }
     
     public static void main(String[] args) {
-        System.out.println(generateRandomSolvableSudokuBoard(20));
+        System.out.println(generateRandomSudokuBoard(20));
     }
 }

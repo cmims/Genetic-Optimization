@@ -1,5 +1,6 @@
 package com.slethron.geneticoptimization.problem;
 
+import com.slethron.geneticoptimization.DeterministicOptimizer;
 import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
@@ -11,15 +12,16 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements GeneticOptimizer<NQueensBoard> {
+public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements GeneticOptimizer<NQueensBoard>,
+        DeterministicOptimizer<NQueensBoard> {
     private Random random;
     private int n;
-    
+
     public NQueensProblem(int n) {
         random = new Random();
         this.n = n;
     }
-    
+
     @Override
     public List<NQueensBoard> generateInitialPopulation(int populationSize) {
         return IntStream.range(0, populationSize)
@@ -27,7 +29,7 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
                 .mapToObj(nQueensBoard -> RandomGeneratorUtil.generateRandomNQueensBoard(n))
                 .collect(Collectors.toList());
     }
-    
+
     @Override
     public NQueensBoard generateIndividualFromParents(NQueensBoard parentA, NQueensBoard parentB) {
         var split = random.nextInt(parentA.length());
@@ -39,10 +41,10 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
                 board[i] = parentB.get(i);
             }
         }
-        
+
         return new NQueensBoard(board);
     }
-    
+
     @Override
     public NQueensBoard mutate(NQueensBoard individual, double mutationRate) {
         var mutated = new NQueensBoard(individual);
@@ -52,10 +54,10 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
                 mutated.set(column, row);
             }
         }
-        
+
         return mutated;
     }
-    
+
     @Override
     public double fitness(NQueensBoard individual) {
         var numberOfConflicts = 0;
@@ -71,25 +73,26 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
                 }
             }
         }
-        
+
         return numberOfConflicts;
     }
-    
+
     public static void main(String[] args) {
         var nanoTimer = new NanoTimer();
-        
-        var n = 12;
+
+        var n = 24;
+        var populationSize = 5000;
         var nQueensProblem = new NQueensProblem(n);
-        
+
+        var population = nQueensProblem.generateInitialPopulation(populationSize);
+
         nanoTimer.start();
-        var population = nQueensProblem.generateInitialPopulation(1000);
-        population = nQueensProblem.optimize(population, 1000, .05, .25);
-        var solution = population.get(0);
+        var solution = nQueensProblem.deterministicOptimize(population, .05, .25);
         nanoTimer.stop();
-        
+        var fitness = nQueensProblem.fitness(solution);
+
         System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());
-        System.out.println("Fitness of solution is: " + nQueensProblem.fitness(solution));
-        System.out.println("(Fitness of 0.0 is solved, greater than 0 is unsolved)");
+        System.out.println("Fitness of solution is " + fitness);
         System.out.println(solution);
         System.out.println(solution.drawAsciiBoard('&', '.'));
     }
