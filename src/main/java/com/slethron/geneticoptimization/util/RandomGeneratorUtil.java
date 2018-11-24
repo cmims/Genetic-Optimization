@@ -21,6 +21,8 @@ import java.util.stream.IntStream;
 public class RandomGeneratorUtil {
     private RandomGeneratorUtil() { }
     
+    private static final int UTF_16_UPPER_BOUND = 127;
+    private static final int UTF_16_LOWER_BOUND = 32;
     /**
      * Generates a string containing random UTF-16 characters. An arbitrary integer within the bounds of
      * 127 (exclusive) and 32 (inclusive) can be converted into a char using the method toChars(int)
@@ -31,7 +33,8 @@ public class RandomGeneratorUtil {
      */
     public static String generateRandomString(int length) {
         return IntStream.range(0, length)
-                .mapToObj(i -> ThreadLocalRandom.current().nextInt(127 - 32) + 32)
+                .mapToObj(i -> ThreadLocalRandom.current().nextInt(UTF_16_UPPER_BOUND - UTF_16_LOWER_BOUND)
+                        + UTF_16_LOWER_BOUND)
                 .map(Character::toChars)
                 .map(String::valueOf)
                 .collect(Collectors.joining());
@@ -99,5 +102,58 @@ public class RandomGeneratorUtil {
         }
         
         return knapsack;
+    }
+    
+    private static final int MIN_REQ_NUM_FILLED_CELLS = 20;
+    /**
+     * Generates a random Sudoku board object with the specified number of filled static cells, such that the board
+     * exists in an unsolved state. The board is solvable.
+     * @param numberOfFilledCells The number of filled cells between
+     * @return
+     */
+    public static SudokuBoard generateRandomSolvableSudokuBoard(int numberOfFilledCells) {
+        if (numberOfFilledCells < MIN_REQ_NUM_FILLED_CELLS) {
+            throw new IllegalArgumentException("This generator can only generate boards with minimum "
+                    + MIN_REQ_NUM_FILLED_CELLS + " filled cells.");
+        } else if (numberOfFilledCells > SudokuBoard.SIZE * SudokuBoard.SIZE) {
+            throw new IllegalArgumentException("Cannot generate a board with number of filled cells greater than the "
+                    + "number of total cells.");
+        }
+    
+        var random = new SplittableRandom();
+        var board = SudokuUtil.generateRandomSolvedSudokuBoard();
+    
+        var removedCount = 0;
+        while (removedCount < SudokuBoard.SIZE * SudokuBoard.SIZE - numberOfFilledCells) {
+            var row = random.nextInt(SudokuBoard.SIZE);
+            var column = random.nextInt(SudokuBoard.SIZE);
+            var removed = board.get(row, column);
+        
+            if (removed == SudokuBoard.EMPTY) {
+                continue;
+            }
+        
+            board.set(row, column, SudokuBoard.EMPTY);
+            removedCount++;
+        
+            if (!SudokuUtil.isSolvable(board)) {
+                board.set(row, column, removed);
+                removedCount--;
+            }
+        }
+    
+        for (var row = 0; row < SudokuBoard.SIZE; row++) {
+            for (var column = 0; column < SudokuBoard.SIZE; column++) {
+                if (board.get(row, column) != SudokuBoard.EMPTY) {
+                    board.setStatic(row, column);
+                }
+            }
+        }
+    
+        return board;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(generateRandomSolvableSudokuBoard(20));
     }
 }

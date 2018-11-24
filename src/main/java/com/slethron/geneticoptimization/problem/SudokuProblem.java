@@ -4,7 +4,7 @@ import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
-import com.slethron.geneticoptimization.util.SudokuGenerator;
+import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 
 import java.util.List;
 import java.util.Random;
@@ -105,7 +105,7 @@ public class SudokuProblem extends PopulationGenerator<SudokuBoard> implements G
 
     public static void main(String[] args) {
         var nanoTimer = new NanoTimer();
-        var sudokuBoard = new SudokuGenerator().generateRandomSolvableSudokuBoard(20);
+        var sudokuBoard = RandomGeneratorUtil.generateRandomSolvableSudokuBoard(20);
         var sudokuProblem = new SudokuProblem(sudokuBoard);
         var scanner = new Scanner(System.in);
 

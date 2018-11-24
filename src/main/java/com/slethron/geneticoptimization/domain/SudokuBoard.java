@@ -61,6 +61,19 @@ public class SudokuBoard {
         staticCells[row][column] = true;
     }
     
+    public int getEmptyCellCount() {
+        var count = 0;
+        for (var row = 0; row < SudokuBoard.SIZE; row++) {
+            for (var column = 0; column < SudokuBoard.SIZE; column++) {
+                if (get(row, column) == SudokuBoard.EMPTY) {
+                    count++;
+                }
+            }
+        }
+        
+        return count;
+    }
+    
     @Override
     public String toString() {
         var builder = new StringBuilder();
