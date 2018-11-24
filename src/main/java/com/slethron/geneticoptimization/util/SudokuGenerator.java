@@ -3,14 +3,15 @@ package com.slethron.geneticoptimization.util;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class SudokuGenerator {
     private static final int MIN_REQ_NUM_FILLED_CELLS = 20;
     private static final int MAX_NUM_RETRIES_TO_SOLVE = 50;
     
-    private class SudokuSolver {
-        private boolean solve(SudokuBoard board) {
+    private class SudokuFiller {
+        private boolean fillRemainingEmptyCellsSequentially(SudokuBoard board) {
             for (var row = 0; row < SudokuBoard.SIZE; row++) {
                 for (var column = 0; column < SudokuBoard.SIZE; column++) {
                     if (board.get(row, column) == 0) {
@@ -18,7 +19,7 @@ public class SudokuGenerator {
                             if (isValidPlacement(board, num, row, column)) {
                                 board.set(row, column, num);
                             
-                                if (solve(board)) {
+                                if (fillRemainingEmptyCellsSequentially(board)) {
                                     return true;
                                 } else {
                                     board.set(row, column, SudokuBoard.EMPTY);
@@ -34,7 +35,7 @@ public class SudokuGenerator {
             return true;
         }
         
-        private boolean solveRandomly(SudokuBoard board) {
+        private boolean fillRemainingEmptyCellsRandomly(SudokuBoard board) {
             var random = new Random();
         
             for (var row = 0; row < SudokuBoard.SIZE; row++) {
@@ -52,7 +53,7 @@ public class SudokuGenerator {
                         
                             if (isValidPlacement(board, attempt, row, column)) {
                                 board.set(row, column, attempt);
-                                if (solveRandomly(board)) {
+                                if (fillRemainingEmptyCellsRandomly(board)) {
                                     return true;
                                 } else {
                                     board.set(row, column, SudokuBoard.EMPTY);
@@ -118,10 +119,6 @@ public class SudokuGenerator {
             var column = random.nextInt(SudokuBoard.SIZE);
             var removed = board.get(row, column);
             
-            if (board.isStatic(row, column)) {
-                continue;
-            }
-            
             board.set(row, column, SudokuBoard.EMPTY);
             removedCount++;
 
@@ -145,28 +142,51 @@ public class SudokuGenerator {
         
         return board;
     }
-    
-    /**
-     * If attempting to generate a solved random Sudoku board by starting at cell [0, 0] and inserting random numbers
-     * that are not in conflict with the previously inserted numbers, it is not possible to reproducibly insert numbers
-     * so that the board remains in a solvable state after each number placement without a backtracking algorithm.
-     *
-     * The goal is to perform the same function as in the original idea, but when running into the condition that the
-     * list of numbers not yet been used in a placement attempt have all been used in a placement attempt
-     * unsuccessfully, remove the previous number and try again, this time removing that number from the list of
-     * possibilities for placement attempt.
-     *
-     * @return The solved Sudoku board
-     */
+
     private SudokuBoard generateRandomSolvedSudokuBoard() {
         var board = new SudokuBoard();
-        var solver = new SudokuSolver();
-        solver.solveRandomly(board);
+        var solver = new SudokuFiller();
+        solver.fillRemainingEmptyCellsRandomly(board);
         return board;
     }
     
     private boolean isSolvable(SudokuBoard board) {
-        return new SudokuSolver().solve(new SudokuBoard(board));
+        var filler = new SudokuFiller();
+        var tentativeSolution = new SudokuBoard(board);
+        Integer firstEmptyCellRow = null;
+        Integer firstEmptyCellColumn = null;
+        outer:
+        for (var row = 0; row < SudokuBoard.SIZE; row++) {
+            for (var column = 0; column < SudokuBoard.SIZE; column++) {
+                if (board.get(row, column) == SudokuBoard.EMPTY) {
+                    firstEmptyCellRow = row;
+                    firstEmptyCellColumn = column;
+                    break outer;
+                }
+            }
+        }
+
+        if (Objects.isNull(firstEmptyCellRow)) {
+            throw new IllegalArgumentException("Board has no remaining empty cells.");
+        }
+
+        if (!filler.fillRemainingEmptyCellsSequentially(tentativeSolution)) {
+            return false;
+        } else {
+            var _board = new SudokuBoard(board);
+            for (var lure = 1; lure <= SudokuBoard.SIZE; lure++) {
+                if (lure == tentativeSolution.get(firstEmptyCellRow, firstEmptyCellColumn)) {
+                    continue;
+                }
+
+                _board.set(firstEmptyCellRow, firstEmptyCellColumn, lure);
+                if (filler.fillRemainingEmptyCellsSequentially(new SudokuBoard(_board))) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
     
     public static void main(String[] args) {
