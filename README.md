@@ -21,7 +21,7 @@ optimization) or until the desired result is obtained (deterministic optimizatio
 <p>
     <i>Deterministic Optimization</i> techniques define an initial set of parameters which are used to optimize a
     population until an individual is found which completely satisifies the given criteria. So the process only needs to
-    be executed for as long as it takes to find that individual.<i>Stochastic Optimization</i> techniques usually rely
+    be executed for as long as it takes to find that individual. <i>Stochastic Optimization</i> techniques usually rely
     on some randomness in the process to generate individuals with better fitness values. The process is essentially the
     same as in deterministic optimization, but the initial parameters may be more difficult to define, and the <i>best
     fitness</i> individual may not be immediately apparent.
