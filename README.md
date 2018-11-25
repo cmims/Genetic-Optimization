@@ -19,18 +19,39 @@ optimization) or until the desired result is obtained (deterministic optimizatio
 <H5>Deterministic vs Stochastic Optimization</H5>
 
 <p>
-    In <i>Stochastic Optimization</i>, execute the process as many times as is necessary to observe convergence.
-    <i>Convergence</i> means there are very minute differences between individuals of the same generation and very
-    little change per generation in genetic diversity. Theoretically, as long as the population has not converged, the
-    average fitness of each generation should progressively increase.
+    <i>Deterministic Optimization</i> techniques define an initial set of parameters which are used to optimize a
+    population until an individual is found which completely satisifies the given criteria. So the process only needs to
+    be executed for as long as it takes to find that individual.<i>Stochastic Optimization</i> techniques usually rely
+    on some randomness in the process to generate individuals with better fitness values. The process is essentially the
+    same as in deterministic optimization, but the initial parameters may be more difficult to define, and the <i>best
+    fitness</i> individual may not be immediately apparent.
 </p>
 <p>
-    For some problems, after one of the individuals has obtained the desired solution, it is no longer beneficial to
-    continue executing the process because it cannot result in a better individual. When the population converges and
-    the fitness values also converge, then it is a <i>deterministic optimization</i> problem. In these problems, the
-    fitness has a maximum possible value. It may make sense to design these such that the individual that represents the
-    desired solution holds a fitness of 0. This would make a lower fitness better than a higher one, with 0 implying a
-    solution has been found.
+    With either technique, the process can be executed as many times as is necessary to observe convergence.
+    <i>Convergence</i> means there are very minute differences between individuals of the same generation and very
+    little change per generation in genetic diversity.
+</p>
+<p>
+    Of the below problems, the knapsack problem is the only one in this project that was implemented with a stochastic
+    approach. The other problems are implemented with a derterministic approach. The difference can be seen in the
+    problem definition. In the deterministic optimization problems, a single value is being minimized, such as the
+    number of conflicts between pieces on a board or difference of a given character versus a target character in a
+    string. In these problems exist an apparent <i>best fitness</i> individual from the parameters.
+</p>
+<p>
+    By contrast, the knapsack problem needs maximization of two separate parameters, a knapsack's total weight and total
+    value. The weight must be maximized but maintained under the maximum knapsack weight limit, while the value is
+    maximized to find the best individual.
+</p>
+<p>
+    Other differences can be seen in how the methods for fitness, mutation and parent reproduction work. With the
+    deterministic problems, mutation sometimes only involves a simple flip of a bit, or random value replacement of an
+    integer. There are no other rules by which those algorithms need to adhere in order to generate a valid invidual.
+    Whereas with the knapsack problem, choosing a random item to remove from the knapsack and another random item to put
+    into the knapsack often results in an illegal transaction. The optimization relies on the randomness of the order of
+    insertion of items when reproducing parents to generate a child, as well as the mutation function possibly inserting
+    an item into a bag with a better value, but weight equal to or lower than the removed item or which is still in the
+    confines of the maximum-knapsack-weight after the transaction occurs.
 </p>
 
 ___
