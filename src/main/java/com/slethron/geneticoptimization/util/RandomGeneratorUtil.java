@@ -111,7 +111,7 @@ public class RandomGeneratorUtil {
      * Generates a random Sudoku board object with the specified number of filled static cells, such that the board
      * exists in an unsolved state. The board is solvable.
      * @param numberOfFilledCells The number of filled cells between
-     * @return
+     * @return The resulting random SudokuBoard object
      */
     public static SudokuBoard generateRandomSudokuBoard(int numberOfFilledCells) {
         if (numberOfFilledCells < MIN_REQ_NUM_FILLED_CELLS) {
@@ -152,9 +152,5 @@ public class RandomGeneratorUtil {
         }
     
         return board;
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(generateRandomSudokuBoard(20));
     }
 }

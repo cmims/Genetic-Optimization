@@ -1,6 +1,7 @@
 package com.slethron.geneticoptimization.util.test;
 
 import com.slethron.geneticoptimization.domain.Knapsack;
+import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 import org.junit.Test;
 
@@ -56,5 +57,13 @@ public class RandomGeneratorUtilTest {
         for (var item : randomKnapsack.getItems()) {
             assertTrue(itemsToPut.contains(item));
         }
+    }
+    
+    @Test
+    public void generateRandomSudokuBoardWith40FilledCells() {
+        var numberOfEmptyCells = 40;
+        var numberOfFilledCells = SudokuBoard.SIZE * SudokuBoard.SIZE - numberOfEmptyCells;
+        var randomSudokuBoard = RandomGeneratorUtil.generateRandomSudokuBoard(numberOfFilledCells);
+        assertEquals(numberOfEmptyCells, randomSudokuBoard.getEmptyCellCount());
     }
 }

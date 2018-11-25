@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.SplittableRandom;
 
-public class SudokuUtil {
+class SudokuUtil {
     static SudokuBoard generateRandomSolvedSudokuBoard() {
         var board = new SudokuBoard();
         fillRemainingEmptyCellsRandomly(board);

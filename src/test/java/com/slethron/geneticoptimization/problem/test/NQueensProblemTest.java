@@ -13,7 +13,7 @@ public class NQueensProblemTest {
     private NQueensProblem nQueensProblem;
     
     @Before
-    public void beforeEach() {
+    public void before() {
         n = 12;
         nQueensProblem = new NQueensProblem(n);
     }
