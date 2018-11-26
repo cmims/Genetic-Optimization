@@ -1,7 +1,6 @@
 package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.DeterministicOptimizer;
-import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
@@ -12,8 +11,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements GeneticOptimizer<NQueensBoard>,
-        DeterministicOptimizer<NQueensBoard> {
+public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements DeterministicOptimizer<NQueensBoard> {
     private Random random;
     private int n;
 
@@ -87,7 +85,7 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
         var population = nQueensProblem.generateInitialPopulation(populationSize);
 
         nanoTimer.start();
-        var solution = nQueensProblem.deterministicOptimize(population, .05, .25);
+        var solution = nQueensProblem.optimize(population, .05, .25);
         nanoTimer.stop();
         var fitness = nQueensProblem.fitness(solution);
 

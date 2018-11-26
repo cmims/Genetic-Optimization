@@ -26,9 +26,6 @@ class SudokuUtil {
             if (board.getEmptyCellCount() == 1) {
                 return true;
             }
-            Integer emptyCellRow = null;
-            Integer emptyCellColumn = null;
-            outer:
             for (var row = 0; row < SudokuBoard.SIZE; row++) {
                 for (var column = 0; column < SudokuBoard.SIZE; column++) {
                     if (board.get(row, column) == SudokuBoard.EMPTY) {
@@ -36,29 +33,23 @@ class SudokuUtil {
                         for (var num = 1; num <= SudokuBoard.SIZE; num++) {
                             if (isValidPlacement(board, num, column, row)) {
                                 validCount++;
+                                if (validCount > 1) {
+                                    for (var lure = 1; lure <= SudokuBoard.SIZE; lure++) {
+                                        if (lure == tentativeSolution.get(row, column)) {
+                                            continue;
+                                        }
+            
+                                        if (isValidPlacement(board, lure, row, column)) {
+                                            var _board = new SudokuBoard(board);
+                                            _board.set(row, column, lure);
+                                            if (fillRemainingEmptyCellsSequentially(_board)) {
+                                                return false;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
-                        if (validCount > 1) {
-                            emptyCellRow = row;
-                            emptyCellColumn = column;
-                            break outer;
-                        }
-                    }
-                }
-            }
-            if (Objects.isNull(emptyCellRow)) {
-                return true;
-            }
-            for (var lure = 1; lure <= SudokuBoard.SIZE; lure++) {
-                var _board = new SudokuBoard(board);
-                if (lure == tentativeSolution.get(emptyCellRow, emptyCellColumn)) {
-                    continue;
-                }
-                
-                if (isValidPlacement(board, lure, emptyCellRow, emptyCellColumn)) {
-                    _board.set(emptyCellRow, emptyCellColumn, lure);
-                    if (fillRemainingEmptyCellsSequentially(_board)) {
-                        return false;
                     }
                 }
             }
@@ -78,7 +69,7 @@ class SudokuUtil {
                             if (fillRemainingEmptyCellsSequentially(board)) {
                                 return true;
                             } else {
-                                board.set(row, column, SudokuBoard.EMPTY);
+                                board.remove(row, column);
                             }
                         }
                     }
@@ -112,7 +103,7 @@ class SudokuUtil {
                             if (fillRemainingEmptyCellsRandomly(board)) {
                                 return true;
                             } else {
-                                board.set(row, column, SudokuBoard.EMPTY);
+                                board.remove(row, column);
                             }
                         }
                         if (unattempted.isEmpty()) {
@@ -150,5 +141,34 @@ class SudokuUtil {
         }
         
         return true;
+    }
+    
+    public static void main(String[] args) {
+        var nanoTimer = new NanoTimer();
+        var sudokuBoard = new SudokuBoard();
+        sudokuBoard.set(0, 0, 1);
+        
+        System.out.println("Determine solvability of Sudoku Board:");
+        System.out.println(sudokuBoard);
+        
+        nanoTimer.start();
+        var solvable = isSolvable(sudokuBoard);
+        nanoTimer.stop();
+        System.out.println("Result: " + solvable + ", found in " + nanoTimer.toString());
+    
+        System.out.println("Generating new board: ...");
+        nanoTimer.start();
+        sudokuBoard = RandomGeneratorUtil.generateRandomSudokuBoard(30);
+        nanoTimer.stop();
+        System.out.println("Board generated in " + nanoTimer.toString());
+        
+        System.out.println("Determine solvability of Sudoku Board:");
+        System.out.println(sudokuBoard);
+        
+        nanoTimer.start();
+        solvable = isSolvable(sudokuBoard);
+        nanoTimer.stop();
+    
+        System.out.println("Result: " + solvable + ", found in " + nanoTimer.toString());
     }
 }

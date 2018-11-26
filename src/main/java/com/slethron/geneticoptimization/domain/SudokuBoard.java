@@ -34,12 +34,20 @@ public class SudokuBoard {
         return board[row][column];
     }
     
-    public boolean set(int row, int column, int value) {
-        if (isStatic(row, column)) {
-            return false;
-        }
+    public void set(int row, int column, int value) {
+        if (value < 1 || value > 9)
+            throw new IllegalArgumentException("Only values 1-9 can be inserted.");
+        if (isStatic(row, column))
+            throw new IllegalArgumentException("Static cells cannot be changed.");
+        
         board[row][column] = value;
-        return true;
+    }
+    
+    public void remove(int row, int column) {
+        if (isStatic(row, column))
+            throw new IllegalArgumentException("Static cells cannot be changed.");
+        
+        board[row][column] = EMPTY;
     }
     
     public int[][] getBoard() {
@@ -55,9 +63,9 @@ public class SudokuBoard {
     }
     
     public void setStatic(int row, int column) {
-        if (get(row, column) == 0) {
-            throw new IllegalStateException("Empty cell cannot be static.");
-        }
+        if (get(row, column) == EMPTY)
+            throw new IllegalArgumentException("Empty cell cannot be static.");
+        
         staticCells[row][column] = true;
     }
     

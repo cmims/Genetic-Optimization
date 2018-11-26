@@ -1,7 +1,6 @@
 package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.DeterministicOptimizer;
-import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
@@ -10,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class StringMatchProblem extends PopulationGenerator<String> implements GeneticOptimizer<String>,
-        DeterministicOptimizer<String> {
+public class StringMatchProblem extends PopulationGenerator<String> implements DeterministicOptimizer<String> {
     private Random random;
     private String target;
     
@@ -79,7 +77,7 @@ public class StringMatchProblem extends PopulationGenerator<String> implements G
         var population = stringMatchProblem.generateInitialPopulation(10000);
 
         nanoTimer.start();
-        var solution = stringMatchProblem.deterministicOptimize(population, .05, .25);
+        var solution = stringMatchProblem.optimize(population, .05, .25);
         nanoTimer.stop();
         
         System.out.println("Solution for target='" + target + "' found in " + nanoTimer.toString());

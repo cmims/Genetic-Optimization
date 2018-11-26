@@ -134,7 +134,7 @@ public class RandomGeneratorUtil {
                 continue;
             }
         
-            board.set(row, column, SudokuBoard.EMPTY);
+            board.remove(row, column);
             removedCount++;
         
             if (!SudokuUtil.isSolvable(board)) {

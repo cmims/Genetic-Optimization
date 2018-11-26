@@ -36,12 +36,14 @@ optimization) or until the desired result is obtained (deterministic optimizatio
     approach. The other problems are implemented with a derterministic approach. The difference can be seen in the
     problem definition. In the deterministic optimization problems, a single value is being minimized, such as the
     number of conflicts between pieces on a board or difference of a given character versus a target character in a
-    string. In these problems exist an apparent <i>best fitness</i> individual from the parameters.
+    string. Most of the parameters are nown beforehand. In these problems exist an apparent <i>best fitness</i>
+    individual.
 </p>
 <p>
     By contrast, the knapsack problem needs maximization of two separate parameters, a knapsack's total weight and total
     value. The weight must be maximized but maintained under the maximum knapsack weight limit, while the value is
-    maximized to find the best individual.
+    maximized to find the best individual. When considering these factors beforehand, it's not possible to know the
+    exact outcome of the optimization.
 </p>
 <p>
     Other differences can be seen in how the methods for fitness, mutation and parent reproduction work. With the

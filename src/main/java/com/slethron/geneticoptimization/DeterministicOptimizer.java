@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.SplittableRandom;
 import java.util.stream.Collectors;
 
-public interface DeterministicOptimizer<E> {
-    default E deterministicOptimize(List<E> population, double mutationRate, double fittestSampleRatio) {
+public interface DeterministicOptimizer<E> extends GeneticOptimizer<E>{
+    default E optimize(List<E> population, double mutationRate, double fittestSampleRatio) {
         var random = new SplittableRandom();
         while (fitness(population.get(0)) != 0) {
             var p = population;
@@ -25,10 +25,4 @@ public interface DeterministicOptimizer<E> {
 
         return population.get(0);
     }
-
-    E generateIndividualFromParents(E parentA, E parentB);
-
-    E mutate(E individual, double mutationRate);
-
-    double fitness(E individual);
 }

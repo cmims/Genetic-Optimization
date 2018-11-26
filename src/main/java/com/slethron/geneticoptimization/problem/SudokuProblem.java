@@ -1,6 +1,6 @@
 package com.slethron.geneticoptimization.problem;
 
-import com.slethron.geneticoptimization.GeneticOptimizer;
+import com.slethron.geneticoptimization.DeterministicOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.util.NanoTimer;
@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class SudokuProblem extends PopulationGenerator<SudokuBoard> implements GeneticOptimizer<SudokuBoard> {
+public class SudokuProblem extends PopulationGenerator<SudokuBoard> implements DeterministicOptimizer<SudokuBoard> {
     private Random random;
     private SudokuBoard unsolvedBoard;
 
@@ -36,12 +36,8 @@ public class SudokuProblem extends PopulationGenerator<SudokuBoard> implements G
         var board = new int[SudokuBoard.SIZE][SudokuBoard.SIZE];
         for (var row = 0; row < SudokuBoard.SIZE; row++) {
             for (var column = 0; column < SudokuBoard.SIZE; column++) {
-                if (row < splitRow) {
+                if (row < splitRow || row == splitRow && column <= splitColumn) {
                     board[row][column] = parentA.get(row, column);
-                } else if (row == splitRow && column <= splitColumn) {
-                    board[row][column] = parentA.get(row, column);
-                } else if (row == splitRow) {
-                    board[row][column] = parentB.get(row, column);
                 } else {
                     board[row][column] = parentB.get(row, column);
                 }
