@@ -3,7 +3,6 @@ package com.slethron.geneticoptimization.util;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.SplittableRandom;
 
 class SudokuUtil {
@@ -29,24 +28,21 @@ class SudokuUtil {
             for (var row = 0; row < SudokuBoard.SIZE; row++) {
                 for (var column = 0; column < SudokuBoard.SIZE; column++) {
                     if (board.get(row, column) == SudokuBoard.EMPTY) {
-                        var validCount = 0;
+                        var validPlacements = new ArrayList<Integer>();
                         for (var num = 1; num <= SudokuBoard.SIZE; num++) {
                             if (isValidPlacement(board, num, column, row)) {
-                                validCount++;
-                                if (validCount > 1) {
-                                    for (var lure = 1; lure <= SudokuBoard.SIZE; lure++) {
-                                        if (lure == tentativeSolution.get(row, column)) {
-                                            continue;
-                                        }
-            
-                                        if (isValidPlacement(board, lure, row, column)) {
-                                            var _board = new SudokuBoard(board);
-                                            _board.set(row, column, lure);
-                                            if (fillRemainingEmptyCellsSequentially(_board)) {
-                                                return false;
-                                            }
-                                        }
-                                    }
+                                validPlacements.add(num);
+                            }
+                        }
+                        if (validPlacements.size() > 1) {
+                            for (var num : validPlacements) {
+                                if (tentativeSolution.get(row, column) == num) {
+                                    continue;
+                                }
+                                var _board = new SudokuBoard(board);
+                                _board.set(row, column, num);
+                                if (fillRemainingEmptyCellsSequentially(_board)) {
+                                    return false;
                                 }
                             }
                         }
@@ -119,21 +115,15 @@ class SudokuUtil {
     
     private static boolean isValidPlacement(SudokuBoard board, int num, int row, int column) {
         for (var i = 0; i < SudokuBoard.SIZE; i++) {
-            if (board.get(row, i) == num) {
+            if (board.get(row, i) == num || board.get(i, column) == num) {
                 return false;
             }
         }
         
-        for (var i = 0; i < SudokuBoard.SIZE; i++) {
-            if (board.get(i, column) == num) {
-                return false;
-            }
-        }
-        
-        var r = row - row % 3;
-        var c = column - column % 3;
-        for (var i = r; i < r + 3; i++) {
-            for (var j = c; j < c + 3; j++) {
+        row = row - row % 3;
+        column = column - column % 3;
+        for (var i = row; i < row + 3; i++) {
+            for (var j = column; j < column + 3; j++) {
                 if (board.get(i, j) == num) {
                     return false;
                 }
@@ -158,7 +148,7 @@ class SudokuUtil {
     
         System.out.println("Generating new board: ...");
         nanoTimer.start();
-        sudokuBoard = RandomGeneratorUtil.generateRandomSudokuBoard(30);
+        sudokuBoard = RandomGeneratorUtil.generateRandomSudokuBoard(25);
         nanoTimer.stop();
         System.out.println("Board generated in " + nanoTimer.toString());
         
