@@ -28,17 +28,9 @@ class SudokuUtil {
             for (var row = 0; row < SudokuBoard.SIZE; row++) {
                 for (var column = 0; column < SudokuBoard.SIZE; column++) {
                     if (board.get(row, column) == SudokuBoard.EMPTY) {
-                        var validPlacements = new ArrayList<Integer>();
                         for (var num = 1; num <= SudokuBoard.SIZE; num++) {
-                            if (isValidPlacement(board, num, column, row)) {
-                                validPlacements.add(num);
-                            }
-                        }
-                        if (validPlacements.size() > 1) {
-                            for (var num : validPlacements) {
-                                if (tentativeSolution.get(row, column) == num) {
-                                    continue;
-                                }
+                            if (num != tentativeSolution.get(row, column)
+                                    && isValidPlacement(board, num, row, column)) {
                                 var _board = new SudokuBoard(board);
                                 _board.set(row, column, num);
                                 if (fillRemainingEmptyCellsSequentially(_board)) {
