@@ -2,23 +2,23 @@ package com.slethron.geneticoptimization.problem.test;
 
 import com.slethron.geneticoptimization.problem.StringMatchProblem;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class StringMatchProblemTest {
+class StringMatchProblemTest {
     private String target;
     private StringMatchProblem stringMatchProblem;
     
-    @Before
-    public void before() {
+    @BeforeEach
+    void init() {
         target = "Hello, World!";
         stringMatchProblem = new StringMatchProblem(target);
     }
     
     @Test
-    public void generatePopulationOfSize100OfLength10Strings() {
+    void generatePopulationOfSize100OfLength10Strings() {
         var size = 100;
         var population = stringMatchProblem.generateInitialPopulation(size);
         
@@ -30,7 +30,7 @@ public class StringMatchProblemTest {
     }
     
     @Test
-    public void generateIndividualFromParentsGeneratesChildWithElementsFromOneOrBothParents() {
+    void generateIndividualFromParentsGeneratesChildWithElementsFromOneOrBothParents() {
         var parentA = RandomGeneratorUtil.generateRandomString(target.length());
         var parentB = RandomGeneratorUtil.generateRandomString(target.length());
         

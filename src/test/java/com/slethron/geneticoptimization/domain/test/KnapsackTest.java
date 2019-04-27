@@ -1,17 +1,16 @@
 package com.slethron.geneticoptimization.domain.test;
 
 import com.slethron.geneticoptimization.domain.Knapsack;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class KnapsackTest {
-    
+class KnapsackTest {
     @Test
-    public void putFailsWhenAttemptingToPutItemInBagToExceedMaxWeight() {
+    void putFailsWhenAttemptingToPutItemInBagToExceedMaxWeight() {
         var knapsack = new Knapsack(5);
         var itemTooBig = new Knapsack.KnapsackItem(10, 10, 10);
         var item = new Knapsack.KnapsackItem(5, 5, 5);
@@ -21,7 +20,7 @@ public class KnapsackTest {
     }
     
     @Test
-    public void getItemsReturnsListOfItemsPlacedInTheKnapsack() {
+    void getItemsReturnsListOfItemsPlacedInTheKnapsack() {
         var random = new Random();
         var itemsToPut = new ArrayList<Knapsack.KnapsackItem>();
         for (var i = 0; i < 10; i++) {
@@ -41,7 +40,7 @@ public class KnapsackTest {
     }
     
     @Test
-    public void getTotalWeightAndGetTotalValueAreAccurate() {
+    void getTotalWeightAndGetTotalValueAreAccurate() {
         var item1 = new Knapsack.KnapsackItem(0, 10, 5);
         var item2 = new Knapsack.KnapsackItem(1, 10, 5);
         
@@ -53,7 +52,7 @@ public class KnapsackTest {
     }
     
     @Test
-    public void equalsReturnsTrueForKnapsacksThatAreTheSameAndFalseForKnapsacksThatAreNot() {
+    void equalsTest() {
         var knapsack = new Knapsack(10);
         var knapsack2 = new Knapsack(10);
         
@@ -71,27 +70,5 @@ public class KnapsackTest {
         knapsack.put(new Knapsack.KnapsackItem(2, 2,4));
         
         assertNotEquals(knapsack, knapsack2);
-    }
-    
-    @Test
-    public void itemsOfSimilarValueAndWeightAreNotEqual() {
-        var itemIdA = 0;
-        var weightA = 10;
-        var valueA = 5;
-        var itemIdB = 1;
-        var weightB = 8;
-        var valueB = 7;
-        
-        var itemA = new Knapsack.KnapsackItem(itemIdA, weightA, valueA);
-        var itemB = new Knapsack.KnapsackItem(itemIdB, weightB, valueB);
-        
-        assertEquals(itemIdA, itemA.getItemId());
-        assertEquals(weightA, itemA.getWeight());
-        assertEquals(valueA, itemA.getValue());
-        assertEquals(itemIdB, itemB.getItemId());
-        assertEquals(weightB, itemB.getWeight());
-        assertEquals(valueB, itemB.getValue());
-        
-        assertNotEquals(itemA, itemB);
     }
 }

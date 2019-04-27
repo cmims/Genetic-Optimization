@@ -3,24 +3,24 @@ package com.slethron.geneticoptimization.problem.test;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.problem.SudokuProblem;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SudokuProblemTest {
+class SudokuProblemTest {
     private SudokuBoard sudokuBoard;
     private SudokuProblem sudokuProblem;
     
-    @Before
-    public void before() {
+    @BeforeEach
+    void init() {
         var numberOfFilledCells = 40;
         sudokuBoard = RandomGeneratorUtil.generateRandomSudokuBoard(numberOfFilledCells);
         sudokuProblem = new SudokuProblem(sudokuBoard);
     }
     
     @Test
-    public void generatePopulationOfSize100BoardsWithSameStaticCells() {
+    void generatePopulationOfSize100BoardsWithSameStaticCells() {
         var populationSize = 100;
         var population = sudokuProblem.generateInitialPopulation(populationSize);
         
@@ -35,7 +35,8 @@ public class SudokuProblemTest {
         }
     }
     
-    public void generateIndividualFromParentsGeneratesChildThatHasSameStaticCellsAndElementsOfOneOrBothParents() {
+    @Test
+    void generateIndividualFromParentsGeneratesChildThatHasSameStaticCellsAndElementsOfOneOrBothParents() {
         var parentA = sudokuBoard;
         var parentB = sudokuProblem.generateInitialPopulation(1).get(0);
         

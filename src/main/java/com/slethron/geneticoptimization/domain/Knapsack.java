@@ -30,15 +30,26 @@ public class Knapsack {
         }
         
         @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof KnapsackItem)) return false;
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
             
-            var item = (KnapsackItem) o;
+            if (!(obj instanceof KnapsackItem)) {
+                return false;
+            }
             
-            if (getItemId() != item.getItemId()) return false;
-            if (getWeight() != item.getWeight()) return false;
-            return getValue() == item.getValue();
+            var knapsackItem = (KnapsackItem) obj;
+            
+            if (knapsackItem.getItemId() != getItemId()) {
+                return false;
+            }
+            
+            if (knapsackItem.getWeight() != getWeight()) {
+                return false;
+            }
+            
+            return knapsackItem.getValue() == getValue();
         }
         
         @Override
@@ -128,11 +139,16 @@ public class Knapsack {
     }
     
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Knapsack)) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         
-        var knapsack = (Knapsack) o;
+        if (!(obj instanceof Knapsack)) {
+            return false;
+        }
+        
+        var knapsack = (Knapsack) obj;
         
         for (var item : this.getItems()) {
             if (!knapsack.getItems().contains(item)) {

@@ -124,33 +124,4 @@ class SudokuUtil {
         
         return true;
     }
-    
-    public static void main(String[] args) {
-        var nanoTimer = new NanoTimer();
-        var sudokuBoard = new SudokuBoard();
-        sudokuBoard.set(0, 0, 1);
-        
-        System.out.println("Determine solvability of Sudoku Board:");
-        System.out.println(sudokuBoard);
-        
-        nanoTimer.start();
-        var solvable = isSolvable(sudokuBoard);
-        nanoTimer.stop();
-        System.out.println("Result: " + solvable + ", found in " + nanoTimer.toString());
-    
-        System.out.println("Generating new board: ...");
-        nanoTimer.start();
-        sudokuBoard = RandomGeneratorUtil.generateRandomSudokuBoard(25);
-        nanoTimer.stop();
-        System.out.println("Board generated in " + nanoTimer.toString());
-        
-        System.out.println("Determine solvability of Sudoku Board:");
-        System.out.println(sudokuBoard);
-        
-        nanoTimer.start();
-        solvable = isSolvable(sudokuBoard);
-        nanoTimer.stop();
-    
-        System.out.println("Result: " + solvable + ", found in " + nanoTimer.toString());
-    }
 }

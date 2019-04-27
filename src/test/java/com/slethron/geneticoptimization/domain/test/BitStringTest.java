@@ -1,25 +1,36 @@
 package com.slethron.geneticoptimization.domain.test;
 
 import com.slethron.geneticoptimization.domain.BitString;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class BitStringTest {
+class BitStringTest {
     private boolean[] bits;
     private BitString bitString;
     
-    @Before
-    public void beforeEach() {
+    @BeforeEach
+    void init() {
         bits = new boolean[] { true, true, true, false, false };
         bitString = new BitString(bits);
     }
     
     @Test
-    public void getReturnsBitAtIndex() {
-        for (var i = 0; i < bitString.length(); i++) {
-            assertEquals(bits[i], bitString.get(i));
-        }
+    void equalsTest() {
+        var other = new BitString(bits.clone());
+        assertEquals(bitString, other);
+        
+        other.set(0, !other.get(0));
+        assertNotEquals(bitString, other);
+    }
+    
+    @Test
+    void cloneTest() {
+        var other = new BitString(bitString);
+        assertEquals(bitString, other);
+        
+        other.set(0, !other.get(0));
+        assertNotEquals(bitString, other);
     }
 }

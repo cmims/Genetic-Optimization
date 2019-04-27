@@ -3,25 +3,25 @@ package com.slethron.geneticoptimization.util.test;
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.domain.SudokuBoard;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class RandomGeneratorUtilTest {
+class RandomGeneratorUtilTest {
     @Test
-    public void generateRandomStringOf25Characters() {
+    void generateRandomStringOf25Characters() {
         var length = 25;
         var randomString = RandomGeneratorUtil.generateRandomString(length);
         assertEquals(length, randomString.length());
     }
     
     @Test
-    public void generateRandomBitStringOf25Bits() {
+    void generateRandomBitStringOf25Bits() {
         var length = 25;
         var randomBitString = RandomGeneratorUtil.generateRandomBitString(length);
         for (var i = 0; i < length; i++) {
@@ -30,7 +30,7 @@ public class RandomGeneratorUtilTest {
     }
     
     @Test
-    public void generateRandomNQueensBoardOfNEquals12() {
+    void generateRandomNQueensBoardOfNEquals12() {
         var n = 12;
         var randomNQueensBoard = RandomGeneratorUtil.generateRandomNQueensBoard(n);
         for (var i = 0; i < n; i++) {
@@ -39,7 +39,7 @@ public class RandomGeneratorUtilTest {
     }
     
     @Test
-    public void generateRandomKnapsackOf10Items() {
+    void generateRandomKnapsackOf10Items() {
         // Generate 15 items of weight>=10 and knapsack maxWeight of 150 so test never fails
         var numberOfItems = 15;
         var maxItemWeightValue = 50;
@@ -60,7 +60,7 @@ public class RandomGeneratorUtilTest {
     }
     
     @Test
-    public void generateRandomSudokuBoardWith40FilledCells() {
+    void generateRandomSudokuBoardWith40FilledCells() {
         var numberOfEmptyCells = 40;
         var numberOfFilledCells = SudokuBoard.SIZE * SudokuBoard.SIZE - numberOfEmptyCells;
         var randomSudokuBoard = RandomGeneratorUtil.generateRandomSudokuBoard(numberOfFilledCells);

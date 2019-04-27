@@ -3,7 +3,6 @@ package com.slethron.geneticoptimization.problem;
 import com.slethron.geneticoptimization.DeterministicOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
-import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 
 import java.util.List;
@@ -73,25 +72,5 @@ public class NQueensProblem extends PopulationGenerator<NQueensBoard> implements
         }
 
         return numberOfConflicts;
-    }
-
-    public static void main(String[] args) {
-        var nanoTimer = new NanoTimer();
-
-        var n = 24;
-        var populationSize = 5000;
-        var nQueensProblem = new NQueensProblem(n);
-
-        var population = nQueensProblem.generateInitialPopulation(populationSize);
-
-        nanoTimer.start();
-        var solution = nQueensProblem.optimize(population, .05, .25);
-        nanoTimer.stop();
-        var fitness = nQueensProblem.fitness(solution);
-
-        System.out.println("Solution for n=" + n + " found in " + nanoTimer.toString());
-        System.out.println("Fitness of solution is " + fitness);
-        System.out.println(solution);
-        System.out.println(solution.drawAsciiBoard('&', '.'));
     }
 }

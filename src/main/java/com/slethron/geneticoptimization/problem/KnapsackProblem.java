@@ -3,7 +3,6 @@ package com.slethron.geneticoptimization.problem;
 import com.slethron.geneticoptimization.GeneticOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
 import com.slethron.geneticoptimization.domain.Knapsack;
-import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 
 import java.util.ArrayList;
@@ -99,40 +98,5 @@ public class KnapsackProblem extends PopulationGenerator<Knapsack> implements Ge
     @Override
     public double fitness(Knapsack individual) {
         return individual.getTotalValue();
-    }
-    
-    public static void main(String[] args) {
-        var numberOfItems = 10;
-        var maxItemWeightValue = 50;
-        var random = new Random();
-        var nanoTimer = new NanoTimer();
-        
-        var itemsToPut = IntStream.range(0, numberOfItems)
-                .mapToObj(i -> new Knapsack.KnapsackItem(i, random.nextInt(maxItemWeightValue), random.nextInt(maxItemWeightValue)))
-                .collect(Collectors.toList());
-        
-        for (var item : itemsToPut) {
-            System.out.println(item);
-        }
-        
-        var maxWeight = random.nextInt(100) + 50;
-        var knapsackProblem = new KnapsackProblem(maxWeight, itemsToPut);
-        
-        nanoTimer.start();
-        var population = knapsackProblem.generateInitialPopulation(10000);
-        population = knapsackProblem.optimize(population, 1000, .05, .25);
-        var solution = population.get(0);
-        nanoTimer.stop();
-        
-        System.out.println("Solution for maxWeight=" + maxWeight + " and selected items found in "
-                + nanoTimer.toString());
-        System.out.println("Fitness of knapsack is: "
-                + knapsackProblem.fitness(solution)
-                + " (value="
-                + solution.getTotalValue()
-                + ", weight="
-                + solution.getTotalWeight()
-                + ")");
-        System.out.println(solution);
     }
 }

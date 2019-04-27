@@ -1,23 +1,23 @@
 package com.slethron.geneticoptimization.domain.test;
 
 import com.slethron.geneticoptimization.domain.SudokuBoard;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class SudokuBoardTest {
+class SudokuBoardTest {
     private SudokuBoard board;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void init() {
         board = new SudokuBoard();
         board.set(0, 0, 1);
     }
 
     @Test
-    public void equalsReturnsTrueForBoardsThatAreTheSameAndFalseForBoardsThatArent() {
+    void equalsTest() {
         var board2 = new SudokuBoard(board);
         assertEquals(board, board2);
         board2.set(0, 0, 2);

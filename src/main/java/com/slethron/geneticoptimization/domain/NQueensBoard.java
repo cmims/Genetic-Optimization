@@ -25,7 +25,7 @@ public class NQueensBoard implements Cloneable {
         return board.length;
     }
     
-    public String drawAsciiBoard(char queen, char space) {
+    public String draw(char queen, char space) {
         var sb = new StringBuilder();
         for (var column : board) {
             for (var j = 0; j < board.length; j++) {
@@ -67,36 +67,13 @@ public class NQueensBoard implements Cloneable {
             return false;
         }
         
-        var e = (NQueensBoard) obj;
+        var nQueensBoard = (NQueensBoard) obj;
         
-        if (e.length() != length()) {
-            return false;
-        }
-        
-        for (var i = 0; i < length(); i++) {
-            if (e.get(i) != get(i)) {
-                return false;
-            }
-        }
-        
-        return true;
+        return Arrays.equals(board, nQueensBoard.board);
     }
     
     @Override
     public int hashCode() {
         return Arrays.hashCode(board);
-    }
-
-    @Override
-    public NQueensBoard clone() {
-        NQueensBoard clone = null;
-        try {
-            clone = (NQueensBoard) super.clone();
-            clone.board = board.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-
-        return clone;
     }
 }

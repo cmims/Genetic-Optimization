@@ -2,7 +2,6 @@ package com.slethron.geneticoptimization.problem;
 
 import com.slethron.geneticoptimization.DeterministicOptimizer;
 import com.slethron.geneticoptimization.PopulationGenerator;
-import com.slethron.geneticoptimization.util.NanoTimer;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 
 import java.util.ArrayList;
@@ -66,21 +65,5 @@ public class StringMatchProblem extends PopulationGenerator<String> implements D
         }
         
         return fitVal;
-    }
-    
-    public static void main(String[] args) {
-        var nanoTimer = new NanoTimer();
-        
-        var target = "Hello, World!";
-        var stringMatchProblem = new StringMatchProblem(target);
-        
-        var population = stringMatchProblem.generateInitialPopulation(10000);
-
-        nanoTimer.start();
-        var solution = stringMatchProblem.optimize(population, .05, .25);
-        nanoTimer.stop();
-        
-        System.out.println("Solution for target='" + target + "' found in " + nanoTimer.toString());
-        System.out.println("Solution: " + solution);
     }
 }

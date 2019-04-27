@@ -3,23 +3,23 @@ package com.slethron.geneticoptimization.problem.test;
 import com.slethron.geneticoptimization.domain.NQueensBoard;
 import com.slethron.geneticoptimization.problem.NQueensProblem;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class NQueensProblemTest {
+class NQueensProblemTest {
     private int n;
     private NQueensProblem nQueensProblem;
     
-    @Before
-    public void before() {
+    @BeforeEach
+    void init() {
         n = 12;
         nQueensProblem = new NQueensProblem(n);
     }
     
     @Test
-    public void generatePopulationOfSize100OfNEquals12Boards() {
+    void generatePopulationOfSize100OfNEquals12Boards() {
         var size = 100;
         var population = nQueensProblem.generateInitialPopulation(size);
         
@@ -31,7 +31,7 @@ public class NQueensProblemTest {
     }
     
     @Test
-    public void generateIndividualFromParentsGeneratesChildThatHasElementsFromOneOrBothParents() {
+    void generateIndividualFromParentsGeneratesChildThatHasElementsFromOneOrBothParents() {
         var parentA = RandomGeneratorUtil.generateRandomNQueensBoard(n);
         var parentB = RandomGeneratorUtil.generateRandomNQueensBoard(n);
         
@@ -41,14 +41,5 @@ public class NQueensProblemTest {
         for (var i = 0; i < child.length(); i++) {
             assertTrue(child.get(i) == parentA.get(i) || child.get(i) == parentB.get(i));
         }
-    }
-    
-    @Test
-    public void getFitnessOfSpecifiedBoard() {
-        var expectedFitness = 78;
-        var board = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-        var nQueensBoard = new NQueensBoard(board);
-    
-        assertEquals(expectedFitness, nQueensProblem.fitness(nQueensBoard), 0);
     }
 }

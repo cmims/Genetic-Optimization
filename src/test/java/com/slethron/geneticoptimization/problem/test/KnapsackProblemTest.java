@@ -3,22 +3,22 @@ package com.slethron.geneticoptimization.problem.test;
 import com.slethron.geneticoptimization.domain.Knapsack;
 import com.slethron.geneticoptimization.problem.KnapsackProblem;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class KnapsackProblemTest {
+class KnapsackProblemTest {
     private int maxWeight;
     private KnapsackProblem knapsackProblem;
     private List<Knapsack.KnapsackItem> items;
     
-    @Before
-    public void beforeEach() {
+    @BeforeEach
+    void init() {
         maxWeight = 40;
         items = new ArrayList<>();
         var weightsOfItems = new int[]{10, 5, 24, 6, 4, 3, 8, 9, 12, 13, 8, 1, 1, 2, 4, 2};
@@ -30,7 +30,7 @@ public class KnapsackProblemTest {
     }
 
     @Test
-    public void generatePopulationOfSize100ContainingKnapsacksOfMaxWeight200() {
+    void generatePopulationOfSize100ContainingKnapsacksOfMaxWeight200() {
         var size = 100;
         var population = knapsackProblem.generateInitialPopulation(size);
         
@@ -43,7 +43,7 @@ public class KnapsackProblemTest {
     }
     
     @Test
-    public void generateIndividualFromParentsGeneratesChildThatHasElementsFromOneOrBothParents() {
+    void generateIndividualFromParentsGeneratesChildThatHasElementsFromOneOrBothParents() {
         var parentA = RandomGeneratorUtil.generateRandomKnapsack(maxWeight, items);
         var parentB = RandomGeneratorUtil.generateRandomKnapsack(maxWeight, items);
         

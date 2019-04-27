@@ -71,9 +71,9 @@ public class SudokuBoard {
     
     public int getEmptyCellCount() {
         var count = 0;
-        for (var row = 0; row < SudokuBoard.SIZE; row++) {
-            for (var column = 0; column < SudokuBoard.SIZE; column++) {
-                if (get(row, column) == SudokuBoard.EMPTY) {
+        for (var row = 0; row < SIZE; row++) {
+            for (var column = 0; column < SIZE; column++) {
+                if (get(row, column) == EMPTY) {
                     count++;
                 }
             }
@@ -112,11 +112,11 @@ public class SudokuBoard {
             return false;
         }
         
-        var e = (SudokuBoard) obj;
+        var sudokuBoard = (SudokuBoard) obj;
         
         for (var i = 0; i < SIZE; i++) {
             for (var j = 0; j < SIZE; j++) {
-                if (e.get(i, j) != get(i, j)) {
+                if (sudokuBoard.get(i, j) != get(i, j)) {
                     return false;
                 }
             }
@@ -124,7 +124,7 @@ public class SudokuBoard {
         
         for (var i = 0; i < SIZE; i++) {
             for (var j = 0; j < SIZE; j++) {
-                if (e.isStatic(i, j) != isStatic(i, j)) {
+                if (sudokuBoard.isStatic(i, j) != isStatic(i, j)) {
                     return false;
                 }
             }
