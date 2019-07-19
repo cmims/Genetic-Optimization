@@ -2,7 +2,7 @@ package com.slethron.geneticoptimization.domain;
 
 import java.util.Arrays;
 
-public class NQueensBoard implements Cloneable {
+public class NQueensBoard {
     private int[] board;
     
     public NQueensBoard(NQueensBoard source) {
