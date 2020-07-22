@@ -3,7 +3,6 @@ package com.slethron.geneticoptimization;
 import java.util.Comparator;
 import java.util.List;
 import java.util.SplittableRandom;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public interface GeneticOptimizer<E> {
@@ -18,7 +17,7 @@ public interface GeneticOptimizer<E> {
                                 p.get(random.nextInt(sampleBound)), p.get(random.nextInt(sampleBound)));
                         
                         child = mutate(child, mutationRate);
-                        
+
                         return child;
                     }).sorted(Comparator.comparingDouble(this::fitness))
                     .collect(Collectors.toList());

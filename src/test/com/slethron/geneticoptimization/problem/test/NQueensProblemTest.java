@@ -1,6 +1,5 @@
 package com.slethron.geneticoptimization.problem.test;
 
-import com.slethron.geneticoptimization.domain.NQueensBoard;
 import com.slethron.geneticoptimization.problem.NQueensProblem;
 import com.slethron.geneticoptimization.util.RandomGeneratorUtil;
 import org.junit.jupiter.api.BeforeEach;

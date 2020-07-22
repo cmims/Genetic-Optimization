@@ -112,10 +112,10 @@ class SudokuUtil {
             }
         }
         
-        row = row - row % 3;
-        column = column - column % 3;
-        for (var i = row; i < row + 3; i++) {
-            for (var j = column; j < column + 3; j++) {
+        row = row - row % SudokuBoard.SUBGRID_SIZE;
+        column = column - column % SudokuBoard.SUBGRID_SIZE;
+        for (var i = row; i < row + SudokuBoard.SUBGRID_SIZE; i++) {
+            for (var j = column; j < column + SudokuBoard.SUBGRID_SIZE; j++) {
                 if (board.get(i, j) == num) {
                     return false;
                 }

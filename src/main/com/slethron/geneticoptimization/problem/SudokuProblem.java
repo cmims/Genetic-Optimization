@@ -80,11 +80,11 @@ public class SudokuProblem extends PopulationGenerator<SudokuBoard> implements D
                     }
                 }
 
-                var subGridOriginRow = (row / 3) * 3;
-                var subGridOriginCol = (column / 3) * 3;
+                var subGridOriginRow = (row / SudokuBoard.SUBGRID_SIZE) * SudokuBoard.SUBGRID_SIZE;
+                var subGridOriginCol = (column / SudokuBoard.SUBGRID_SIZE) * SudokuBoard.SUBGRID_SIZE;
 
-                for (var i = subGridOriginRow; i < subGridOriginRow + 3; i++) {
-                    for (var j = subGridOriginCol; j < subGridOriginCol + 3; j++) {
+                for (var i = subGridOriginRow; i < subGridOriginRow + SudokuBoard.SUBGRID_SIZE; i++) {
+                    for (var j = subGridOriginCol; j < subGridOriginCol + SudokuBoard.SUBGRID_SIZE; j++) {
                         if (!(i == row && j == column) && individual.get(i, j) == num) {
                             numberOfConflicts++;
                         }

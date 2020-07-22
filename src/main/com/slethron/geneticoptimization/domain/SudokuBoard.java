@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class SudokuBoard {
     public static final int EMPTY = 0;
     public static final int SIZE = 9;
+    public static final int SUBGRID_SIZE = SIZE / 3;
     
     private int[][] board;
     private boolean[][] staticCells;
