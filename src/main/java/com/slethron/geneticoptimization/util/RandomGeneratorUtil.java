@@ -97,7 +97,7 @@ public class RandomGeneratorUtil {
         return knapsack;
     }
     
-    private static final int MIN_REQ_NUM_FILLED_CELLS = 20;
+    private static final int MIN_REQ_NUM_FILLED_CELLS = 25;
     /**
      * Generates a random Sudoku board object with the specified number of filled static cells, such that the board
      * exists in an unsolved state. The board is solvable.
@@ -115,8 +115,9 @@ public class RandomGeneratorUtil {
     
         var board = SudokuUtil.generateRandomSolvedSudokuBoard();
     
-        var removedCount = 0;
-        while (removedCount < SudokuBoard.SIZE * SudokuBoard.SIZE - numberOfFilledCells) {
+        var numberOfEmptyCells = 0;
+        var totalNumberOfCells = SudokuBoard.SIZE * SudokuBoard.SIZE;
+        while (numberOfEmptyCells < totalNumberOfCells - numberOfFilledCells) {
             var row = RANDOM.nextInt(SudokuBoard.SIZE);
             var column = RANDOM.nextInt(SudokuBoard.SIZE);
             var removed = board.get(row, column);
@@ -126,11 +127,11 @@ public class RandomGeneratorUtil {
             }
         
             board.remove(row, column);
-            removedCount++;
+            numberOfEmptyCells++;
         
             if (!SudokuUtil.isSolvable(board)) {
                 board.set(row, column, removed);
-                removedCount--;
+                numberOfEmptyCells--;
             }
         }
     
@@ -143,16 +144,5 @@ public class RandomGeneratorUtil {
         }
     
         return board;
-    }
-
-    public static void main(String[] args) {
-        var board = generateRandomSudokuBoard(30);
-        System.out.println("Solvable board: ");
-        System.out.println(board);
-
-
-
-        System.out.println("Solved Board:");
-        System.out.println(board);
     }
 }
